@@ -12,3 +12,6 @@ known-first-party = ["adapters", "agents", "pipeline", "storage", "notifier"]
 [tool.mypy]
 python_version = "3.9"
 ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

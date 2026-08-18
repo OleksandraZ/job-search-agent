@@ -8,20 +8,8 @@ these without a test failing; write the failing case into a fixture instead of j
 narrating it in memory/docs next time.
 """
 
-from adapters.boards import NormalizedJob
 from pipeline.location import is_munich, is_remote
-
-
-def _job(location: str = "", description: str = "") -> NormalizedJob:
-    return NormalizedJob(
-        source_id="test",
-        title="Test Engineer",
-        company="Test GmbH",
-        url="https://example.test/1",
-        location=location,
-        description=description,
-    )
-
+from tests.conftest import make_job as _job
 
 # --- is_remote() ---
 
