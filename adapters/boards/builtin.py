@@ -72,7 +72,7 @@ def _parse_listing_page(html: str, source_id: str) -> list[NormalizedJob]:
             work_mode_div = work_mode_el.find_parent("div")
             work_mode_span = work_mode_div.find_next_sibling("span") if work_mode_div else None
             work_mode = work_mode_span.get_text(strip=True) if work_mode_span else ""
-        href = title_el.get("href", "") if title_el else ""
+        href = str(title_el.get("href", "")) if title_el else ""
 
         jobs.append(
             NormalizedJob(

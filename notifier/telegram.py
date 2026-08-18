@@ -9,8 +9,7 @@ TELEGRAM_MAX_MESSAGE_LENGTH = 4096
 
 def _entries(jobs: list[NormalizedJob]) -> list[str]:
     return [
-        f"{i}. {job.title} — {job.company} ({job.location})\n   {job.url}"
-        for i, job in enumerate(jobs, 1)
+        f"{i}. {job.title} — {job.company} ({job.location})\n   {job.url}" for i, job in enumerate(jobs, 1)
     ]
 
 

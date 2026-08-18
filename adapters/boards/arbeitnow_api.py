@@ -45,9 +45,7 @@ def fetch_jobs(source_config: dict) -> list[NormalizedJob]:
 
 
 def _search(term: str) -> str:
-    response = get_with_retry(
-        SEARCH_API_URL, params={"page": 1, "search": term, "sort_by": "relevance"}
-    )
+    response = get_with_retry(SEARCH_API_URL, params={"page": 1, "search": term, "sort_by": "relevance"})
     return response.json()["data"]
 
 
@@ -64,7 +62,7 @@ def _parse_search_fragment(html: str, source_id: str) -> list[NormalizedJob]:
                 source_id=source_id,
                 title=title_el.get_text(strip=True) if title_el else "",
                 company=company_el.get_text(strip=True) if company_el else "",
-                url=card.get("data-link", ""),
+                url=str(card.get("data-link", "")),
                 location=location_el.get_text(strip=True) if location_el else "",
                 description="",
             )

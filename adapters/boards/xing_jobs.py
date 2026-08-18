@@ -59,7 +59,7 @@ def _parse_search_page(html: str, source_id: str) -> list[NormalizedJob]:
         company_el = card.select_one('p[class*="Company"]')
         location_el = card.select_one('div[class*="multi-location-display-styles__Container"]')
         link_el = card.find("a", href=True)
-        href = link_el["href"] if link_el else ""
+        href = str(link_el["href"]) if link_el else ""
         # Most cards link to XING's own /jobs/<slug>-<id> detail page. A minority
         # ("Externes Job-Angebot") link straight out to a partner site (e.g.
         # jobware.de) with an already-absolute URL - kept as-is since those carry
@@ -139,7 +139,7 @@ def _title_matches(title: str, terms: list[str]) -> bool:
 def _fetch_description_and_country(url: str) -> tuple[str, str]:
     response = get_with_retry(url, headers=HEADERS)
     soup = BeautifulSoup(response.text, "html.parser")
-    desc_el = soup.find(attrs={"data-testid": "expandable-content"})
+    desc_el = soup.find(attrs={"data-testid": "expandable-content"})  # type: ignore[call-overload]
     # Raw inner HTML, not get_text() - keeps <li>/<ul> bullet-point structure intact
     # for pipeline/classify_language.py's HTML-tag clause boundary.
     description = desc_el.decode_contents() if desc_el else ""

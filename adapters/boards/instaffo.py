@@ -107,7 +107,7 @@ def _fetch_job(url: str, source_id: str) -> NormalizedJob | None:
     posting = None
     for tag in soup.find_all("script", type="application/ld+json"):
         try:
-            data = json.loads(tag.string)
+            data = json.loads(str(tag.string))
         except (json.JSONDecodeError, TypeError):
             continue
         if data.get("@type") == "JobPosting":

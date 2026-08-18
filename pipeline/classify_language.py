@@ -71,7 +71,8 @@ def is_german_required(job: NormalizedJob) -> bool:
 def split_by_language(
     jobs: list[NormalizedJob],
 ) -> tuple[list[NormalizedJob], list[NormalizedJob]]:
-    german, english = [], []
+    german: list[NormalizedJob] = []
+    english: list[NormalizedJob] = []
     for job in jobs:
         (german if is_german_required(job) else english).append(job)
     return german, english

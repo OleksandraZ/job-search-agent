@@ -66,7 +66,7 @@ def _parse_listing_page(html: str, source_id: str) -> list[NormalizedJob]:
         # ends up with doubled commas ("London,, United Kingdom,,").
         location = ", ".join(b.rstrip(",").strip() for b in badges[:-1]) if len(badges) > 1 else ""
         work_mode = badges[-1] if badges else ""
-        href = link_el.get("href", "") if link_el else ""
+        href = str(link_el.get("href", "")) if link_el else ""
 
         jobs.append(
             NormalizedJob(

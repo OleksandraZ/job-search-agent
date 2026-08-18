@@ -36,9 +36,7 @@ def fetch_jobs(source_config: dict) -> list[NormalizedJob]:
         try:
             # size=100 comfortably covers every real term's result count seen so
             # far (max ~100) in one request - no pagination needed.
-            response = get_with_retry(
-                SEARCH_API_URL, params={"was": term, "size": 100}, headers=API_HEADERS
-            )
+            response = get_with_retry(SEARCH_API_URL, params={"was": term, "size": 100}, headers=API_HEADERS)
         except httpx.HTTPError as exc:
             logger.warning("bundesagentur search for %r failed: %s", term, exc)
             continue
@@ -65,9 +63,7 @@ def _parse_search_response(data: dict, source_id: str) -> list[NormalizedJob]:
         # Keep only the German location(s) of a multi-site posting, and drop the
         # job entirely if none of its locations are in Germany.
         de_locations = [
-            loc
-            for loc in raw.get("stellenlokationen", [])
-            if loc.get("adresse", {}).get("land") == GERMANY
+            loc for loc in raw.get("stellenlokationen", []) if loc.get("adresse", {}).get("land") == GERMANY
         ]
         if not de_locations:
             continue
@@ -128,7 +124,7 @@ def _fetch_description(url: str) -> str:
     soup = BeautifulSoup(response.text, "html.parser")
     for tag in soup.find_all("script", type="application/ld+json"):
         try:
-            data = json.loads(tag.string)
+            data = json.loads(str(tag.string))
         except (json.JSONDecodeError, TypeError):
             continue
         if data.get("@type") == "JobPosting":

@@ -14,8 +14,12 @@ from pipeline.location import is_munich, is_remote
 
 def _job(location: str = "", description: str = "") -> NormalizedJob:
     return NormalizedJob(
-        source_id="test", title="Test Engineer", company="Test GmbH", url="https://example.test/1",
-        location=location, description=description,
+        source_id="test",
+        title="Test Engineer",
+        company="Test GmbH",
+        url="https://example.test/1",
+        location=location,
+        description=description,
     )
 
 

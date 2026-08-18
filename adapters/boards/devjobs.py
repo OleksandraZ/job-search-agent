@@ -74,7 +74,7 @@ def _parse_search_page(html: str, source_id: str) -> list[NormalizedJob]:
         # the full description - for title-matched jobs the adapter fetches the
         # detail page (below) for the full description instead.
         snippet_el = card.select_one("p.line-clamp-2")
-        href = card.get("href", "")
+        href = str(card.get("href", ""))
 
         jobs.append(
             NormalizedJob(

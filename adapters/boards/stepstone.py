@@ -56,7 +56,7 @@ def _parse_search_page(html: str, source_id: str) -> list[NormalizedJob]:
         # mid-sentence - real text, usable as a fallback, but detail pages
         # (fetched below for title-matched jobs) give the full description.
         snippet_el = card.select_one('[data-at="jobcard-content"]')
-        href = title_el.get("href", "") if title_el else ""
+        href = str(title_el.get("href", "")) if title_el else ""
 
         jobs.append(
             NormalizedJob(

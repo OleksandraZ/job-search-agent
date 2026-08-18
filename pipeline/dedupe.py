@@ -10,7 +10,7 @@ DB_PATH = Path(__file__).parent.parent / "storage" / "jobs.db"
 
 
 def _job_id(job: NormalizedJob) -> str:
-    return hashlib.sha256(f"{job.source_id}:{job.url}".encode("utf-8")).hexdigest()
+    return hashlib.sha256(f"{job.source_id}:{job.url}".encode()).hexdigest()
 
 
 def init_db(db_path: Path = DB_PATH) -> None:
