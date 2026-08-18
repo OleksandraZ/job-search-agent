@@ -1,0 +1,206 @@
+meta:
+  usage: >
+    Classifies by the language the role REQUIRES, not the language the posting is
+    written in (see job_search_agent_plan.md §8). German bucket = one of
+    german_required_patterns matches somewhere in the job description, and isn't
+    immediately followed by an optional_disclaimer_patterns phrase that applies to
+    German itself (see pipeline/classify_language.py for the exact logic). English
+    bucket = everything else.
+  validated_against: >
+    Patterns were checked against real GermanTechJobs RSS description text (not
+    written from assumptions) before being committed here — see
+    job_search_agent_phase4 memory for the false-positive cases this ruled out
+    (e.g. "Deutschkenntnisse sind von Vorteil" = explicitly optional, despite
+    containing the word "Deutschkenntnisse").
+
+# All patterns are case-insensitive regexes matched against the raw job description.
+# Gaps between words use [^.;<]{0,N} rather than \s* or .{0,N} - bounded to stay
+# within one clause/sentence and never cross an HTML tag boundary (descriptions are
+# HTML with <li> bullet points; unbounded gaps previously let a disclaimer in an
+# unrelated adjacent bullet point falsely apply to a German-requirement match in a
+# different one).
+german_required_patterns:
+  # Deutsch + CEFR level, either order: "Deutsch (C1)", "Deutsch mind. C1-Niveau",
+  # "Niveau C1", "German C2", "Deutschkenntnisse mindestens auf B2-Niveau". B1/B2 are
+  # included alongside C1/C2 - the plan's own "gute Deutschkenntnisse" example is
+  # roughly B2-equivalent phrasing, so an explicitly stated B-level requirement is the
+  # same kind of signal, just spelled as a CEFR code instead of prose. Gap excludes
+  # ';'/'<' but NOT '.' - German abbreviations like "mind." (mindestens) put a period
+  # between "Deutsch" and the level that isn't a real sentence boundary; the 40-char
+  # cap plus the '<' HTML-tag guard still bound how far this can drift.
+  - "deutsch\\w*[^;<]{0,40}\\b(b1|b2|c1|c2)\\b"
+  - "german\\w*[^;<]{0,40}\\b(b1|b2|c1|c2)\\b"
+  # Deutsch + fluency descriptor, either order (German prose usually leads with the
+  # adjective: "Fließende Deutschkenntnisse", "Verhandlungssichere Deutschkenntnisse")
+  - "(fließend\\w*|verhandlungssicher\\w*)[^.;<]{0,40}deutsch\\w*"
+  - "deutsch\\w*[^.;<]{0,40}(fließend\\w*|verhandlungssicher\\w*)"
+  # \bfluen\w* (not \bfluent\w*) so it also catches "fluency" - a different stem
+  # ("fluency" vs "fluent" diverge at the 6th letter, so \w* after "fluent" can't
+  # reach it) that real englishjobs.de postings use just as often: "fluency in
+  # German and English" - the \b guards against matching inside "influence" or
+  # "confluence", which also contain "fluen" as a substring. See
+  # job_search_agent_phase5 memory.
+  - "\\bfluen\\w*[^.;<]{0,20}german"
+  - "native\\w*[^.;<]{0,20}german"
+  # Native-language requirement
+  - "deutsch\\w*[^.;<]{0,20}mutterspr\\w*"
+  - "mutterspr\\w*[^.;<]{0,20}deutsch\\w*"
+  # "(sehr) gute Deutschkenntnisse" / "gute Deutsch- und Englischkenntnisse" - German
+  # compound words elide the shared suffix, so \w* must tolerate a bare trailing
+  # hyphen ("Deutsch-") as well as the full word ("Deutschkenntnisse")
+  - "gute[srn]?\\s+deutsch\\w*"
+  # Explicit "(required)" tag next to a bare skill mention
+  - "deutschkenntnisse\\s*\\(?\\s*erforderlich"
+  # English-phrased German-skill requirement, either order - found validating against
+  # real DEVjobs.de description text (2026-08-17), which auto-translates German-origin
+  # postings to English and routinely drops the CEFR level/"fluent"/"native" wording
+  # the patterns above depend on: "Good knowledge of German and English.",
+  # "Very good written and spoken German and English skills.", "Excellent spoken and
+  # written proficiency in German and English." None of the existing patterns matched
+  # any of these despite them being real, stated requirements - see
+  # job_search_agent_phase5 memory.
+  - "(?:very\\s+)?(?:good|excellent|strong|solid)\\w*[^.;<]{0,25}(?:knowledge|skills?|proficiency|command)\\w*[^.;<]{0,15}german\\w*"
+  - "german\\w*[^.;<]{0,25}skills?\\b"
+
+# Phrases that, found shortly after a german_required_patterns match (same clause,
+# see DISCLAIMER_WINDOW in pipeline/classify_language.py), mean German itself was
+# being described as optional rather than required - negates that specific match.
+# (If "english"/"englisch" appears before the disclaimer in that same window, the
+# disclaimer is read as applying to English instead, and the German match still
+# counts - "gute Deutschkenntnisse, Englischkenntnisse von Vorteil" is a real German
+# requirement with English merely being the nice-to-have.)
+optional_disclaimer_patterns:
+  - "von\\s+vorteil"
+  - "wünschenswert"
+  - "ein\\s+plus"
+  - "kein\\s+muss"
+  - "optional"
+  # English equivalents - found validating against real DEVjobs.de text: "Fluent
+  # English skills and German as a plus." matches the "fluent...german" required
+  # pattern above (the "fluent" describes English, not German - the words just happen
+  # to fall within the pattern's gap), and without an English disclaimer this posting
+  # was wrongly classified as German-required despite explicitly saying German is
+  # optional. Same same-clause/English-mention-guard logic as the German phrases
+  # above applies here - see job_search_agent_phase5 memory.
+  - "a\\s+plus"
+  - "nice[\\s-]to[\\s-]have"
+  - "desirable"
+  - "not\\s+required"
+  - "not\\s+mandatory"
+
+# Fallback for postings that never explicitly state a language requirement because
+# the whole ad is written in German - real Instaffo and XING postings (2026-08-18)
+# read as pure German prose (a German QA/testautomatisierung job ad, requirements
+# bullets, benefits, all in German) with no "Deutschkenntnisse"/CEFR/native-speaker
+# phrase anywhere, since the platform's own market is German and stating the
+# requirement explicitly would be redundant - both landed in the English bucket
+# despite requiring German just to read the ad. See job_search_agent_phase5 memory.
+# Counted as a stopword-frequency check (pipeline/classify_language.py) rather than
+# another regex phrase, since there's no single phrase to match here - the signal is
+# "this text is German", not "this text mentions a German requirement". Deliberately
+# a closed, unambiguous function-word list (articles/pronouns/prepositions/conjunctions
+# with no English-cognate collision) on both sides, not a general dictionary - keeps
+# false positives low on an English posting that happens to include a German company
+# name or address-footer line, validated against a real English Built In posting
+# (Nomad Digital) scoring 0 German hits out of 266 English hits.
+whole_description_language_signal:
+  german_words:
+    - der
+    - die
+    - das
+    - und
+    - mit
+    - für
+    - ist
+    - sich
+    - eine
+    - einen
+    - einer
+    - werden
+    - wir
+    - auf
+    - von
+    - nicht
+    - oder
+    - auch
+    - sind
+    - du
+    - deine
+    - dein
+    - unser
+    - unsere
+    - zur
+    - zum
+    - dich
+    - im
+    - am
+    - als
+    - bei
+    - des
+    - dem
+    - den
+    - ein
+    - aus
+    - nach
+    - über
+    - durch
+    - kannst
+    - hast
+    - haben
+    - hat
+    - können
+    - dieser
+    - diese
+    - dieses
+    - dir
+    - deinen
+    - deiner
+    - uns
+    - euch
+    - wird
+    - zu
+  english_words:
+    - the
+    - and
+    - with
+    - for
+    - is
+    - are
+    - you
+    - your
+    - we
+    - our
+    - this
+    - that
+    - will
+    - from
+    - have
+    - has
+    - of
+    - to
+    - in
+    - on
+    - as
+    - be
+    - or
+    - an
+    - by
+    - about
+    - team
+    - work
+    - company
+    - join
+    - who
+    - what
+    - when
+    - where
+    - why
+    - how
+    - if
+  # Calibrated against real fetched samples (2026-08-18): 3 pure-German postings
+  # (Instaffo x2, XING) scored a 0.91-0.94 German ratio with 51-132 German hits;
+  # a pure-English posting (Built In) scored 0.00 with 266 English hits. Both
+  # thresholds have wide margin from that split - min_words guards against a short
+  # snippet where a couple of stray German words could spike the ratio.
+  min_german_words: 15
+  min_ratio: 0.6

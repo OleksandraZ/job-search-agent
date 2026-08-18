@@ -1,0 +1,401 @@
+companies:
+- name: FINN
+  url: https://www.finn.com
+- name: Quantum Systems
+  url: https://quantum-systems.com
+- name: Parloa
+  url: https://www.parloa.com
+- name: n8n
+  url: https://n8n.io
+- name: Trade Republic
+  url: https://traderepublic.com
+- name: DeepL
+  url: https://www.deepl.com
+- name: N26
+  url: https://n26.com
+- name: Celonis
+  url: https://www.celonis.com
+- name: Flix
+  url: https://flix.com
+- name: Personio
+  url: https://www.personio.com
+- name: Scalable Capital
+  url: https://de.scalable.capital
+- name: GetYourGuide
+  url: https://www.getyourguide.com
+- name: EGYM
+  url: https://egym.com
+- name: AMBOSS
+  url: https://www.amboss.com
+- name: commercetools
+  url: https://commercetools.com
+- name: Contentful
+  url: https://www.contentful.com
+- name: Staffbase
+  url: https://staffbase.com
+- name: Upvest
+  url: https://upvest.co
+- name: Raisin
+  url: https://www.raisin.com
+- name: Choco
+  url: https://choco.com
+- name: Taktile
+  url: https://taktile.com
+- name: Urban Sports Club
+  url: https://urbansportsclub.com
+- name: Omio
+  url: https://www.omio.com
+- name: Taxfix
+  url: https://taxfix.de
+- name: Solaris
+  url: https://www.solarisgroup.com
+- name: Holidu
+  url: https://www.holidu.com
+- name: Pliant
+  url: https://www.getpliant.com
+- name: Moonfare
+  url: https://www.moonfare.com
+- name: Billie
+  url: https://www.billie.io
+- name: Moss
+  url: https://www.getmoss.com
+- name: Clark
+  url: https://www.clark.de
+- name: Vivid Money
+  url: https://vivid.money
+- name: Getsafe
+  url: https://www.hellogetsafe.com
+- name: ELEMENT
+  url: https://www.element.in
+- name: Hawk AI
+  url: https://hawk.ai
+- name: Payrails
+  url: https://www.payrails.com
+- name: Mondu
+  url: https://www.mondu.ai
+- name: bunch
+  url: https://www.bunch.capital
+- name: Blacklane
+  url: https://www.blacklane.com
+- name: AnyDesk
+  url: https://anydesk.com
+- name: Camunda
+  url: https://camunda.com
+- name: Spryker
+  url: https://spryker.com
+- name: Productsup
+  url: https://www.productsup.com
+- name: Talon.One
+  url: https://www.talon.one
+- name: Shopware
+  url: https://www.shopware.com
+- name: SimScale
+  url: https://www.simscale.com
+- name: Tacto
+  url: https://www.tacto.ai
+- name: osapiens
+  url: https://osapiens.com
+- name: IntegrityNext
+  url: https://www.integritynext.com
+- name: Makersite
+  url: https://makersite.io
+- name: Buynomics
+  url: https://www.buynomics.com
+- name: Sastrify
+  url: https://www.sastrify.com
+- name: Plan A
+  url: https://plana.earth
+- name: ottonova
+  url: https://www.ottonova.de
+- name: gridX
+  url: https://www.gridx.ai
+- name: TWAICE
+  url: https://www.twaice.com
+- name: tado°
+  url: https://www.tado.com
+- name: The Mobility House
+  url: https://www.mobilityhouse.com
+- name: cargo.one
+  url: https://www.cargo.one
+- name: ResearchGate
+  url: https://www.researchgate.net
+- name: parcelLab
+  url: https://parcellab.com
+- name: Seven Senders
+  url: https://sevensenders.com
+- name: WorkMotion
+  url: https://workmotion.com
+- name: Zenjob
+  url: https://www.zenjob.com
+- name: Uberall
+  url: https://uberall.com
+- name: Patient21
+  url: https://www.patient21.com
+- name: Everphone
+  url: https://www.everphone.com
+- name: Grover
+  url: https://www.grover.com
+- name: Helsing
+  url: https://helsing.ai
+- name: NEURA Robotics
+  url: https://neura-robotics.com
+- name: 1KOMMA5°
+  url: https://1komma5.com
+- name: Enpal
+  url: https://www.enpal.com
+- name: Black Forest Labs
+  url: https://blackforestlabs.ai
+- name: STARK
+  url: https://stark-defence.com
+- name: Forto
+  url: https://www.forto.com
+- name: sennder
+  url: https://www.sennder.com
+- name: Sereact
+  url: https://sereact.ai
+- name: Agile Robots
+  url: https://www.agile-robots.com
+- name: Aleph Alpha
+  url: https://aleph-alpha.com
+- name: Flink
+  url: https://www.goflink.com
+- name: Wandelbots
+  url: https://www.wandelbots.com
+- name: RobCo
+  url: https://www.rob.co
+- name: OroraTech
+  url: https://ororatech.com
+- name: Orbem
+  url: https://orbem.ai
+- name: Caresyntax
+  url: https://caresyntax.com
+- name: Ada Health
+  url: https://ada.com
+- name: Isar Aerospace
+  url: https://www.isaraerospace.com
+- name: The Exploration Company
+  url: https://www.exploration.space
+- name: Sunfire
+  url: https://www.sunfire.de
+- name: CMBlu Energy
+  url: https://www.cmblu.com
+- name: Instagrid
+  url: https://instagrid.co
+- name: ENVIRIA
+  url: https://enviria.energy
+- name: air up
+  url: https://www.air-up.com
+- name: KoRo
+  url: https://www.koro.com
+- name: Voltfang
+  url: https://voltfang.de
+- name: Terra One
+  url: https://www.terra.one
+- name: Kraftblock
+  url: https://kraftblock.com
+- name: Tubulis
+  url: https://tubulis.com
+- name: Proxima Fusion
+  url: https://www.proximafusion.com
+- name: Marvel Fusion
+  url: https://marvelfusion.com
+- name: Atruvia AG
+  url: https://www.atruvia.de/
+- name: Provinzial Konzern
+  url: https://www.provinzial.de/
+- name: AXA Konzern AG
+  url: https://www.axa.de/
+- name: Zurich Gruppe Deutschland
+  url: https://www.zurich.de/
+- name: EnBW Energie Baden-Württemberg AG
+  url: https://www.enbw.com/
+- name: Commerzbank AG
+  url: https://www.commerzbank.de/
+- name: BITMARCK-Unternehmensgruppe
+  url: https://www.bitmarck.de/
+- name: Dataport AöR
+  url: https://www.dataport.de/
+- name: Siemens AG
+  url: https://www.siemens.com/de/de.html
+- name: Allianz in Deutschland
+  url: https://www.allianz.de/
+- name: BWI GmbH
+  url: https://www.bwi.de/
+- name: Airbus
+  url: https://www.airbus.com/
+- name: AUDI AG
+  url: https://www.audi.de/
+- name: E.ON
+  url: https://www.eon.com/de.html
+- name: Siemens Energy
+  url: https://www.siemens-energy.com/de/de/home.html
+- name: Finanz Informatik GmbH & Co.KG
+  url: https://www.f-i.de/
+- name: BMW Group
+  url: https://www.bmwgroup.com/
+- name: AEB SE
+  url: https://www.aeb.com/
+- name: SECUINFRA GmbH
+  url: https://www.secuinfra.com/
+- name: Vodafone GmbH
+  url: https://www.vodafone.de/
+- name: BROCKHAUS AG
+  url: https://www.brockhaus-ag.de/
+- name: Bosch Gruppe
+  url: https://www.bosch.de/
+- name: Bundesagentur für Arbeit
+  url: https://www.arbeitsagentur.de/
+- name: TauRes Gesellschaft für Investmentberatung mbH
+  url: https://taures.de/
+- name: Bayernwerk
+  url: https://www.bayernwerk.de/
+- name: HanseWerk-Gruppe
+  url: https://www.hansewerk.com/
+- name: TenneT Deutschland
+  url: https://www.tennet.eu/de/
+- name: Hamburger Sparkasse AG (Haspa)
+  url: https://www.haspa.de/
+- name: Westnetz GmbH
+  url: https://www.westnetz.de/
+- name: AVEDO
+  url: https://www.avedo.de/
+- name: Kassenärztliche Vereinigung Baden-Württemberg
+  url: https://www.kvbawue.de/
+- name: ZEISS
+  url: https://www.zeiss.de/
+- name: Landschaftsverband Rheinland
+  url: https://www.lvr.de/
+- name: Syna GmbH
+  url: https://www.syna.de/
+- name: Swiss Life Deutschland
+  url: https://www.swisslife.de/
+- name: enmore consulting ag
+  url: https://www.enmore.de/
+- name: R+V Versicherung
+  url: https://www.ruv.de/
+- name: profine GmbH
+  url: https://www.profine-group.com/
+- name: DZ BANK AG / Deutsche Zentral-Genossenschaftsbank
+  url: https://www.dzbank.de/
+- name: LVM Versicherung
+  url: https://www.lvm.de/
+- name: Techniker Krankenkasse
+  url: https://www.tk.de/
+- name: Sparkasse Vorpommern
+  url: https://www.spk-vorpommern.de/
+- name: SachsenEnergie AG
+  url: https://www.sachsenenergie.de/
+- name: AOK - Die Gesundheitskasse
+  url: https://www.aok.de/
+- name: Deutsche Leasing Gruppe
+  url: https://www.deutsche-leasing.com/
+- name: Avacon AG
+  url: https://www.avacon.de/
+- name: GROB-WERKE GmbH & Co. KG
+  url: https://www.grobgroup.com/
+- name: VR Bank Augsburg-Ostallgäu eG
+  url: https://www.vrbank-augsburg-ostallgaeu.de/
+- name: KPMG AG Wirtschaftsprüfungsgesellschaft
+  url: https://kpmg.com/de/de.html
+- name: verticus Finanzmanagement AG
+  url: https://www.verticus.ag/
+- name: Lufthansa Technik AG
+  url: https://www.lufthansa-technik.com/
+- name: Stadtwerke Potsdam GmbH
+  url: https://www.swp-potsdam.de/
+- name: DEVK
+  url: https://www.devk.de/
+- name: Elektro Breitling GmbH
+  url: https://www.elektro-breitling.de/
+- name: Dräger
+  url: https://www.draeger.com/de_de/Home
+- name: EVOMOTIV
+  url: https://www.evomotiv.com/
+- name: Maschinenfabrik Reinhausen GmbH
+  url: https://www.reinhausen.com/
+- name: Sparkasse Pforzheim Calw
+  url: https://www.sparkasse-pforzheim-calw.de/
+- name: VerbundVolksbank OWL eG
+  url: https://www.verbundvolksbank-owl.de/
+- name: FAIR DOCTORS Gruppe
+  url: https://fair-doctors.de/
+- name: pme Familienservice GmbH
+  url: https://www.familienservice.de/
+- name: PraeLux
+  url: https://praelux.de/
+- name: m&i-Klinikgruppe Enzensberg
+  url: https://www.enzensberg.de/
+- name: koenig.solutions
+  url: https://www.koenig.solutions/
+- name: Dorow Clinic
+  url: https://dorow-clinic.de/
+- name: GOLDBECK GmbH
+  url: https://www.goldbeck.de/
+- name: LEONHARD WEISS GmbH & Co. KG
+  url: https://www.leonhard-weiss.de/
+- name: Bayer (Deutschland)
+  url: https://www.bayer.com/de/de/
+- name: STRABAG SE
+  url: https://www.strabag.com/
+- name: XXXLutz Deutschland
+  url: https://www.xxxlutz.de/
+- name: Roche in Deutschland
+  url: https://www.roche.de/
+- name: Agentur für Haushaltshilfe GmbH
+  url: https://www.agentur-fuer-haushaltshilfe.de/
+- name: ACTIEF Personalmanagement GmbH
+  url: https://www.actief-personal.de/
+- name: Amadeus Fire AG
+  url: https://www.amadeus-fire.de/
+- name: TÜV SÜD
+  url: https://www.tuvsud.com/de-de/
+- name: AllDent Zahnzentrum
+  url: https://www.alldent-zahnzentrum.de/
+- name: Graf Recke Stiftung
+  url: https://www.graf-recke-stiftung.de/
+- name: POLYGON Deutschland GmbH
+  url: https://www.polygongroup.com/de-DE/
+- name: Pflegedienst Kremer
+  url: https://pflegedienst-kremer.de/
+- name: DIS AG
+  url: https://www.dis-ag.com/
+- name: Johanniter Seniorenhäuser GmbH
+  url: https://www.johanniter.de/johanniter-seniorenhaeuser/
+- name: Adecco Personaldienstleistungen GmbH
+  url: https://www.adecco.de/
+- name: Neukirchener Erziehungsverein
+  url: https://www.neukirchener.de/
+- name: Terminal for Kids gGmbH
+  url: https://www.terminalforkids.de/
+- name: Kaiserswerther Diakonie
+  url: https://www.kaiserswerther-diakonie.de/
+- name: Rail Unit GmbH
+  url: https://rail-unit.de/
+- name: Klinikum Siegen
+  url: https://www.klinikum-siegen.de/
+- name: Schülerhilfe Deutschland
+  url: https://www.schuelerhilfe.de/
+- name: PASSAUER WOLF Medizin fürs Leben
+  url: https://www.passauerwolf.de/
+- name: Office Events P & B GmbH
+  url: https://www.office-events.de/
+- name: ep group
+  url: https://www.ep-group.de/
+- name: Fürst Gruppe
+  url: https://www.fuerst-gruppe.de/
+- name: Atemzug Intensivpflege Burkart GmbH
+  url: https://www.atemzug.online/
+- name: TEMPTON
+  url: https://www.tempton.de/
+- name: tristar GmbH
+  url: https://www.tristar-hotelgruppe.de/
+- name: FitX
+  url: https://www.fitx.de/
+- name: Maritim Hotels
+  url: https://www.maritim.de/
+- name: Aramark
+  url: https://www.aramark.de/
+- name: Leonardo Hotels
+  url: https://www.leonardo-hotels.de/
+- name: Fitness First Germany GmbH
+  url: https://www.fitnessfirst.de/

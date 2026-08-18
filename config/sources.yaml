@@ -1,0 +1,1049 @@
+meta:
+  source_of_this_list: germany_job_boards_qa_sdet.json (user-supplied research)
+  total_platforms: 118
+  enabled_count: 118
+  priority_legend:
+    '1': Most relevant — monitor continuously and create alerts
+    '2': Highly relevant — check several times per week
+    '3': Useful secondary source — check weekly
+    '4': Low-yield, duplicate-heavy, regional or niche — check occasionally
+  note: All 118 sources enabled per user request. Priority field retained for triage/build-order purposes,
+    not for filtering.
+  adapter_legend:
+    arbeitnow_api: Real, working adapter (adapters/boards/arbeitnow_api.py). Built and verified.
+    html_scrape: Real, working adapter (adapters/boards/html_scrape.py). Currently only used by
+      germantechjobs_testing_germany, via its RSS feed - despite the generic-sounding name, this
+      module is not (yet) a generic scraper; see CLAUDE.md.
+    stepstone: Real, working adapter (adapters/boards/stepstone.py). Built and verified.
+    devjobs: Real, working adapter (adapters/boards/devjobs.py). Built and verified.
+    testdevjobs: Real, working adapter (adapters/boards/testdevjobs.py). Built and verified.
+    wearedevelopers: Real, working adapter (adapters/boards/wearedevelopers.py). Built and verified.
+    englishjobsde: Real, working adapter (adapters/boards/englishjobsde.py). Built and verified.
+    builtin: Real, working adapter (adapters/boards/builtin.py). Built and verified.
+    xing_jobs: Real, working adapter (adapters/boards/xing_jobs.py). Built and verified.
+    get_in_it: Real, working adapter (adapters/boards/get_in_it.py). Built and verified.
+    instaffo: Real, working adapter (adapters/boards/instaffo.py). Built and verified.
+    bundesagentur: Real, working adapter (adapters/boards/bundesagentur.py). Built and verified.
+    json_api_todo: Automated classification pass (2026-08-17) found a real JSON API response at
+      this URL. No adapter built yet - see the add-board-source skill.
+    html_scrape_todo: Automated pass found real server-rendered HTML with visible job-search
+      content (not a bare SPA shell). No adapter built yet - likely scrapeable with BeautifulSoup,
+      but re-verify per add-board-source skill step 1 before building, since the check was a page
+      fetch only (no pagination/search-flow/login-wall verification).
+    js_rendered_todo: Automated pass found a client-rendered SPA shell (little/no visible text
+      despite substantial HTML/JS payload). Needs the same investigation as GermanTechJobs did -
+      check for a real API behind the site's own search, or an RSS/feed alternative, before
+      reaching for a browser-automation dependency.
+    anti_bot_avoid: Blocked (HTTP 401/403/429/999) during the automated pass, or known to be
+      heavily anti-scraping regardless of what an unauthenticated request returns (linkedin_jobs -
+      its plain GET returns only cookie-consent boilerplate, not real listings; per job_search_agent_plan.md
+      §4 Tier 3, use an alternate channel like an email job alert instead of direct scraping).
+    broken_todo: URL was unreachable (DNS failure, connection/read timeout) during the automated
+      pass. May be a dead/renamed domain, or a transient network issue - re-check before assuming
+      the source is gone.
+    ambiguous_todo: Automated pass couldn't confidently classify this one (e.g. empty response
+      with no clear SPA/anti-bot signal). Needs manual investigation (add-board-source skill step 1)
+      before building.
+sources:
+- id: linkedin_jobs
+  name: LinkedIn Jobs
+  url: https://www.linkedin.com/jobs/
+  priority: 1
+  category: general
+  enabled: true
+  adapter: anti_bot_avoid
+  notes: Highest overall volume for German QA/SDET roles, international employers, recruiter outreach,
+    and granular alerts.
+- id: stepstone_germany
+  name: StepStone Germany
+  url: https://www.stepstone.de/
+  priority: 1
+  category: general
+  enabled: true
+  adapter: stepstone
+  notes: Major source for permanent mid-level and senior QA roles at established German employers.
+    Real server-rendered HTML (data-testid="job-item" cards), queried once per
+    title_match_terms entry via /jobs/<term-slug> (spaces -> hyphens, URL-quoted -
+    verified against multi-word and umlaut terms). Listing cards carry a real but
+    short (~300 char, often mid-sentence-truncated) description snippet; for
+    title-matched jobs the adapter additionally fetches the job's detail page
+    (the "-inline.html" URL from the listing card) for the full description -
+    that fetch requires a Referer header or the connection gets reset
+    (HTTP/2 INTERNAL_ERROR) by StepStone's bot detection, no other anti-bot
+    friction observed. location is StepStone's own structured city field (can be
+    multi-city for postings open to several offices).
+- id: indeed_germany
+  name: Indeed Germany
+  url: https://de.indeed.com/
+  priority: 1
+  category: general
+  enabled: true
+  adapter: anti_bot_avoid
+  notes: Broad aggregator covering employer career pages, agencies, and both English- and German-language
+    QA vacancies.
+- id: devjobs_germany_qa_engineer
+  name: DEVjobs Germany – QA Engineer
+  url: https://en.devjobs.de/jobs/qa-engineer
+  priority: 1
+  category: tech
+  enabled: true
+  adapter: devjobs
+  notes: Tech-specific QA search with stack, salary, English-only, seniority, and work-model filters.
+    Real server-rendered HTML, but requires a browser User-Agent header (default
+    httpx UA gets a 403). No free-text search - /jobs/search only accepts
+    jobProfessions from a small fixed taxonomy (every title_match_terms entry was
+    tested as a slug; only "qa-engineer" and "test-automation-engineer" are real
+    categories), so the adapter crawls those two paginated categories in full and
+    relies on filter_by_title downstream, same approach as GermanTechJobs' RSS.
+    Listing cards carry a short real snippet; title-matched jobs get a full
+    description from the detail page's job-body div. Auto-translates German-origin
+    postings to English, which surfaced a real gap in
+    config/language_rules.yaml's German-requirement/disclaimer patterns - fixed
+    there (see job_search_agent_phase5 memory), not just here.
+- id: germantechjobs_testing_germany
+  name: GermanTechJobs – Testing Germany
+  url: https://germantechjobs.de/en/jobs/Tester/all
+  rss_url: https://germantechjobs.de/rss
+  priority: 1
+  category: tech
+  enabled: true
+  adapter: html_scrape
+  notes: German tech board with transparent stacks and frequent salary ranges; highly relevant to automation
+    roles. The Tester/all page is a client-rendered React app with no data in the raw HTML, so the
+    adapter reads the site's RSS feed instead (unfiltered by category — narrowed by title_match_terms).
+- id: testdevjobs_remote_germany
+  name: TestDevJobs – Remote Germany
+  url: https://testdevjobs.com/location/remote-germany/
+  path: /location/remote-germany/
+  priority: 1
+  category: qa-specialist
+  enabled: true
+  adapter: testdevjobs
+  notes: Testing-specific board covering QA, SDET, Playwright, pytest, API and automation vacancies available
+    in Germany. Real server-rendered HTML, no anti-bot friction, no special headers
+    needed. No free-text search - this is a fixed, pre-filtered listing page
+    (the `path` field, paginated) rather than a query endpoint - despite the "remote"
+    in the URL it actually lists both Fully Remote and On-Site Germany postings,
+    distinguished by a real structured work-mode badge on each card, folded into
+    NormalizedJob.location (not description) since it's source-provided structured
+    data, same trust level as Arbeitnow's "Fully Remote" location values.
+- id: wearedevelopers_jobs
+  name: WeAreDevelopers Jobs
+  url: https://www.wearedevelopers.com/en/jobs
+  priority: 1
+  category: tech
+  enabled: true
+  adapter: wearedevelopers
+  notes: Strong European developer board with active German software-testing and automation roles.
+    A large multi-source aggregator (Adzuna/Indeed/Xing/etc. under the hood), but
+    every page is also published as clean Markdown purpose-built for machine
+    consumption (append ".md" to any URL - see /agents.md) - no HTML parsing needed.
+    /jobs.md?country=DE&q=<term> is a real working keyword search, queried once per
+    title_match_terms entry (page 1/~25 results only - some terms alone return 200+
+    results, breadth across 23 terms plus filter_by_title downstream covers it
+    without deep pagination). Real structured location field (city or
+    "Germany (Remote available)"). Detail pages are plain markdown, not HTML, so
+    there's no <li>/<ul> structure for classify_language.py's HTML-tag clause
+    boundary to key off - "." and ";" alone still bound each clause there.
+- id: arbeitnow_qa_jobs
+  name: Arbeitnow – QA Jobs
+  url: https://www.arbeitnow.com/jobs/qa
+  priority: 1
+  category: english-international
+  enabled: true
+  adapter: arbeitnow_api
+  notes: English-friendly Germany board with remote, relocation, visa and salary filters and a direct
+    QA search. The documented job-board-api has no working search/tags filter and only returns the
+    newest ~175 postings, so the adapter uses the site's internal search endpoint (/api/jobs) instead,
+    queried once per title_match_terms entry (injected by agents/munich_local.py).
+- id: englishjobsde
+  name: EnglishJobs.de
+  url: https://englishjobs.de/
+  priority: 1
+  category: english-international
+  enabled: true
+  adapter: englishjobsde
+  notes: Dedicated search engine for positions in Germany where German is not required.
+    Despite the site's own positioning, real search results do include jobs stating
+    a German requirement (e.g. "Requires ... fluency in German and English") - don't
+    skip the language classifier for this source. Real server-rendered HTML
+    (talent.com-powered, /jobs/<term_with_underscores> search, one query per
+    title_match_terms entry, page 1/~20 results only). It's a clickout-tracked
+    aggregator - "View job" redirects to whatever arbitrary external site actually
+    posted it, with no consistent structure to fetch a fuller description from, so
+    the adapter uses the real (not placeholder) ~250-750 char excerpt already in the
+    search-result snippet rather than attempting a detail-page fetch, same approach
+    as GermanTechJobs' RSS. Fixed a title-extraction bug where BeautifulSoup's
+    get_text(strip=True)/get_text(" ", strip=True) both corrupted titles containing
+    <em>-highlighted search terms (e.g. "QA/QC" became "QAQC" or "QA /QC") - see
+    job_search_agent_phase5 memory.
+- id: built_in_qa_germany
+  name: Built In – QA Germany
+  url: https://builtin.com/jobs/eu/germany/dev-engineering/search/qa
+  priority: 1
+  category: tech
+  enabled: true
+  adapter: builtin
+  notes: Current international tech listings with useful stack descriptions, including Playwright, API
+    and backend QA. Real server-rendered HTML, no anti-bot friction. No working
+    free-text search - every title_match_terms entry was tested as both a
+    "/search/<slug>" path and a "?q=" query param; "/search/qa" (this URL) is the
+    only real, populated category, other slugs fall back to an unrelated generic
+    listing or return 0, and "?q=" is silently ignored (identical results with or
+    without it). So the adapter crawls this one category in full (paginated, ~100
+    jobs) and relies on filter_by_title downstream, same approach as
+    GermanTechJobs' RSS. Real structured location + work-mode field ("Hybrid" /
+    "In-Office" / "In-Office or Remote" / etc., sometimes "N Locations" instead of a
+    city for multi-site postings) folded together into NormalizedJob.location.
+    Title-matched jobs get a full description from the detail page's
+    div.job-post-item.
+- id: xing_jobs
+  name: XING Jobs
+  url: https://www.xing.com/jobs
+  priority: 1
+  category: general
+  enabled: true
+  adapter: xing_jobs
+  notes: Real server-rendered HTML at /jobs/search?keywords=<term> - confirmed real
+    free-text search (results diff per term, unlike the devjobs/testdevjobs/builtin
+    fixed-taxonomy trap). Structured multi-city location field (cleaned of a "+ N
+    weitere" overflow suffix). Cards mostly link to XING's own /jobs/<slug>-<id>
+    detail page (full description via [data-testid=expandable-content]); a minority
+    ("Externes Job-Angebot") link straight to a partner site instead and are left
+    with description="". robots.txt disallows /jobs/search for generic crawlers but
+    has an explicit allow block for named AI-agent bots (ClaudeBot, Claude-User,
+    GPTBot, PerplexityBot, ...) - user approved (2026-08-18) identifying honestly as
+    Claude-User to fall under that grant rather than spoofing a browser UA against a
+    path disallowed for anonymous scrapers; see adapters/boards/xing_jobs.py's
+    HEADERS comment.
+- id: get_in_it
+  name: get in IT
+  url: https://www.get-in-it.de/jobsuche?thematicPriority=24
+  priority: 1
+  category: tech
+  enabled: true
+  adapter: get_in_it
+  notes: Next.js site with real structured job data embedded server-side in a
+    __NEXT_DATA__ JSON script tag (no HTML-selector scraping needed). No free-text
+    search - the filter schema has no keyword field at all, and a ?keywords=/?q=
+    query param is silently ignored (parsed into the Next.js route but never reaches
+    the job list). Real filtering uses the `thematicPriority` facet instead; id 24 is
+    "Quality Assurance" (~100 real QA-tagged jobs out of ~3610 total). Pagination past
+    the first ~39 is client-side only (a "load more" button, no URL param changes the
+    SSR result) - accepted as a partial-coverage limitation, same tradeoff class as
+    other single-listing-page sources. Full description comes from each title-matched
+    job's detail page, also via __NEXT_DATA__ (job.content, raw HTML). Deliberately
+    does NOT fold the listing's homeOffice boolean into location as a remote signal -
+    a real homeOffice=true posting turned out to mean occasional/negotiable home
+    office, not full remote (same "sounds remote but isn't" trap as TestDevJobs'
+    "remote-first"). Structured location has real addressCountry=DE in its JSON-LD -
+    Germany-only, unlike XING's DACH-wide scope, so no country filter needed here.
+- id: instaffo_qa_engineer
+  name: Instaffo – QA Engineer
+  url: https://jobs.instaffo.com/en/browsejobs/qa-engineer
+  priority: 1
+  category: tech
+  enabled: true
+  adapter: instaffo
+  notes: The /en/browsejobs/qa-engineer listing page is a pure client-rendered SPA
+    (no embedded job data at all) and robots.txt disallows /api/ for every crawler
+    with no named-bot exception (unlike XING) - so the internal listing API isn't an
+    option. Individual job detail pages ARE server-rendered with a real schema.org
+    JobPosting JSON-LD block (title/company/jobLocation/description all structured).
+    The adapter crawls the sitewide /sitemap-jobs.xml instead (not disallowed,
+    ~1958 unique jobs across all categories, no per-category sitemap exists),
+    pre-filters using each URL's slug (rough title text, umlaut-normalized) against
+    title_match_terms with the same substring check filter_by_title applies
+    downstream, and only fetches the handful of detail pages that survive.
+- id: bundesagentur_für_arbeit_jobsuche
+  name: Bundesagentur für Arbeit Jobsuche
+  url: https://www.arbeitsagentur.de/jobsuche/
+  priority: 1
+  category: official
+  enabled: true
+  adapter: bundesagentur
+  notes: The jobsuche/ listing page itself is a client-rendered Angular app, but it
+    uses an official, documented public API (https://jobsuche.api.bund.dev/) for
+    search - real free-text search via ?was=<term>, confirmed the frontend's own
+    bundled config.js points at /pc/v6/jobs (not v4, which the docs/older examples
+    reference) with the well-known public API key "jobboerse-jobsuche" (also the
+    OIDC client id in that same config.js - not a secret). The API's own dedicated
+    job-detail endpoint (/pc/v4/jobdetails) 404s on every real reference number
+    tried, so descriptions are fetched from the human-facing
+    /jobsuche/jobdetail/<referenznummer> page instead, which is server-rendered with
+    a real schema.org JobPosting JSON-LD block (works the same for both normal and
+    "Chiffre"/anonymized-employer listings). Not exclusively Germany - a small
+    fraction of real results were Luxembourg/Romania-based - so, like XING, jobs
+    with no German-located stellenlokation are dropped (cheaper here since the
+    country is already in the search API's own response, no detail-page fetch
+    needed to check).
+- id: glassdoor_germany_jobs
+  name: Glassdoor Germany Jobs
+  url: https://www.glassdoor.de/Job/index.htm
+  priority: 2
+  category: general
+  enabled: true
+  adapter: anti_bot_avoid
+  notes: Useful combination of German vacancies, salary signals, interview reports and employer reviews.
+- id: jobware
+  name: Jobware
+  url: https://www.jobware.de/
+  priority: 2
+  category: general
+  enabled: true
+  adapter: js_rendered_todo
+  notes: Established German board for specialists and professionals, including IT and test engineering.
+- id: stellenanzeigende
+  name: stellenanzeigen.de
+  url: https://www.stellenanzeigen.de/
+  priority: 2
+  category: general
+  enabled: true
+  adapter: html_scrape_todo
+  notes: Broad German board with good coverage of SMEs and employers outside the largest technology hubs.
+- id: meinestadtde_jobs
+  name: meinestadt.de Jobs
+  url: https://jobs.meinestadt.de/
+  priority: 2
+  category: general
+  enabled: true
+  adapter: anti_bot_avoid
+  notes: Very large local German database, useful for Munich-area and regional employers.
+- id: kimeta
+  name: Kimeta
+  url: https://www.kimeta.de/
+  priority: 2
+  category: aggregator
+  enabled: true
+  adapter: html_scrape_todo
+  notes: Large German job-search engine indexing boards and direct employer career pages.
+- id: joblift_germany
+  name: Joblift Germany
+  url: https://joblift.de/
+  priority: 2
+  category: aggregator
+  enabled: true
+  adapter: anti_bot_avoid
+  notes: German aggregator useful for discovering listings outside the main boards.
+- id: wellfound_qa_germany
+  name: Wellfound – QA Germany
+  url: https://wellfound.com/role/l/qa-engineer/germany
+  priority: 2
+  category: startup
+  enabled: true
+  adapter: html_scrape_todo
+  notes: Startup-focused QA search with more English-first companies and sometimes direct hiring-manager
+    access.
+- id: berlin_startup_jobs
+  name: Berlin Startup Jobs
+  url: https://berlinstartupjobs.com/
+  priority: 2
+  category: startup
+  enabled: true
+  adapter: html_scrape_todo
+  notes: High-quality source for English-speaking startup and scale-up roles, including remote jobs available
+    elsewhere in Germany.
+- id: startupjobs_qa_engineer
+  name: Startup.jobs – QA Engineer
+  url: https://startup.jobs/roles/qa-engineer
+  priority: 2
+  category: startup
+  enabled: true
+  adapter: anti_bot_avoid
+  notes: International startup aggregator with dedicated QA search and remote/hybrid filters.
+- id: munich_startup_jobs
+  name: Munich Startup Jobs
+  url: https://www.munich-startup.de/jobs/
+  priority: 2
+  category: startup
+  enabled: true
+  adapter: html_scrape_todo
+  notes: Official Munich startup ecosystem job board; QA roles are irregular but locally relevant.
+- id: remote_rocketship_qa_europe
+  name: Remote Rocketship – QA Europe
+  url: https://www.remoterocketship.com/country/europe/jobs/qa-engineer/
+  priority: 2
+  category: remote
+  enabled: true
+  adapter: anti_bot_avoid
+  notes: Large remote QA aggregation with experience-level and skill signals; verify Germany hiring eligibility.
+- id: relocateme
+  name: Relocate.me
+  url: https://relocate.me/
+  priority: 2
+  category: english-international
+  enabled: true
+  adapter: html_scrape_todo
+  notes: International technology vacancies from employers accustomed to relocation and English-speaking
+    candidates.
+- id: make_it_in_germany_job_listings
+  name: Make it in Germany – Job Listings
+  url: https://www.make-it-in-germany.com/en/working-in-germany/job-listings
+  priority: 2
+  category: official
+  enabled: true
+  adapter: js_rendered_todo
+  notes: Official federal portal for international professionals seeking work in Germany.
+- id: eures
+  name: EURES
+  url: https://eures.europa.eu/index_en
+  priority: 2
+  category: official
+  enabled: true
+  adapter: html_scrape_todo
+  notes: Official EU mobility portal with verified jobs and cross-border employment information.
+- id: golem_jobs
+  name: Golem Jobs
+  url: https://jobs.golem.de/
+  priority: 2
+  category: tech
+  enabled: true
+  adapter: html_scrape_todo
+  notes: German IT job board connected to a major technology publication.
+- id: heise_jobs
+  name: heise Jobs
+  url: https://jobs.heise.de/
+  priority: 2
+  category: tech
+  enabled: true
+  adapter: html_scrape_todo
+  notes: German technology and engineering board with software, infrastructure and testing opportunities.
+- id: computerwoche_jobs
+  name: Computerwoche Jobs
+  url: https://jobs.computerwoche.de/
+  priority: 2
+  category: tech
+  enabled: true
+  adapter: html_scrape_todo
+  notes: IT-focused German board suited to enterprise technology and quality-engineering roles.
+- id: it_jobsde
+  name: IT-Jobs.de
+  url: https://www.it-jobs.de/
+  priority: 2
+  category: tech
+  enabled: true
+  adapter: js_rendered_todo
+  notes: Dedicated German IT job board with software testing and automation searches.
+- id: no_fluff_jobs
+  name: No Fluff Jobs
+  url: https://nofluffjobs.com/
+  priority: 2
+  category: tech
+  enabled: true
+  adapter: ambiguous_todo
+  notes: Salary-transparent European technology board; filter for Germany or Germany-compatible remote
+    roles.
+- id: remote_ok
+  name: Remote OK
+  url: https://remoteok.com/
+  priority: 2
+  category: remote
+  enabled: true
+  adapter: html_scrape_todo
+  notes: Large global remote board with software testing roles; eligibility for German residents must
+    be verified.
+- id: we_work_remotely
+  name: We Work Remotely
+  url: https://weworkremotely.com/
+  priority: 2
+  category: remote
+  enabled: true
+  adapter: html_scrape_todo
+  notes: Major global remote board that occasionally carries senior QA and test automation roles.
+- id: remotive
+  name: Remotive
+  url: https://remotive.com/remote-jobs
+  priority: 2
+  category: remote
+  enabled: true
+  adapter: html_scrape_todo
+  notes: Curated remote vacancies with QA and engineering filters; check employment geography carefully.
+- id: eu_remote_jobs
+  name: EU Remote Jobs
+  url: https://euremotejobs.com/
+  priority: 2
+  category: remote
+  enabled: true
+  adapter: anti_bot_avoid
+  notes: European-time-zone remote board more likely than global boards to support Germany-based employment.
+- id: himalayas
+  name: Himalayas
+  url: https://himalayas.app/jobs
+  priority: 2
+  category: remote
+  enabled: true
+  adapter: anti_bot_avoid
+  notes: Remote job database with strong filters for timezone, country eligibility, seniority and skills.
+- id: hays_germany_jobs
+  name: Hays Germany – Jobs
+  url: https://www.hays.de/jobsuche
+  priority: 2
+  category: recruiter
+  enabled: true
+  adapter: html_scrape_todo
+  notes: Major recruiter with permanent and contract IT testing roles, including enterprise environments.
+- id: computer_futures_germany
+  name: Computer Futures Germany
+  url: https://www.computerfutures.com/de-de/stellensuche
+  priority: 2
+  category: recruiter
+  enabled: true
+  adapter: html_scrape_todo
+  notes: Specialist technology recruiter with software QA, automation and engineering vacancies.
+- id: gulp
+  name: GULP
+  url: https://www.gulp.de/
+  priority: 2
+  category: recruiter
+  enabled: true
+  adapter: html_scrape_todo
+  notes: Important German IT and engineering marketplace for permanent and freelance test roles.
+- id: ferchau_jobs
+  name: FERCHAU Jobs
+  url: https://www.ferchau.com/de/de/bewerber/jobs
+  priority: 2
+  category: recruiter
+  enabled: true
+  adapter: js_rendered_todo
+  notes: Large German engineering and IT services employer with many software-test and validation roles.
+- id: brunel_germany_jobs
+  name: Brunel Germany Jobs
+  url: https://www.brunel.net/de-de/jobs
+  priority: 2
+  category: recruiter
+  enabled: true
+  adapter: html_scrape_todo
+  notes: Engineering and technology recruiter with test engineering, embedded and industrial software
+    roles.
+- id: jooble_germany
+  name: Jooble Germany
+  url: https://de.jooble.org/
+  priority: 3
+  category: aggregator
+  enabled: true
+  adapter: anti_bot_avoid
+  notes: Large aggregator that improves coverage but produces duplicates and occasional stale listings.
+- id: adzuna_germany
+  name: Adzuna Germany
+  url: https://www.adzuna.de/
+  priority: 3
+  category: aggregator
+  enabled: true
+  adapter: anti_bot_avoid
+  notes: Job-search aggregator with salary estimates and broad German coverage.
+- id: jobrapido_germany
+  name: JobRapido Germany
+  url: https://de.jobrapido.com/
+  priority: 3
+  category: aggregator
+  enabled: true
+  adapter: html_scrape_todo
+  notes: Broad aggregator; useful for long-tail discovery rather than primary daily monitoring.
+- id: talentcom_germany
+  name: Talent.com Germany
+  url: https://de.talent.com/
+  priority: 3
+  category: aggregator
+  enabled: true
+  adapter: html_scrape_todo
+  notes: Large international aggregator with German listings and substantial duplication.
+- id: careerjet_germany
+  name: Careerjet Germany
+  url: https://www.careerjet.de/
+  priority: 3
+  category: aggregator
+  enabled: true
+  adapter: js_rendered_todo
+  notes: Long-running aggregator covering German employer pages and smaller boards.
+- id: jobted_germany
+  name: Jobted Germany
+  url: https://de.jobted.com/
+  priority: 3
+  category: aggregator
+  enabled: true
+  adapter: ambiguous_todo
+  notes: German job-search engine suitable for supplementary searches and alerts.
+- id: jobijoba_germany
+  name: Jobijoba Germany
+  url: https://www.jobijoba.de/
+  priority: 3
+  category: aggregator
+  enabled: true
+  adapter: html_scrape_todo
+  notes: Secondary German aggregator with profession and city searches.
+- id: whatjobs_germany
+  name: WhatJobs Germany
+  url: https://de.whatjobs.com/
+  priority: 3
+  category: aggregator
+  enabled: true
+  adapter: html_scrape_todo
+  notes: Broad search engine that can surface long-tail QA listings but requires freshness checks.
+- id: jobsora_germany
+  name: Jobsora Germany
+  url: https://de.jobsora.com/
+  priority: 3
+  category: aggregator
+  enabled: true
+  adapter: ambiguous_todo
+  notes: Supplementary aggregator with remote and location filters.
+- id: jobisjob_germany
+  name: JobisJob Germany
+  url: https://www.jobisjob.de/
+  priority: 3
+  category: aggregator
+  enabled: true
+  adapter: html_scrape_todo
+  notes: Secondary job-search engine with broad German coverage.
+- id: monster_germany
+  name: Monster Germany
+  url: https://www.monster.de/
+  priority: 3
+  category: general
+  enabled: true
+  adapter: anti_bot_avoid
+  notes: Legacy general board with a smaller technology footprint than the leading German platforms.
+- id: jobsde
+  name: Jobs.de
+  url: https://www.jobs.de/
+  priority: 3
+  category: general
+  enabled: true
+  adapter: html_scrape_todo
+  notes: General German job board useful as an additional source.
+- id: jobstairs
+  name: JobStairs
+  url: https://www.jobstairs.de/
+  priority: 3
+  category: general
+  enabled: true
+  adapter: html_scrape_todo
+  notes: Employer-driven German board with large corporate vacancies.
+- id: stellenonline
+  name: Stellenonline
+  url: https://www.stellenonline.de/
+  priority: 3
+  category: general
+  enabled: true
+  adapter: html_scrape_todo
+  notes: General German aggregator and job board with regional coverage.
+- id: jobbörsede
+  name: Jobbörse.de
+  url: https://www.jobboerse.de/
+  priority: 3
+  category: general
+  enabled: true
+  adapter: anti_bot_avoid
+  notes: General German job board with job-title and city searches.
+- id: heyjobs
+  name: HeyJobs
+  url: https://www.heyjobs.co/
+  priority: 3
+  category: general
+  enabled: true
+  adapter: html_scrape_todo
+  notes: High-volume German recruitment platform; more useful when keyword filters are kept narrow.
+- id: yourfirm
+  name: Yourfirm
+  url: https://www.yourfirm.de/
+  priority: 3
+  category: general
+  enabled: true
+  adapter: html_scrape_todo
+  notes: Focuses on German SMEs, which can reveal QA openings absent from international boards.
+- id: kununu_jobs
+  name: Kununu Jobs
+  url: https://www.kununu.com/de/jobs
+  priority: 3
+  category: general
+  enabled: true
+  adapter: anti_bot_avoid
+  notes: Useful for job discovery alongside German employer ratings and salary reports.
+- id: experteer_germany
+  name: Experteer Germany
+  url: https://www.experteer.de/
+  priority: 3
+  category: general
+  enabled: true
+  adapter: html_scrape_todo
+  notes: Senior specialist and management vacancies; parts of the service require payment.
+- id: wearedevelopers
+  name: wearedevelopers
+  url: https://www.wearedevelopers.com/jobs?country=DE
+  priority: 3
+  category: tech
+  enabled: true
+  adapter: html_scrape_todo
+  notes: German technology talent marketplace with employer matching rather than conventional mass applications.
+- id: ictjob_germany
+  name: ICTjob Germany
+  url: https://www.ictjob.de/
+  priority: 3
+  category: tech
+  enabled: true
+  adapter: html_scrape_todo
+  notes: German IT-specialist job board with enterprise technology vacancies.
+- id: it_treff
+  name: IT-Treff
+  url: https://www.it-treff.de/
+  priority: 3
+  category: tech
+  enabled: true
+  adapter: ambiguous_todo
+  notes: Smaller German IT portal with software and testing listings.
+- id: devjobs_germany
+  name: DevJobs Germany
+  url: https://devjobs.de/
+  priority: 3
+  category: tech
+  enabled: true
+  adapter: html_scrape_todo
+  notes: Broader homepage of the DEVjobs technology platform; use the dedicated QA search first.
+- id: eurotechjobs
+  name: EuroTechJobs
+  url: https://www.eurotechjobs.com/
+  priority: 3
+  category: tech
+  enabled: true
+  adapter: html_scrape_todo
+  notes: European technology board with jobs in Germany and cross-border opportunities.
+- id: euroengineerjobs
+  name: EuroEngineerJobs
+  url: https://www.euroengineerjobs.com/
+  priority: 3
+  category: tech
+  enabled: true
+  adapter: html_scrape_todo
+  notes: European engineering board useful for software verification, embedded and industrial testing
+    roles.
+- id: landingjobs
+  name: Landing.jobs
+  url: https://landing.jobs/
+  priority: 3
+  category: tech
+  enabled: true
+  adapter: html_scrape_todo
+  notes: European tech platform with remote and relocation roles; German QA volume varies.
+- id: python_job_board
+  name: Python Job Board
+  url: https://www.python.org/jobs/
+  priority: 3
+  category: tech
+  enabled: true
+  adapter: html_scrape_todo
+  notes: Official Python community board; occasional testing, tooling and quality-engineering opportunities.
+- id: munichstartupsjobscom
+  name: MunichStartupsJobs.com
+  url: https://munichstartupsjobs.com/
+  priority: 3
+  category: startup
+  enabled: true
+  adapter: js_rendered_todo
+  notes: Additional Munich-focused startup aggregator; worth an occasional scan alongside the official
+    ecosystem board.
+- id: y_combinator_jobs_munich
+  name: Y Combinator Jobs – Munich
+  url: https://www.ycombinator.com/jobs/location/munich
+  priority: 3
+  category: startup
+  enabled: true
+  adapter: html_scrape_todo
+  notes: Small English-first product companies; dedicated QA roles are rare but potentially high quality.
+- id: eu_startups_job_board
+  name: EU-Startups Job Board
+  url: https://www.eu-startups.com/job-board/
+  priority: 3
+  category: startup
+  enabled: true
+  adapter: html_scrape_todo
+  notes: European startup listings that can include German and remote technology roles.
+- id: startbase_jobs
+  name: Startbase Jobs
+  url: https://www.startbase.com/jobs/
+  priority: 3
+  category: startup
+  enabled: true
+  adapter: ambiguous_todo
+  notes: German startup database and job board useful for discovering smaller employers.
+- id: htgf_portfolio_jobs
+  name: HTGF Portfolio Jobs
+  url: https://www.htgf.de/en/jobs/
+  priority: 3
+  category: startup
+  enabled: true
+  adapter: html_scrape_todo
+  notes: Jobs across High-Tech Gründerfonds and its German technology portfolio.
+- id: project_a_careers
+  name: Project A Careers
+  url: https://www.project-a.com/careers/
+  priority: 3
+  category: startup
+  enabled: true
+  adapter: html_scrape_todo
+  notes: Project A and portfolio-company jobs, often at international German startups.
+- id: hv_capital_jobs
+  name: HV Capital Jobs
+  url: https://jobs.hvcapital.com/
+  priority: 3
+  category: startup
+  enabled: true
+  adapter: js_rendered_todo
+  notes: Jobs across a major German venture-capital portfolio.
+- id: earlybird_jobs
+  name: Earlybird Jobs
+  url: https://jobs.earlybird.com/
+  priority: 3
+  category: startup
+  enabled: true
+  adapter: js_rendered_todo
+  notes: European startup portfolio board with German technology employers.
+- id: speedinvest_careers
+  name: Speedinvest Careers
+  url: https://careers.speedinvest.com/
+  priority: 3
+  category: startup
+  enabled: true
+  adapter: js_rendered_todo
+  notes: European portfolio-company jobs, including remote roles open to Germany.
+- id: working_nomads
+  name: Working Nomads
+  url: https://www.workingnomads.com/jobs
+  priority: 3
+  category: remote
+  enabled: true
+  adapter: html_scrape_todo
+  notes: Remote job aggregator with development and occasional QA categories.
+- id: remoteco
+  name: Remote.co
+  url: https://remote.co/remote-jobs/
+  priority: 3
+  category: remote
+  enabled: true
+  adapter: anti_bot_avoid
+  notes: Curated remote board with occasional QA and testing openings.
+- id: justremote
+  name: JustRemote
+  url: https://justremote.co/
+  priority: 3
+  category: remote
+  enabled: true
+  adapter: html_scrape_todo
+  notes: Global remote job search; Germany eligibility must be confirmed per listing.
+- id: jobgether
+  name: Jobgether
+  url: https://jobgether.com/
+  priority: 3
+  category: remote
+  enabled: true
+  adapter: html_scrape_todo
+  notes: Remote and flexible-work aggregator with country eligibility information on some jobs.
+- id: dailyremote
+  name: DailyRemote
+  url: https://dailyremote.com/
+  priority: 3
+  category: remote
+  enabled: true
+  adapter: html_scrape_todo
+  notes: Remote aggregator with QA keyword searches and frequent duplicates.
+- id: nodesk_remote_jobs
+  name: NoDesk Remote Jobs
+  url: https://nodesk.co/remote-jobs/
+  priority: 3
+  category: remote
+  enabled: true
+  adapter: html_scrape_todo
+  notes: Curated remote board with a smaller but generally cleaner technology feed.
+- id: dynamite_jobs
+  name: Dynamite Jobs
+  url: https://dynamitejobs.com/
+  priority: 3
+  category: remote
+  enabled: true
+  adapter: html_scrape_todo
+  notes: Remote-first job board with occasional software quality positions.
+- id: arc_remote_jobs
+  name: Arc Remote Jobs
+  url: https://arc.dev/remote-jobs
+  priority: 3
+  category: remote
+  enabled: true
+  adapter: html_scrape_todo
+  notes: Remote developer network that sometimes includes SDET and QA automation roles.
+- id: robert_half_germany_jobs
+  name: Robert Half Germany Jobs
+  url: https://www.roberthalf.com/de/de/jobs
+  priority: 3
+  category: recruiter
+  enabled: true
+  adapter: js_rendered_todo
+  notes: Recruiter covering German technology and project-based quality roles.
+- id: michael_page_germany_jobs
+  name: Michael Page Germany Jobs
+  url: https://www.michaelpage.de/jobs
+  priority: 3
+  category: recruiter
+  enabled: true
+  adapter: html_scrape_todo
+  notes: Professional recruiter with occasional senior software QA and quality-management roles.
+- id: progressive_recruitment_germany
+  name: Progressive Recruitment Germany
+  url: https://www.progressiverecruitment.com/de-de/jobs-projekte-suchen
+  priority: 3
+  category: recruiter
+  enabled: true
+  adapter: html_scrape_todo
+  notes: Technology and engineering recruiter with contract and permanent test vacancies.
+- id: amadeus_fire_jobs
+  name: Amadeus Fire Jobs
+  url: https://www.amadeus-fire.de/jobs/
+  priority: 3
+  category: recruiter
+  enabled: true
+  adapter: html_scrape_todo
+  notes: German recruitment company covering IT specialists and enterprise environments.
+- id: dis_ag_jobs
+  name: DIS AG Jobs
+  url: https://www.dis-ag.com/stellenangebote/
+  priority: 3
+  category: recruiter
+  enabled: true
+  adapter: html_scrape_todo
+  notes: German staffing portal with IT, engineering and quality roles.
+- id: randstad_germany_jobs
+  name: Randstad Germany Jobs
+  url: https://www.randstad.de/jobs/
+  priority: 3
+  category: recruiter
+  enabled: true
+  adapter: html_scrape_todo
+  notes: Large staffing board; useful mainly for regional and enterprise test positions.
+- id: adecco_germany_jobs
+  name: Adecco Germany Jobs
+  url: https://www.adecco.de/stellenangebote/
+  priority: 3
+  category: recruiter
+  enabled: true
+  adapter: html_scrape_todo
+  notes: Large staffing platform with broad coverage but limited specialist QA concentration.
+- id: manpower_germany_jobs
+  name: Manpower Germany Jobs
+  url: https://www.manpower.de/de/jobs
+  priority: 3
+  category: recruiter
+  enabled: true
+  adapter: html_scrape_todo
+  notes: General staffing portal with occasional IT testing positions.
+- id: ratbacher_jobs
+  name: Ratbacher Jobs
+  url: https://www.ratbacher.de/stellenangebote/
+  priority: 3
+  category: recruiter
+  enabled: true
+  adapter: html_scrape_todo
+  notes: German IT recruitment specialist, especially relevant to enterprise technology roles.
+- id: westhouse_jobs
+  name: Westhouse Jobs
+  url: https://www.westhouse-group.com/jobs/
+  priority: 3
+  category: recruiter
+  enabled: true
+  adapter: html_scrape_todo
+  notes: IT and engineering recruiter for freelance and permanent work.
+- id: etengo_projects
+  name: Etengo Projects
+  url: https://www.etengo.de/
+  priority: 3
+  category: recruiter
+  enabled: true
+  adapter: html_scrape_todo
+  notes: German marketplace primarily for freelance IT projects, including test automation.
+- id: interamt
+  name: INTERAMT
+  url: https://interamt.de/
+  priority: 3
+  category: official
+  enabled: true
+  adapter: html_scrape_todo
+  notes: Major German public-sector portal; language requirements are commonly high but IT testing roles
+    appear.
+- id: servicebundde_vacancies
+  name: service.bund.de – Vacancies
+  url: https://www.service.bund.de/Content/DE/Stellen/Suche/Formular.html
+  priority: 3
+  category: official
+  enabled: true
+  adapter: html_scrape_todo
+  notes: Federal public-sector vacancy search with occasional IT quality and test positions.
+- id: the_local_germany_jobs
+  name: The Local Germany Jobs
+  url: https://www.thelocal.de/jobs/
+  priority: 4
+  category: english-international
+  enabled: true
+  adapter: html_scrape_todo
+  notes: English-language expatriate portal; useful but much smaller than dedicated tech boards.
+- id: iamexpat_germany_jobs
+  name: IamExpat Germany Jobs
+  url: https://www.iamexpat.de/career/jobs-germany
+  priority: 4
+  category: english-international
+  enabled: true
+  adapter: html_scrape_todo
+  notes: International-professional job listings in Germany with limited QA volume.
+- id: expatica_germany_jobs
+  name: Expatica Germany Jobs
+  url: https://www.expatica.com/de/jobs/
+  priority: 4
+  category: english-international
+  enabled: true
+  adapter: html_scrape_todo
+  notes: Expat-oriented job portal and aggregator; supplementary rather than primary.
+- id: jobsingermanynet
+  name: JobsInGermany.net
+  url: https://jobsingermany.net/
+  priority: 4
+  category: english-international
+  enabled: true
+  adapter: html_scrape_todo
+  notes: International-professional Germany board with modest technology coverage.
+- id: europe_language_jobs
+  name: Europe Language Jobs
+  url: https://www.europelanguagejobs.com/
+  priority: 4
+  category: english-international
+  enabled: true
+  adapter: ambiguous_todo
+  notes: Language-focused European jobs; QA relevance is occasional.
+- id: faruse_germany
+  name: Faruse Germany
+  url: https://faruse.com/english-speaking/jobs/germany
+  priority: 4
+  category: english-international
+  enabled: true
+  adapter: html_scrape_todo
+  notes: English-speaking job aggregator aimed at international applicants; verify original listings.
+- id: multilingual_vacancies
+  name: Multilingual Vacancies
+  url: https://www.multilingualvacancies.com/
+  priority: 4
+  category: english-international
+  enabled: true
+  adapter: html_scrape_todo
+  notes: Language-oriented jobs with occasional testing or customer-quality roles.
+- id: qajobsco_germany
+  name: QAJobs.co – Germany
+  url: https://www.qajobs.co/?location=Germany
+  priority: 4
+  category: qa-specialist
+  enabled: true
+  adapter: html_scrape_todo
+  notes: QA-specific in name, but its Germany listings have recently been sparse and stale; check only
+    occasionally.
+- id: simplyhired_germany
+  name: SimplyHired Germany
+  url: https://www.simplyhired.de/
+  priority: 4
+  category: aggregator
+  enabled: true
+  adapter: anti_bot_avoid
+  notes: General aggregator with duplicates and variable listing freshness.

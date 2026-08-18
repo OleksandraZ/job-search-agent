@@ -1,0 +1,4 @@
+httpx
+PyYAML
+python-dotenv
+beautifulsoup4
