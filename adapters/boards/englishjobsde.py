@@ -2,13 +2,11 @@ from __future__ import annotations
 
 import logging
 import re
-import time
 
-import httpx
 from bs4 import BeautifulSoup
 
 from adapters.boards import NormalizedJob
-from http_client import get_with_retry
+from http_client import fetch_each, get_with_retry
 
 logger = logging.getLogger(__name__)
 
@@ -20,16 +18,13 @@ def fetch_jobs(source_config: dict) -> list[NormalizedJob]:
     search_terms = source_config.get("search_terms", [])
     jobs_by_url: dict[str, NormalizedJob] = {}
 
-    for i, term in enumerate(search_terms):
-        if i > 0:
-            time.sleep(REQUEST_DELAY_SECONDS)
-
-        try:
-            html = _search(term)
-        except httpx.HTTPError as exc:
-            logger.warning("englishjobs.de search for %r failed: %s", term, exc)
-            continue
-
+    for _term, html in fetch_each(
+        search_terms,
+        _search,
+        delay_seconds=REQUEST_DELAY_SECONDS,
+        logger=logger,
+        log_context="englishjobs.de search",
+    ):
         for job in _parse_search_page(html, source_config["id"]):
             jobs_by_url[job.url] = job
 

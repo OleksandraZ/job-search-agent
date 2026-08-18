@@ -3,14 +3,13 @@ from __future__ import annotations
 import json
 import logging
 import re
-import time
 import xml.etree.ElementTree as ElementTree
 
 import httpx
 from bs4 import BeautifulSoup
 
 from adapters.boards import NormalizedJob
-from http_client import get_with_retry
+from http_client import fetch_each, get_with_retry
 
 logger = logging.getLogger(__name__)
 
@@ -67,14 +66,13 @@ def fetch_jobs(source_config: dict) -> list[NormalizedJob]:
     )
 
     jobs = []
-    for i, url in enumerate(candidates):
-        if i > 0:
-            time.sleep(REQUEST_DELAY_SECONDS)
-        try:
-            job = _fetch_job(url, source_config["id"])
-        except httpx.HTTPError as exc:
-            logger.warning("failed to fetch instaffo job %s: %s", url, exc)
-            continue
+    for _url, job in fetch_each(
+        candidates,
+        lambda u: _fetch_job(u, source_config["id"]),
+        delay_seconds=REQUEST_DELAY_SECONDS,
+        logger=logger,
+        log_context="instaffo job fetch",
+    ):
         if job is not None:
             jobs.append(job)
 

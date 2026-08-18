@@ -7,8 +7,9 @@ import yaml
 from dotenv import load_dotenv
 
 from adapters.boards import NormalizedJob
+from adapters.registry import fetch_from_sources
 from agents import germany_remote, munich_local
-from agents._common import SOURCE_IDS, fetch_from_sources
+from agents._common import SOURCE_IDS
 from notifier import telegram
 from pipeline import classify_language, filters
 from storage import dedupe
@@ -27,7 +28,7 @@ def load_yaml(name: str) -> dict:
 
 
 def build_report(
-    raw_jobs: list[NormalizedJob], keywords_config: dict
+    raw_jobs: list[NormalizedJob], keywords_config: dict, db_path: Path
 ) -> tuple[list[NormalizedJob], list[NormalizedJob]]:
     """Turn already-fetched jobs into the (german, english) report to send. No
     network/Telegram/env dependency, so it's testable with a plain job list -
@@ -44,7 +45,7 @@ def build_report(
     matched = filters.filter_by_title(list(by_url.values()), keywords_config["title_match_terms"])
     logger.info("%d jobs matched title_match_terms", len(matched))
 
-    unseen = dedupe.filter_unseen(matched, db_path=dedupe.DB_PATH)
+    unseen = dedupe.filter_unseen(matched, db_path=db_path)
     logger.info("%d of those are new (not previously seen)", len(unseen))
 
     german_jobs, english_jobs = classify_language.split_by_language(unseen)
@@ -55,11 +56,12 @@ def build_report(
 def main(dry_run: bool = False) -> None:
     sources_config = load_yaml("sources.yaml")
     keywords_config = load_yaml("keywords.yaml")
+    db_path = dedupe.DB_PATH
 
     raw_jobs = fetch_from_sources(sources_config, keywords_config, sorted(SOURCE_IDS))
     logger.info("fetched %d jobs total", len(raw_jobs))
 
-    german_jobs, english_jobs = build_report(raw_jobs, keywords_config)
+    german_jobs, english_jobs = build_report(raw_jobs, keywords_config, db_path)
 
     if dry_run:
         for chunk in telegram.format_message(german_jobs, english_jobs):
@@ -70,7 +72,7 @@ def main(dry_run: bool = False) -> None:
     bot_token = os.environ["TELEGRAM_BOT_TOKEN"]
     chat_id = os.environ["TELEGRAM_CHAT_ID"]
     sent_jobs = telegram.send_report(german_jobs, english_jobs, bot_token, chat_id)
-    dedupe.mark_seen(sent_jobs, db_path=dedupe.DB_PATH)
+    dedupe.mark_seen(sent_jobs, db_path=db_path)
     logger.info("sent Telegram message(s), marked %d jobs as seen", len(sent_jobs))
 
 

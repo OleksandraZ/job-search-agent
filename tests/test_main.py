@@ -4,9 +4,7 @@ import main
 from tests.conftest import make_job
 
 
-def test_build_report_filters_dedupes_and_classifies(monkeypatch, tmp_path):
-    monkeypatch.setattr(main.dedupe, "DB_PATH", tmp_path / "jobs.db")
-
+def test_build_report_filters_dedupes_and_classifies(tmp_path):
     munich_job = make_job(
         title="QA Engineer",
         url="https://example.test/1",
@@ -16,27 +14,27 @@ def test_build_report_filters_dedupes_and_classifies(monkeypatch, tmp_path):
     other_job = make_job(title="Sales Manager", url="https://example.test/2", location="München")
 
     german_jobs, english_jobs = main.build_report(
-        [munich_job, other_job], {"title_match_terms": ["QA Engineer"]}
+        [munich_job, other_job], {"title_match_terms": ["QA Engineer"]}, db_path=tmp_path / "jobs.db"
     )
 
     assert german_jobs == []
     assert english_jobs == [munich_job]
 
 
-def test_build_report_excludes_previously_seen_jobs(monkeypatch, tmp_path):
+def test_build_report_excludes_previously_seen_jobs(tmp_path):
     db_path = tmp_path / "jobs.db"
-    monkeypatch.setattr(main.dedupe, "DB_PATH", db_path)
     job = make_job(title="QA Engineer", location="München", description="English required.")
     main.dedupe.mark_seen([job], db_path=db_path)
 
-    german_jobs, english_jobs = main.build_report([job], {"title_match_terms": ["QA Engineer"]})
+    german_jobs, english_jobs = main.build_report(
+        [job], {"title_match_terms": ["QA Engineer"]}, db_path=db_path
+    )
 
     assert german_jobs == []
     assert english_jobs == []
 
 
-def test_build_report_dedupes_job_matching_both_scopes_by_url(monkeypatch, tmp_path):
-    monkeypatch.setattr(main.dedupe, "DB_PATH", tmp_path / "jobs.db")
+def test_build_report_dedupes_job_matching_both_scopes_by_url(tmp_path):
     # A job that's both Munich-based AND remote-eligible must be reported once, not twice.
     job = make_job(
         title="QA Engineer",
@@ -45,7 +43,9 @@ def test_build_report_dedupes_job_matching_both_scopes_by_url(monkeypatch, tmp_p
         description="English required.",
     )
 
-    german_jobs, english_jobs = main.build_report([job], {"title_match_terms": ["QA Engineer"]})
+    german_jobs, english_jobs = main.build_report(
+        [job], {"title_match_terms": ["QA Engineer"]}, db_path=tmp_path / "jobs.db"
+    )
 
     assert english_jobs == [job]
 
@@ -55,7 +55,9 @@ def _patch_orchestration(monkeypatch, *, german_jobs, english_jobs, calls):
     computation (covered separately above), sending, and marking-seen.
     """
     monkeypatch.setattr(main, "load_yaml", lambda name: {"sources": [], "title_match_terms": []})
-    monkeypatch.setattr(main, "build_report", lambda raw_jobs, keywords_config: (german_jobs, english_jobs))
+    monkeypatch.setattr(
+        main, "build_report", lambda raw_jobs, keywords_config, db_path: (german_jobs, english_jobs)
+    )
 
     def fake_mark_seen(jobs, db_path):
         calls.append(("mark_seen", jobs))

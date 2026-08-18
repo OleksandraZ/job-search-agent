@@ -1,14 +1,12 @@
 from __future__ import annotations
 
 import logging
-import time
 import urllib.parse
 
-import httpx
 from bs4 import BeautifulSoup
 
 from adapters.boards import NormalizedJob, title_matches
-from http_client import get_with_retry
+from http_client import fetch_each, get_with_retry
 
 logger = logging.getLogger(__name__)
 
@@ -21,18 +19,14 @@ def fetch_jobs(source_config: dict) -> list[NormalizedJob]:
     search_terms = source_config.get("search_terms", [])
     jobs_by_url: dict[str, NormalizedJob] = {}
 
-    for i, term in enumerate(search_terms):
-        if i > 0:
-            time.sleep(REQUEST_DELAY_SECONDS)
-
-        search_url = _search_url(term)
-        try:
-            response = get_with_retry(search_url, params={"radius": 30})
-        except httpx.HTTPError as exc:
-            logger.warning("stepstone search for %r failed: %s", term, exc)
-            continue
-
-        for job in _parse_search_page(response.text, source_config["id"]):
+    for _term, html in fetch_each(
+        search_terms,
+        _search,
+        delay_seconds=REQUEST_DELAY_SECONDS,
+        logger=logger,
+        log_context="stepstone search",
+    ):
+        for job in _parse_search_page(html, source_config["id"]):
             jobs_by_url[job.url] = job
 
     _fill_descriptions(jobs_by_url, search_terms)
@@ -43,6 +37,11 @@ def fetch_jobs(source_config: dict) -> list[NormalizedJob]:
 def _search_url(term: str) -> str:
     slug = urllib.parse.quote(term.replace(" ", "-"))
     return SEARCH_URL_TEMPLATE.format(slug=slug)
+
+
+def _search(term: str) -> str:
+    response = get_with_retry(_search_url(term), params={"radius": 30})
+    return response.text
 
 
 def _parse_search_page(html: str, source_id: str) -> list[NormalizedJob]:
@@ -82,14 +81,13 @@ def _fill_descriptions(jobs_by_url: dict[str, NormalizedJob], search_terms: list
         len(jobs_by_url),
     )
 
-    for i, job in enumerate(candidates):
-        if i > 0:
-            time.sleep(REQUEST_DELAY_SECONDS)
-        try:
-            description = _fetch_description(job.url)
-        except httpx.HTTPError as exc:
-            logger.warning("failed to fetch description for %s: %s", job.url, exc)
-            continue
+    for job, description in fetch_each(
+        candidates,
+        lambda j: _fetch_description(j.url),
+        delay_seconds=REQUEST_DELAY_SECONDS,
+        logger=logger,
+        log_context="stepstone description fetch",
+    ):
         if description:
             job.description = description
 

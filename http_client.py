@@ -2,10 +2,15 @@ from __future__ import annotations
 
 import logging
 import time
+from collections.abc import Callable, Iterable, Iterator
+from typing import TypeVar
 
 import httpx
 
 logger = logging.getLogger(__name__)
+
+T = TypeVar("T")
+R = TypeVar("R")
 
 # 429 = rate limited (seen on Arbeitnow's search endpoint); 5xx = transient server
 # error. Neither is worth retrying more than once here - a daily cron job can just
@@ -58,3 +63,24 @@ def get_with_retry(url: str, **kwargs) -> httpx.Response:
 
 def post_with_retry(url: str, **kwargs) -> httpx.Response:
     return _request_with_retry("POST", url, **kwargs)
+
+
+def fetch_each(
+    items: Iterable[T],
+    fetch_one: Callable[[T], R],
+    *,
+    delay_seconds: float,
+    logger: logging.Logger,
+    log_context: str,
+) -> Iterator[tuple[T, R]]:
+    """Call fetch_one(item) for each item, spacing calls by delay_seconds and
+    skipping (with a logged warning) any item whose fetch_one raises httpx.HTTPError -
+    one bad request doesn't discard the results already gathered from the others.
+    """
+    for i, item in enumerate(items):
+        if i > 0:
+            time.sleep(delay_seconds)
+        try:
+            yield item, fetch_one(item)
+        except httpx.HTTPError as exc:
+            logger.warning("%s failed for %r: %s", log_context, item, exc)

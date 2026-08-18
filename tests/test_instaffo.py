@@ -1,5 +1,6 @@
 import json
 
+import http_client
 from adapters.boards import instaffo
 from tests.conftest import fake_response
 
@@ -37,7 +38,7 @@ def test_umlaut_normalized_slug_prefilter_matches_real_title_term(monkeypatch):
         return fake_response(text=_detail_html())
 
     monkeypatch.setattr(instaffo, "get_with_retry", fake_get)
-    monkeypatch.setattr(instaffo.time, "sleep", lambda *_: None)
+    monkeypatch.setattr(http_client.time, "sleep", lambda *_: None)
 
     instaffo.fetch_jobs({"id": "instaffo_qa_engineer", "search_terms": ["Qualitätssicherung"]})
 
@@ -54,7 +55,7 @@ def test_non_matching_slugs_are_never_fetched(monkeypatch):
         return fake_response(text=_detail_html())
 
     monkeypatch.setattr(instaffo, "get_with_retry", fake_get)
-    monkeypatch.setattr(instaffo.time, "sleep", lambda *_: None)
+    monkeypatch.setattr(http_client.time, "sleep", lambda *_: None)
 
     instaffo.fetch_jobs({"id": "instaffo_qa_engineer", "search_terms": ["ingenieur"]})
 
@@ -68,7 +69,7 @@ def test_parses_job_posting_json_ld_from_detail_page(monkeypatch):
         return fake_response(text=_detail_html())
 
     monkeypatch.setattr(instaffo, "get_with_retry", fake_get)
-    monkeypatch.setattr(instaffo.time, "sleep", lambda *_: None)
+    monkeypatch.setattr(http_client.time, "sleep", lambda *_: None)
 
     jobs = instaffo.fetch_jobs({"id": "instaffo_qa_engineer", "search_terms": ["ingenieur"]})
 

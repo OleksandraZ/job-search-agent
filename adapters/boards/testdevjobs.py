@@ -7,7 +7,7 @@ import httpx
 from bs4 import BeautifulSoup
 
 from adapters.boards import NormalizedJob, title_matches
-from http_client import get_with_retry
+from http_client import fetch_each, get_with_retry
 
 logger = logging.getLogger(__name__)
 
@@ -97,14 +97,13 @@ def _fill_descriptions(jobs_by_url: dict[str, NormalizedJob], search_terms: list
         len(jobs_by_url),
     )
 
-    for i, job in enumerate(candidates):
-        if i > 0:
-            time.sleep(REQUEST_DELAY_SECONDS)
-        try:
-            description = _fetch_description(job.url)
-        except httpx.HTTPError as exc:
-            logger.warning("failed to fetch description for %s: %s", job.url, exc)
-            continue
+    for job, description in fetch_each(
+        candidates,
+        lambda j: _fetch_description(j.url),
+        delay_seconds=REQUEST_DELAY_SECONDS,
+        logger=logger,
+        log_context="testdevjobs description fetch",
+    ):
         if description:
             job.description = description
 

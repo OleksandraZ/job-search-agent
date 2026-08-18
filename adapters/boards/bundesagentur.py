@@ -2,13 +2,11 @@ from __future__ import annotations
 
 import json
 import logging
-import time
 
-import httpx
 from bs4 import BeautifulSoup
 
 from adapters.boards import NormalizedJob, title_matches
-from http_client import get_with_retry
+from http_client import fetch_each, get_with_retry
 
 logger = logging.getLogger(__name__)
 
@@ -30,23 +28,26 @@ def fetch_jobs(source_config: dict) -> list[NormalizedJob]:
     search_terms = source_config.get("search_terms", [])
     jobs_by_url: dict[str, NormalizedJob] = {}
 
-    for i, term in enumerate(search_terms):
-        if i > 0:
-            time.sleep(REQUEST_DELAY_SECONDS)
-        try:
-            # size=100 comfortably covers every real term's result count seen so
-            # far (max ~100) in one request - no pagination needed.
-            response = get_with_retry(SEARCH_API_URL, params={"was": term, "size": 100}, headers=API_HEADERS)
-        except httpx.HTTPError as exc:
-            logger.warning("bundesagentur search for %r failed: %s", term, exc)
-            continue
-
-        for job in _parse_search_response(response.json(), source_config["id"]):
+    for _term, data in fetch_each(
+        search_terms,
+        _search,
+        delay_seconds=REQUEST_DELAY_SECONDS,
+        logger=logger,
+        log_context="bundesagentur search",
+    ):
+        for job in _parse_search_response(data, source_config["id"]):
             jobs_by_url[job.url] = job
 
     _fill_descriptions(jobs_by_url, search_terms)
 
     return list(jobs_by_url.values())
+
+
+def _search(term: str) -> dict:
+    # size=100 comfortably covers every real term's result count seen so far (max
+    # ~100) in one request - no pagination needed.
+    response = get_with_retry(SEARCH_API_URL, params={"was": term, "size": 100}, headers=API_HEADERS)
+    return response.json()
 
 
 def _parse_search_response(data: dict, source_id: str) -> list[NormalizedJob]:
@@ -97,14 +98,13 @@ def _fill_descriptions(jobs_by_url: dict[str, NormalizedJob], search_terms: list
         len(jobs_by_url),
     )
 
-    for i, job in enumerate(candidates):
-        if i > 0:
-            time.sleep(REQUEST_DELAY_SECONDS)
-        try:
-            description = _fetch_description(job.url)
-        except httpx.HTTPError as exc:
-            logger.warning("failed to fetch description for %s: %s", job.url, exc)
-            continue
+    for job, description in fetch_each(
+        candidates,
+        lambda j: _fetch_description(j.url),
+        delay_seconds=REQUEST_DELAY_SECONDS,
+        logger=logger,
+        log_context="bundesagentur description fetch",
+    ):
         if description:
             job.description = description
 

@@ -2,12 +2,9 @@ from __future__ import annotations
 
 import logging
 import re
-import time
-
-import httpx
 
 from adapters.boards import NormalizedJob, title_matches
-from http_client import get_with_retry
+from http_client import fetch_each, get_with_retry
 
 logger = logging.getLogger(__name__)
 
@@ -33,16 +30,13 @@ def fetch_jobs(source_config: dict) -> list[NormalizedJob]:
     search_terms = source_config.get("search_terms", [])
     jobs_by_url: dict[str, NormalizedJob] = {}
 
-    for i, term in enumerate(search_terms):
-        if i > 0:
-            time.sleep(REQUEST_DELAY_SECONDS)
-
-        try:
-            text = _search(term)
-        except httpx.HTTPError as exc:
-            logger.warning("wearedevelopers search for %r failed: %s", term, exc)
-            continue
-
+    for _term, text in fetch_each(
+        search_terms,
+        _search,
+        delay_seconds=REQUEST_DELAY_SECONDS,
+        logger=logger,
+        log_context="wearedevelopers search",
+    ):
         for job in _parse_jobs_md(text, source_config["id"]):
             jobs_by_url[job.url] = job
 
@@ -90,14 +84,13 @@ def _fill_descriptions(jobs_by_url: dict[str, NormalizedJob], search_terms: list
         len(jobs_by_url),
     )
 
-    for i, job in enumerate(candidates):
-        if i > 0:
-            time.sleep(REQUEST_DELAY_SECONDS)
-        try:
-            description = _fetch_description(job.url)
-        except httpx.HTTPError as exc:
-            logger.warning("failed to fetch description for %s: %s", job.url, exc)
-            continue
+    for job, description in fetch_each(
+        candidates,
+        lambda j: _fetch_description(j.url),
+        delay_seconds=REQUEST_DELAY_SECONDS,
+        logger=logger,
+        log_context="wearedevelopers description fetch",
+    ):
         if description:
             job.description = description
 

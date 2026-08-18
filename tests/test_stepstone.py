@@ -1,3 +1,4 @@
+import http_client
 from adapters.boards import stepstone
 from tests.conftest import fake_response
 
@@ -34,7 +35,7 @@ def test_detail_page_fetch_sends_a_referer_header(monkeypatch):
         return fake_response(text=DETAIL_PAGE)
 
     monkeypatch.setattr(stepstone, "get_with_retry", fake_get)
-    monkeypatch.setattr(stepstone.time, "sleep", lambda *_: None)
+    monkeypatch.setattr(http_client.time, "sleep", lambda *_: None)
 
     jobs = stepstone.fetch_jobs({"id": "stepstone_germany", "search_terms": ["qa engineer"]})
 

@@ -1,5 +1,6 @@
 import json
 
+import http_client
 from adapters.boards import get_in_it
 from tests.conftest import fake_response
 
@@ -89,7 +90,7 @@ def test_fills_description_for_title_matched_jobs(monkeypatch):
         return fake_response(text=_detail_html("Full role description."))
 
     monkeypatch.setattr(get_in_it, "get_with_retry", fake_get)
-    monkeypatch.setattr(get_in_it.time, "sleep", lambda *_: None)
+    monkeypatch.setattr(http_client.time, "sleep", lambda *_: None)
 
     jobs = get_in_it.fetch_jobs({"id": "get_in_it", "search_terms": ["qa engineer"]})
 

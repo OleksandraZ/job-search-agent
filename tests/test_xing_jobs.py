@@ -1,5 +1,6 @@
 import json
 
+import http_client
 from adapters.boards import xing_jobs
 from tests.conftest import fake_response
 
@@ -45,7 +46,7 @@ def test_non_germany_job_is_dropped_after_detail_page_fetch(monkeypatch):
         return fake_response(text=_detail_page("AT"))
 
     monkeypatch.setattr(xing_jobs, "get_with_retry", fake_get)
-    monkeypatch.setattr(xing_jobs.time, "sleep", lambda *_: None)
+    monkeypatch.setattr(http_client.time, "sleep", lambda *_: None)
 
     jobs = xing_jobs.fetch_jobs({"id": "xing_jobs", "search_terms": ["qa engineer"]})
 
@@ -59,7 +60,7 @@ def test_germany_job_keeps_fetched_description(monkeypatch):
         return fake_response(text=_detail_page("DE"))
 
     monkeypatch.setattr(xing_jobs, "get_with_retry", fake_get)
-    monkeypatch.setattr(xing_jobs.time, "sleep", lambda *_: None)
+    monkeypatch.setattr(http_client.time, "sleep", lambda *_: None)
 
     jobs = xing_jobs.fetch_jobs({"id": "xing_jobs", "search_terms": ["qa engineer"]})
 

@@ -1,3 +1,4 @@
+import http_client
 from adapters.boards import bundesagentur
 from tests.conftest import fake_response
 
@@ -87,7 +88,7 @@ def test_fills_description_via_job_posting_json_ld(monkeypatch):
         return fake_response(text=DETAIL_HTML)
 
     monkeypatch.setattr(bundesagentur, "get_with_retry", fake_get)
-    monkeypatch.setattr(bundesagentur.time, "sleep", lambda *_: None)
+    monkeypatch.setattr(http_client.time, "sleep", lambda *_: None)
 
     jobs = bundesagentur.fetch_jobs(SOURCE_CONFIG)
 

@@ -1,3 +1,4 @@
+import http_client
 from adapters.boards import wearedevelopers
 from tests.conftest import fake_response
 
@@ -40,7 +41,7 @@ def test_fills_description_only_for_title_matched_jobs(monkeypatch):
         return fake_response(text=JOBS_MD)
 
     monkeypatch.setattr(wearedevelopers, "get_with_retry", fake_get)
-    monkeypatch.setattr(wearedevelopers.time, "sleep", lambda *_: None)
+    monkeypatch.setattr(http_client.time, "sleep", lambda *_: None)
 
     jobs = wearedevelopers.fetch_jobs({"id": "wearedevelopers_jobs", "search_terms": ["qa engineer"]})
 

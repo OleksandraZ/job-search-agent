@@ -1,5 +1,6 @@
 import httpx
 
+import http_client
 from adapters.boards import arbeitnow_api
 from tests.conftest import fake_response
 
@@ -40,7 +41,7 @@ def test_fills_description_only_for_title_matched_jobs(monkeypatch):
         return fake_response(text=DETAIL_HTML)
 
     monkeypatch.setattr(arbeitnow_api, "get_with_retry", fake_get)
-    monkeypatch.setattr(arbeitnow_api.time, "sleep", lambda *_: None)
+    monkeypatch.setattr(http_client.time, "sleep", lambda *_: None)
 
     jobs = arbeitnow_api.fetch_jobs({"id": "arbeitnow_qa_jobs", "search_terms": ["qa engineer"]})
 
@@ -73,7 +74,7 @@ def test_a_failed_search_term_does_not_drop_other_terms_results(monkeypatch):
         return fake_response(json={"data": SEARCH_FRAGMENT})
 
     monkeypatch.setattr(arbeitnow_api, "get_with_retry", fake_get)
-    monkeypatch.setattr(arbeitnow_api.time, "sleep", lambda *_: None)
+    monkeypatch.setattr(http_client.time, "sleep", lambda *_: None)
 
     jobs = arbeitnow_api.fetch_jobs({"id": "arbeitnow_qa_jobs", "search_terms": ["broken", "qa engineer"]})
 
