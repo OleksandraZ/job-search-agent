@@ -3,3 +3,4 @@ __pycache__/
 *.pyc
 storage/jobs.db
 .env
+.DS_Store

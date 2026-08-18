@@ -50,7 +50,7 @@ Three config files drive the pipeline (all shared alongside this plan):
 
 | File | Contents |
 |---|---|
-| `config/sources.yaml` | 118 board sources (all enabled), each with `id`, `adapter`, `url`, `priority`, `category` |
+| `config/sources.yaml` | 109 board sources (all enabled), each with `id`, `adapter`, `url`, `priority`, `category` |
 | `config/keywords.yaml` | Title-match terms + search-query term buckets (EN/DE) |
 | `config/companies.yaml` | 200 companies (100 Series B startups + 100 kununu top employers) for direct ATS sourcing |
 
@@ -79,7 +79,7 @@ sources:
 
 ## 4. Board Sources — Build Order
 
-`config/sources.yaml` has all 154 platforms enabled, with `adapter: html_scrape` as a default
+`config/sources.yaml` has all 109 platforms enabled, with `adapter: html_scrape` as a default
 placeholder to be overridden per-source as real adapters are built. Build in this tier order:
 
 | Tier | What it means | Examples |
@@ -92,20 +92,18 @@ placeholder to be overridden per-source as real adapters are built. Build in thi
 
 ## 5. Keyword Matching
 
-`config/keywords.yaml` has four buckets:
+`config/keywords.yaml` has one bucket, `title_match_terms` (20 entries, EN + DE role
+titles): it's both the search query sent to every board that supports free-text
+search, and the post-fetch title filter (`pipeline/filters.py:filter_by_title`) run
+on every job regardless of source. Combining the two roles keeps per-run request
+volume down — see the wall-time gotcha in `CLAUDE.md` — since a skill-qualified query
+(e.g. "QA Engineer Playwright") wouldn't change what survives the filter afterward
+anyway, which only ever matches on bare role titles. An earlier, unbuilt design had
+separate `priority_search_terms`/`search_terms_en`/`search_terms_de` buckets for a
+role×skill matrix sent as board queries; dropped since no adapter ever read them.
 
-| Bucket | Purpose | Count |
-|---|---|---|
-| `title_match_terms` | Plain role titles (EN + DE), case-insensitive match against job **title** | 23 |
-| `priority_search_terms` | Hand-picked role+skill combos, always used as board search queries | 24 |
-| `search_terms_en` | Role × skill matrix in English (13 roles × 7 skills) | 91 |
-| `search_terms_de` | Same matrix in German | 80 |
-
-- `title_match_terms` filters jobs already fetched — run on every job title.
-- `search_terms_en/de` + `priority_search_terms` are sent as actual search queries to boards
-  that support free-text search (e.g. `?search=QA+Engineer+Playwright`).
-- `title_match_terms` includes both English and German role titles, since German QA postings
-  often keep the English title as a loanword rather than translating it.
+- `title_match_terms` includes both English and German role titles, since German QA
+  postings often keep the English title as a loanword rather than translating it.
 
 ---
 
