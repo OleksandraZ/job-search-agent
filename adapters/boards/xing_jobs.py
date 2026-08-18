@@ -8,7 +8,7 @@ import time
 import httpx
 from bs4 import BeautifulSoup
 
-from adapters.boards import NormalizedJob
+from adapters.boards import NormalizedJob, title_matches
 from http_client import get_with_retry
 
 logger = logging.getLogger(__name__)
@@ -95,7 +95,7 @@ def _fill_descriptions(jobs_by_url: dict[str, NormalizedJob], search_terms: list
     candidates = [
         job
         for job in jobs_by_url.values()
-        if _title_matches(job.title, search_terms) and job.url.startswith(BASE_URL + "/jobs/")
+        if title_matches(job.title, search_terms) and job.url.startswith(BASE_URL + "/jobs/")
     ]
     logger.info(
         "fetching full descriptions for %d/%d title-matched xing jobs (internal detail pages only)",
@@ -129,11 +129,6 @@ def _fill_descriptions(jobs_by_url: dict[str, NormalizedJob], search_terms: list
             continue
         if description:
             job.description = description
-
-
-def _title_matches(title: str, terms: list[str]) -> bool:
-    lowered = title.lower()
-    return any(term.lower() in lowered for term in terms)
 
 
 def _fetch_description_and_country(url: str) -> tuple[str, str]:

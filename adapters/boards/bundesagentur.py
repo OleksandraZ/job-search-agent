@@ -7,7 +7,7 @@ import time
 import httpx
 from bs4 import BeautifulSoup
 
-from adapters.boards import NormalizedJob
+from adapters.boards import NormalizedJob, title_matches
 from http_client import get_with_retry
 
 logger = logging.getLogger(__name__)
@@ -63,12 +63,14 @@ def _parse_search_response(data: dict, source_id: str) -> list[NormalizedJob]:
         # Keep only the German location(s) of a multi-site posting, and drop the
         # job entirely if none of its locations are in Germany.
         de_locations = [
-            loc for loc in raw.get("stellenlokationen", []) if loc.get("adresse", {}).get("land") == GERMANY
+            loc
+            for loc in raw.get("stellenlokationen", [])
+            if (loc.get("adresse") or {}).get("land") == GERMANY
         ]
         if not de_locations:
             continue
         location = ", ".join(
-            loc["adresse"]["ort"] for loc in de_locations if loc.get("adresse", {}).get("ort")
+            loc["adresse"]["ort"] for loc in de_locations if (loc.get("adresse") or {}).get("ort")
         )
 
         jobs.append(
@@ -81,14 +83,14 @@ def _parse_search_response(data: dict, source_id: str) -> list[NormalizedJob]:
                 description="",
             )
         )
-    return jobs
+    return [job for job in jobs if job.url]
 
 
 def _fill_descriptions(jobs_by_url: dict[str, NormalizedJob], search_terms: list[str]) -> None:
     # Same narrowing as the other adapters: only pay for a detail-page request for
     # jobs whose title already matches search_terms (the check
     # pipeline/filters.py:filter_by_title applies downstream anyway).
-    candidates = [job for job in jobs_by_url.values() if _title_matches(job.title, search_terms)]
+    candidates = [job for job in jobs_by_url.values() if title_matches(job.title, search_terms)]
     logger.info(
         "fetching full descriptions for %d/%d title-matched bundesagentur jobs",
         len(candidates),
@@ -105,11 +107,6 @@ def _fill_descriptions(jobs_by_url: dict[str, NormalizedJob], search_terms: list
             continue
         if description:
             job.description = description
-
-
-def _title_matches(title: str, terms: list[str]) -> bool:
-    lowered = title.lower()
-    return any(term.lower() in lowered for term in terms)
 
 
 def _fetch_description(url: str) -> str:

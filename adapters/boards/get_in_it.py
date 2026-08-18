@@ -7,7 +7,7 @@ import time
 import httpx
 from bs4 import BeautifulSoup
 
-from adapters.boards import NormalizedJob
+from adapters.boards import NormalizedJob, title_matches
 from http_client import get_with_retry
 
 logger = logging.getLogger(__name__)
@@ -63,24 +63,25 @@ def _parse_search_page(html: str, source_id: str) -> list[NormalizedJob]:
     jobs = []
     for raw in raw_jobs:
         location = ", ".join(loc["name"] for loc in raw.get("locations", []))
+        href = raw.get("url", "")
         jobs.append(
             NormalizedJob(
                 source_id=source_id,
                 title=raw.get("title", ""),
-                company=raw.get("company", {}).get("title", ""),
-                url=BASE_URL + raw["url"],
+                company=(raw.get("company") or {}).get("title", ""),
+                url=BASE_URL + href if href else "",
                 location=location,
                 description="",
             )
         )
-    return jobs
+    return [job for job in jobs if job.url]
 
 
 def _fill_descriptions(jobs_by_url: dict[str, NormalizedJob], search_terms: list[str]) -> None:
     # Same narrowing as the other adapters: only pay for a detail-page request for
     # jobs whose title already matches search_terms (the check
     # pipeline/filters.py:filter_by_title applies downstream anyway).
-    candidates = [job for job in jobs_by_url.values() if _title_matches(job.title, search_terms)]
+    candidates = [job for job in jobs_by_url.values() if title_matches(job.title, search_terms)]
     logger.info(
         "fetching full descriptions for %d/%d title-matched get-in-it jobs",
         len(candidates),
@@ -97,11 +98,6 @@ def _fill_descriptions(jobs_by_url: dict[str, NormalizedJob], search_terms: list
             continue
         if description:
             job.description = description
-
-
-def _title_matches(title: str, terms: list[str]) -> bool:
-    lowered = title.lower()
-    return any(term.lower() in lowered for term in terms)
 
 
 def _fetch_description(url: str) -> str:

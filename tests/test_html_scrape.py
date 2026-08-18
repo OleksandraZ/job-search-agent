@@ -1,3 +1,5 @@
+import httpx
+
 from adapters.boards import html_scrape
 from tests.conftest import fake_response
 
@@ -20,7 +22,9 @@ RSS_FEED = """<?xml version="1.0"?>
 def test_parses_title_at_company_pattern(monkeypatch):
     monkeypatch.setattr(html_scrape, "get_with_retry", lambda *a, **k: fake_response(text=RSS_FEED))
 
-    jobs = html_scrape.fetch_jobs({"id": "germantechjobs_testing_germany", "rss_url": "https://example.test/rss"})
+    jobs = html_scrape.fetch_jobs(
+        {"id": "germantechjobs_testing_germany", "rss_url": "https://example.test/rss"}
+    )
 
     assert jobs[0].title == "QA Engineer"
     assert jobs[0].company == "Acme GmbH"
@@ -32,7 +36,22 @@ def test_parses_title_at_company_pattern(monkeypatch):
 def test_falls_back_to_raw_title_and_unknown_company_when_pattern_does_not_match(monkeypatch):
     monkeypatch.setattr(html_scrape, "get_with_retry", lambda *a, **k: fake_response(text=RSS_FEED))
 
-    jobs = html_scrape.fetch_jobs({"id": "germantechjobs_testing_germany", "rss_url": "https://example.test/rss"})
+    jobs = html_scrape.fetch_jobs(
+        {"id": "germantechjobs_testing_germany", "rss_url": "https://example.test/rss"}
+    )
 
     assert jobs[1].title == "Untitled Posting With No Company Marker"
     assert jobs[1].company == "Unknown"
+
+
+def test_http_error_returns_empty_list_instead_of_raising(monkeypatch):
+    def raise_error(*a, **k):
+        raise httpx.HTTPError("boom")
+
+    monkeypatch.setattr(html_scrape, "get_with_retry", raise_error)
+
+    jobs = html_scrape.fetch_jobs(
+        {"id": "germantechjobs_testing_germany", "rss_url": "https://example.test/rss"}
+    )
+
+    assert jobs == []

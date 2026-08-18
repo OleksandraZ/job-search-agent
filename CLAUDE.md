@@ -17,6 +17,12 @@ prose elsewhere in this file. Full adapter list: `sources.yaml`'s
 `meta.adapter_legend`. Phase definitions: `job_search_agent_plan.md` §13.
 Per-source build notes: `job_search_agent_phase5` memory (historical, not kept current).
 
+## Code quality
+
+After every task, `ruff check .` and `mypy .` must both show no errors before the
+task is considered done. Fix any findings — don't suppress them with inline
+ignores unless the ignore itself is the correct fix.
+
 ## Before adding a source
 
 - [ ] [Check for JSON-LD/`__NEXT_DATA__`](docs/lessons/adapters.md#json-ld) before writing CSS selectors

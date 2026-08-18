@@ -6,14 +6,14 @@ from pathlib import Path
 
 from adapters.boards import NormalizedJob
 
-DB_PATH = Path(__file__).parent.parent / "storage" / "jobs.db"
+DB_PATH = Path(__file__).parent / "jobs.db"
 
 
 def _job_id(job: NormalizedJob) -> str:
     return hashlib.sha256(f"{job.source_id}:{job.url}".encode()).hexdigest()
 
 
-def init_db(db_path: Path = DB_PATH) -> None:
+def init_db(db_path: Path) -> None:
     db_path.parent.mkdir(parents=True, exist_ok=True)
     with closing(sqlite3.connect(db_path)) as conn:
         conn.execute(
@@ -29,14 +29,14 @@ def init_db(db_path: Path = DB_PATH) -> None:
         conn.commit()
 
 
-def filter_unseen(jobs: list[NormalizedJob], db_path: Path = DB_PATH) -> list[NormalizedJob]:
+def filter_unseen(jobs: list[NormalizedJob], db_path: Path) -> list[NormalizedJob]:
     init_db(db_path)
     with closing(sqlite3.connect(db_path)) as conn:
         seen_ids = {row[0] for row in conn.execute("SELECT job_id FROM seen_jobs")}
     return [job for job in jobs if _job_id(job) not in seen_ids]
 
 
-def mark_seen(jobs: list[NormalizedJob], db_path: Path = DB_PATH) -> None:
+def mark_seen(jobs: list[NormalizedJob], db_path: Path) -> None:
     if not jobs:
         return
 

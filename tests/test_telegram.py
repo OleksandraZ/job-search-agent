@@ -1,3 +1,5 @@
+import httpx
+
 from notifier import telegram
 from tests.conftest import make_job
 
@@ -71,3 +73,34 @@ def test_send_report_sends_one_message_per_chunk(monkeypatch):
 
     expected_chunks = telegram.format_message(german_jobs=[], english_jobs=many_jobs)
     assert sent_texts == expected_chunks
+
+
+def test_send_report_stops_and_returns_only_delivered_jobs_on_chunk_failure(monkeypatch):
+    sent_texts = []
+    call_count = 0
+
+    def fake_post(url, **kwargs):
+        nonlocal call_count
+        call_count += 1
+        if call_count == 2:
+            raise httpx.HTTPError("boom")
+        sent_texts.append(kwargs["data"]["text"])
+
+        class FakeResponse:
+            def json(self):
+                return {"ok": True}
+
+        return FakeResponse()
+
+    monkeypatch.setattr(telegram, "post_with_retry", fake_post)
+
+    many_jobs = [make_job(url=f"https://example.test/{i}", title="Q" * 200) for i in range(60)]
+    expected_chunks = telegram.format_message(german_jobs=[], english_jobs=many_jobs)
+    assert len(expected_chunks) > 1  # the failure must land on a real 2nd chunk for this to mean anything
+
+    sent_jobs = telegram.send_report(german_jobs=[], english_jobs=many_jobs, bot_token="TOKEN", chat_id="1")
+
+    assert len(sent_texts) == 1
+    assert sent_jobs
+    assert sent_jobs != many_jobs
+    assert all(job in many_jobs for job in sent_jobs)

@@ -6,10 +6,12 @@ from pathlib import Path
 import yaml
 from dotenv import load_dotenv
 
+from adapters.boards import NormalizedJob
 from agents import germany_remote, munich_local
-from agents._common import fetch_from_sources
+from agents._common import SOURCE_IDS, fetch_from_sources
 from notifier import telegram
-from pipeline import classify_language, dedupe, filters
+from pipeline import classify_language, filters
+from storage import dedupe
 
 CONFIG_DIR = Path(__file__).parent / "config"
 
@@ -24,14 +26,13 @@ def load_yaml(name: str) -> dict:
         return yaml.safe_load(f)
 
 
-def main(dry_run: bool = False) -> None:
-    sources_config = load_yaml("sources.yaml")
-    keywords_config = load_yaml("keywords.yaml")
-
-    source_ids = sorted(set(munich_local.SOURCE_IDS) | set(germany_remote.SOURCE_IDS))
-    raw_jobs = fetch_from_sources(sources_config, keywords_config, source_ids)
-    logger.info("fetched %d jobs total", len(raw_jobs))
-
+def build_report(
+    raw_jobs: list[NormalizedJob], keywords_config: dict
+) -> tuple[list[NormalizedJob], list[NormalizedJob]]:
+    """Turn already-fetched jobs into the (german, english) report to send. No
+    network/Telegram/env dependency, so it's testable with a plain job list -
+    main() keeps only the true I/O seams (fetch, send, mark-seen).
+    """
     munich_jobs = munich_local.filter_jobs(raw_jobs)
     remote_jobs = germany_remote.filter_jobs(raw_jobs)
     logger.info("%d Munich jobs, %d Germany-remote jobs", len(munich_jobs), len(remote_jobs))
@@ -43,11 +44,22 @@ def main(dry_run: bool = False) -> None:
     matched = filters.filter_by_title(list(by_url.values()), keywords_config["title_match_terms"])
     logger.info("%d jobs matched title_match_terms", len(matched))
 
-    unseen = dedupe.filter_unseen(matched)
+    unseen = dedupe.filter_unseen(matched, db_path=dedupe.DB_PATH)
     logger.info("%d of those are new (not previously seen)", len(unseen))
 
     german_jobs, english_jobs = classify_language.split_by_language(unseen)
     logger.info("%d German-required, %d English jobs", len(german_jobs), len(english_jobs))
+    return german_jobs, english_jobs
+
+
+def main(dry_run: bool = False) -> None:
+    sources_config = load_yaml("sources.yaml")
+    keywords_config = load_yaml("keywords.yaml")
+
+    raw_jobs = fetch_from_sources(sources_config, keywords_config, sorted(SOURCE_IDS))
+    logger.info("fetched %d jobs total", len(raw_jobs))
+
+    german_jobs, english_jobs = build_report(raw_jobs, keywords_config)
 
     if dry_run:
         for chunk in telegram.format_message(german_jobs, english_jobs):
@@ -57,9 +69,9 @@ def main(dry_run: bool = False) -> None:
 
     bot_token = os.environ["TELEGRAM_BOT_TOKEN"]
     chat_id = os.environ["TELEGRAM_CHAT_ID"]
-    telegram.send_report(german_jobs, english_jobs, bot_token, chat_id)
-    dedupe.mark_seen(unseen)
-    logger.info("sent Telegram message(s), marked %d jobs as seen", len(unseen))
+    sent_jobs = telegram.send_report(german_jobs, english_jobs, bot_token, chat_id)
+    dedupe.mark_seen(sent_jobs, db_path=dedupe.DB_PATH)
+    logger.info("sent Telegram message(s), marked %d jobs as seen", len(sent_jobs))
 
 
 if __name__ == "__main__":

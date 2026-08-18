@@ -1,4 +1,6 @@
 import re
+from dataclasses import dataclass
+from functools import lru_cache
 from pathlib import Path
 
 import yaml
@@ -23,15 +25,32 @@ def _load_config(config_path: Path = CONFIG_PATH) -> dict:
         return yaml.safe_load(f)
 
 
-_config = _load_config()
-GERMAN_PATTERNS = [re.compile(p, re.IGNORECASE) for p in _config["german_required_patterns"]]
-DISCLAIMER_PATTERN = re.compile("|".join(_config["optional_disclaimer_patterns"]), re.IGNORECASE)
+@dataclass(frozen=True)
+class _Rules:
+    german_patterns: list[re.Pattern]
+    disclaimer_pattern: re.Pattern
+    german_words: set[str]
+    english_words: set[str]
+    min_german_words: int
+    min_ratio: float
 
-_WHOLE_DESC_CONFIG = _config["whole_description_language_signal"]
-GERMAN_WORDS = set(_WHOLE_DESC_CONFIG["german_words"])
-ENGLISH_WORDS = set(_WHOLE_DESC_CONFIG["english_words"])
-MIN_GERMAN_WORDS = _WHOLE_DESC_CONFIG["min_german_words"]
-MIN_GERMAN_RATIO = _WHOLE_DESC_CONFIG["min_ratio"]
+
+@lru_cache(maxsize=1)
+def _rules() -> _Rules:
+    # Computed on first use, not at import - importing this module (e.g. transitively
+    # through main.py during test collection) must not do real file I/O as a side
+    # effect just because something else needed NormalizedJob or split_by_language's
+    # signature, not its config-derived behavior.
+    config = _load_config()
+    whole_desc = config["whole_description_language_signal"]
+    return _Rules(
+        german_patterns=[re.compile(p, re.IGNORECASE) for p in config["german_required_patterns"]],
+        disclaimer_pattern=re.compile("|".join(config["optional_disclaimer_patterns"]), re.IGNORECASE),
+        german_words=set(whole_desc["german_words"]),
+        english_words=set(whole_desc["english_words"]),
+        min_german_words=whole_desc["min_german_words"],
+        min_ratio=whole_desc["min_ratio"],
+    )
 
 
 def _same_clause(text: str) -> str:
@@ -40,10 +59,11 @@ def _same_clause(text: str) -> str:
 
 
 def _has_explicit_german_requirement(text: str) -> bool:
-    for pattern in GERMAN_PATTERNS:
+    rules = _rules()
+    for pattern in rules.german_patterns:
         for match in pattern.finditer(text):
             window = _same_clause(text[match.end() : match.end() + DISCLAIMER_WINDOW])
-            disclaimer = DISCLAIMER_PATTERN.search(window)
+            disclaimer = rules.disclaimer_pattern.search(window)
             if disclaimer and not ENGLISH_MENTION.search(window[: disclaimer.start()]):
                 continue  # disclaimer applies to German itself - not a real requirement
             return True
@@ -55,12 +75,13 @@ def _is_predominantly_german(text: str) -> bool:
     # whole ad is written in German (see the config's comment for real examples) -
     # a stopword-frequency check rather than a phrase match, since there's no
     # explicit requirement statement to find here.
+    rules = _rules()
     words = WORD.findall(HTML_TAG.sub(" ", text).lower())
-    german_count = sum(1 for w in words if w in GERMAN_WORDS)
-    english_count = sum(1 for w in words if w in ENGLISH_WORDS)
-    if german_count < MIN_GERMAN_WORDS:
+    german_count = sum(1 for w in words if w in rules.german_words)
+    english_count = sum(1 for w in words if w in rules.english_words)
+    if german_count < rules.min_german_words:
         return False
-    return german_count / (german_count + english_count) >= MIN_GERMAN_RATIO
+    return german_count / (german_count + english_count) >= rules.min_ratio
 
 
 def is_german_required(job: NormalizedJob) -> bool:

@@ -78,7 +78,7 @@ def fetch_jobs(source_config: dict) -> list[NormalizedJob]:
         if job is not None:
             jobs.append(job)
 
-    return jobs
+    return [job for job in jobs if job.url]
 
 
 def _parse_job_urls(sitemap_xml: str) -> list[str]:
@@ -121,7 +121,7 @@ def _fetch_job(url: str, source_id: str) -> NormalizedJob | None:
     location = ", ".join(
         loc["address"]["addressLocality"]
         for loc in locations
-        if isinstance(loc, dict) and loc.get("address", {}).get("addressLocality")
+        if isinstance(loc, dict) and (loc.get("address") or {}).get("addressLocality")
     )
 
     return NormalizedJob(

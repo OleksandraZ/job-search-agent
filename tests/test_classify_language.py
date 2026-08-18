@@ -3,6 +3,7 @@ patterns and thresholds - see job_search_agent_phase4/phase5 memory and
 docs/lessons/classification.md for the incidents behind each case.
 """
 
+from pipeline import classify_language
 from pipeline.classify_language import is_german_required, split_by_language
 from tests.conftest import make_job
 
@@ -49,6 +50,25 @@ def test_empty_description_defaults_to_english():
     # silently lands in the English bucket.
     job = make_job(description="")
     assert is_german_required(job) is False
+
+
+def test_config_is_loaded_lazily_and_cached(monkeypatch):
+    classify_language._rules.cache_clear()
+    real_load_config = classify_language._load_config
+    calls: list = []
+
+    def counting_load_config(*args, **kwargs):
+        calls.append(1)
+        return real_load_config(*args, **kwargs)
+
+    monkeypatch.setattr(classify_language, "_load_config", counting_load_config)
+
+    assert calls == []  # importing/having the module around must not have loaded it
+
+    is_german_required(make_job(description="Deutschkenntnisse erforderlich."))
+    is_german_required(make_job(description="We need English only."))
+
+    assert len(calls) == 1  # loaded once on first real use, cached after that
 
 
 def test_split_by_language_partitions_jobs():

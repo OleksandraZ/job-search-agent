@@ -35,6 +35,17 @@ DETAIL_HTML = """
 </script>
 """
 
+NULL_ADDRESS_RESPONSE = {
+    "ergebnisliste": [
+        {
+            "referenznummer": "REF-4",
+            "stellenangebotsTitel": "Null Address Posting",
+            "firma": "Ghost GmbH",
+            "stellenlokationen": [{"adresse": None}],
+        }
+    ]
+}
+
 SOURCE_CONFIG = {"id": "bundesagentur_für_arbeit_jobsuche", "search_terms": ["qa engineer"]}
 
 
@@ -57,6 +68,16 @@ def test_job_with_no_german_locations_is_dropped_entirely(monkeypatch):
     urls = [job.url for job in jobs]
     assert "https://www.arbeitsagentur.de/jobsuche/jobdetail/REF-2" not in urls
     assert "https://www.arbeitsagentur.de/jobsuche/jobdetail/REF-3" not in urls
+
+
+def test_null_adresse_field_does_not_crash_and_job_is_dropped(monkeypatch):
+    monkeypatch.setattr(
+        bundesagentur, "get_with_retry", lambda *a, **k: fake_response(json=NULL_ADDRESS_RESPONSE)
+    )
+
+    jobs = bundesagentur.fetch_jobs(SOURCE_CONFIG)
+
+    assert jobs == []
 
 
 def test_fills_description_via_job_posting_json_ld(monkeypatch):

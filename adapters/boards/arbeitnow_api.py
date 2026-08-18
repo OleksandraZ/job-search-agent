@@ -6,7 +6,7 @@ import time
 import httpx
 from bs4 import BeautifulSoup
 
-from adapters.boards import NormalizedJob
+from adapters.boards import NormalizedJob, title_matches
 from http_client import get_with_retry
 
 logger = logging.getLogger(__name__)
@@ -67,7 +67,7 @@ def _parse_search_fragment(html: str, source_id: str) -> list[NormalizedJob]:
                 description="",
             )
         )
-    return jobs
+    return [job for job in jobs if job.url]
 
 
 def _fill_descriptions(jobs_by_url: dict[str, NormalizedJob], search_terms: list[str]) -> None:
@@ -78,7 +78,7 @@ def _fill_descriptions(jobs_by_url: dict[str, NormalizedJob], search_terms: list
     # (searching ~20 terms already returns ~150 unique jobs). Narrow to jobs whose
     # title actually matches search_terms - the same check pipeline/filters.py
     # applies downstream anyway - before paying for the extra request per job.
-    candidates = [job for job in jobs_by_url.values() if _title_matches(job.title, search_terms)]
+    candidates = [job for job in jobs_by_url.values() if title_matches(job.title, search_terms)]
     logger.info(
         "fetching full descriptions for %d/%d title-matched arbeitnow jobs",
         len(candidates),
@@ -92,11 +92,6 @@ def _fill_descriptions(jobs_by_url: dict[str, NormalizedJob], search_terms: list
             job.description = _fetch_description(job.url)
         except httpx.HTTPError as exc:
             logger.warning("failed to fetch description for %s: %s", job.url, exc)
-
-
-def _title_matches(title: str, terms: list[str]) -> bool:
-    lowered = title.lower()
-    return any(term.lower() in lowered for term in terms)
 
 
 def _fetch_description(url: str) -> str:

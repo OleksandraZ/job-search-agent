@@ -1,7 +1,7 @@
 import sqlite3
 from contextlib import closing
 
-from pipeline.dedupe import filter_unseen, init_db, mark_seen
+from storage.dedupe import filter_unseen, init_db, mark_seen
 from tests.conftest import make_job
 
 

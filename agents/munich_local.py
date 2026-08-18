@@ -1,21 +1,6 @@
 from adapters.boards import NormalizedJob
-from agents._common import fetch_from_sources
+from agents._common import SOURCE_IDS, fetch_from_sources
 from pipeline.location import filter_munich
-
-SOURCE_IDS = [
-    "arbeitnow_qa_jobs",
-    "germantechjobs_testing_germany",
-    "stepstone_germany",
-    "devjobs_germany_qa_engineer",
-    "testdevjobs_remote_germany",
-    "wearedevelopers_jobs",
-    "englishjobsde",
-    "built_in_qa_germany",
-    "xing_jobs",
-    "get_in_it",
-    "instaffo_qa_engineer",
-    "bundesagentur_für_arbeit_jobsuche",
-]
 
 
 def filter_jobs(jobs: list[NormalizedJob]) -> list[NormalizedJob]:
