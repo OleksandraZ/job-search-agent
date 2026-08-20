@@ -13,6 +13,7 @@ from agents._common import SOURCE_IDS
 from notifier import telegram
 from pipeline import classify_language, filters
 from storage import dedupe
+from tools.resolve_ats import resolve_pending
 
 CONFIG_DIR = Path(__file__).parent / "config"
 
@@ -62,8 +63,19 @@ def build_report(
 def main(dry_run: bool = False) -> None:
     sources_config = load_yaml("sources.yaml")
     keywords_config = load_yaml("keywords.yaml")
-    companies_config = load_yaml("companies.yaml")
     db_path = dedupe.DB_PATH
+
+    # A fresh companies.yaml entry (bare name+url, never resolved) has no ats set,
+    # so fetch_from_companies() would otherwise silently skip it forever -
+    # resolve_pending() classifies any such entry in place on disk before it's
+    # loaded below. Only ever-unresolved entries, not already-attempted null/custom
+    # ones - see resolve_pending()'s docstring. No-op once every company has been
+    # through resolution at least once.
+    newly_resolved = resolve_pending()
+    if newly_resolved:
+        logger.info("resolved %d pending companies before this run", len(newly_resolved))
+
+    companies_config = load_yaml("companies.yaml")
 
     raw_board_jobs = fetch_from_sources(sources_config, keywords_config, sorted(SOURCE_IDS))
     raw_company_jobs = fetch_from_companies(companies_config, keywords_config)

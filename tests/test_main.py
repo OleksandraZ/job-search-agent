@@ -60,6 +60,7 @@ def _patch_orchestration(monkeypatch, *, german_jobs, english_jobs, calls):
         return {"sources": [], "title_match_terms": []}
 
     monkeypatch.setattr(main, "load_yaml", fake_load_yaml)
+    monkeypatch.setattr(main, "resolve_pending", lambda: [])
     monkeypatch.setattr(
         main, "build_report", lambda raw_jobs, keywords_config, db_path: (german_jobs, english_jobs)
     )

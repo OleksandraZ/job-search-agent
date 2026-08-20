@@ -1,7 +1,20 @@
 import logging
 from concurrent.futures import ThreadPoolExecutor
 
-from adapters.ats import ashby_api, greenhouse_api, lever_api, personio_feed, smartrecruiters_api, workday_api
+from adapters.ats import (
+    ashby_api,
+    bamboohr_api,
+    greenhouse_api,
+    join_api,
+    lever_api,
+    onlyfy_scrape,
+    personio_feed,
+    recruitee_api,
+    smartrecruiters_api,
+    softgarden_scrape,
+    workable_api,
+    workday_api,
+)
 from adapters.boards import (
     NormalizedJob,
     arbeitnow_api,
@@ -45,6 +58,20 @@ ATS_ADAPTERS = {
     "smartrecruiters": smartrecruiters_api.fetch_jobs,
     "personio": personio_feed.fetch_jobs,
     "workday": workday_api.fetch_jobs,
+    "workable": workable_api.fetch_jobs,
+    "recruitee": recruitee_api.fetch_jobs,
+    "softgarden": softgarden_scrape.fetch_jobs,
+    "bamboohr": bamboohr_api.fetch_jobs,
+    "join": join_api.fetch_jobs,
+    "onlyfy": onlyfy_scrape.fetch_jobs,
+    # rexx intentionally not registered - unlike the six above, it isn't a
+    # centralized per-slug API/subdomain at all: it's fully white-labeled onto
+    # each company's own domain (verified live against Dataport/CANCOM/iteratec -
+    # only a generic CSS/JS "rexx-kit" framework and jQuery-autocomplete search
+    # endpoints are visible, no discoverable per-company identifier or API). Every
+    # rexx-resolved company currently has identifier: null for the same reason.
+    # Needs per-company reverse engineering, not one shared adapter - left
+    # unregistered (inert, same as a board `_todo` entry) rather than guessed at.
 }
 
 

@@ -79,6 +79,22 @@ CAREER_LINK_PATTERN = re.compile(
     r"career|karriere|jobs?\b|stellenangebote|stellenanzeigen|wir suchen|join us", re.IGNORECASE
 )
 
+# A second, distinct pattern for the second hop only (see `_detect_ats`'s "second
+# hop" comment) - a career-hub page (already matched CAREER_LINK_PATTERN to get
+# here) commonly links to its actual job listing via phrasing that doesn't itself
+# contain "career"/"job"/"karriere" at all, e.g. "See our open roles". Verified live
+# against Taxfix: its /en/careers/ hub page's only link to the real (Ashby-embedded)
+# listing page is anchor text "See our open roles" / "Open roles" - neither matches
+# CAREER_LINK_PATTERN. Kept separate from CAREER_LINK_PATTERN rather than merged
+# into it, since these terms (bare "role", "opening") are too generic to risk
+# matching unrelated homepage links.
+JOB_LISTING_LINK_PATTERN = re.compile(
+    r"open\s*(?:role|position|vacanc\w*)s?|current\s*openings?|job\s*openings?|"
+    r"view\s*(?:all\s*)?jobs|see\s*(?:all\s*)?(?:our\s*)?(?:jobs|roles)|"
+    r"offene\s*stellen|alle\s*stellen",
+    re.IGNORECASE,
+)
+
 # Each entry: (ats name, list of regexes tried in order - first capture group(s) give
 # the identifier). Most platforms link directly (`jobs.lever.co/<slug>`); Greenhouse's
 # standard embed snippet instead carries the slug as a `for=` query param
@@ -126,7 +142,22 @@ ATS_PATTERNS: list[tuple[str, list[re.Pattern[str]]]] = [
     # it as an unexplained null. Identifier is the company's subdomain slug, e.g.
     # "passauerwolf1" from https://passauerwolf1.softgarden.io - verified live
     # against PASSAUER WOLF Medizin fürs Leben's careers page.
-    ("softgarden", [re.compile(r"([a-z0-9-]+)\.softgarden\.io", re.IGNORECASE)]),
+    (
+        "softgarden",
+        [
+            # Two distinct domain conventions confirmed live on different
+            # companies: <slug>.softgarden.io (PASSAUER WOLF) and
+            # <slug>.career.softgarden.de (Sunfire) - the original pattern only
+            # covered the first, silently missing every company on the second.
+            re.compile(r"([a-z0-9-]+)\.(?:career\.)?softgarden\.(?:io|de)", re.IGNORECASE),
+        ],
+    ),
+    # Workable: no fetch_jobs adapter exists yet either, same inert-until-built
+    # status as softgarden. Verified live against Plan A's careers page
+    # (apply.workable.com/plana) - the public apply subdomain is the stable
+    # per-company slug, confirmed live to be Workable's own documented URL
+    # convention (not guessed).
+    ("workable", [re.compile(r"apply\.workable\.com/([a-z0-9_-]+)", re.IGNORECASE)]),
     # The eight vendors below have no adapter built (or planned yet) - unlike every
     # pattern above, none of these were checked against a real live page, so they're
     # kept as simple domain/path matches on purpose: they only feed bucketing/
@@ -146,7 +177,7 @@ ATS_PATTERNS: list[tuple[str, list[re.Pattern[str]]]] = [
 ]
 
 
-def _match_signature(url: str, text: str) -> dict | None:
+def _match_signature(url: str, text: str, expected_name: str) -> dict | None:
     # Next.js's embedded page-data JSON (and similar React/JS payloads) escapes
     # forward slashes inside string literals - verified live on n8n's careers
     # page, whose raw HTML has the real ashbyhq URL as a JSON string with every
@@ -157,14 +188,32 @@ def _match_signature(url: str, text: str) -> dict | None:
     haystack = f"{url}\n{text}".replace("\\u002F", "/").replace("\\/", "/")
     for ats, patterns in ATS_PATTERNS:
         for pattern in patterns:
-            match = pattern.search(haystack)
-            if not match:
+            matches = list(pattern.finditer(haystack))
+            if not matches:
                 continue
             identifier: str | dict[str, str] | None
             if ats == "workday":
+                match = matches[0]
                 identifier = {"tenant": match.group(1), "wd_host": match.group(2), "site": match.group(3)}
-            elif match.groups():
-                identifier = match.group(1)
+            elif matches[0].groups():
+                # A page can carry more than one reference matching the same
+                # pattern - most often the vendor's own tracking/analytics
+                # subdomain embedded on every page it hosts, which happens to
+                # share the same "<slug>.<vendor>.<tld>" shape as the real
+                # per-company board. Verified live: Softgarden injects
+                # "matomo.softgarden.io" (its own analytics) before the real
+                # "cqse.softgarden.io" reference on CQSE's careers page;
+                # Recruitee injects "careers-analytics.recruitee.com" before the
+                # real company slug on every Recruitee-hosted page seen so far.
+                # Taking the first match blindly picked the tracker's subdomain
+                # instead of the company's own. Prefer whichever candidate's
+                # slug actually fuzzy-matches the company name; fall back to the
+                # first match only when none do (matches this file's existing
+                # default-permissive bias - see _names_match's other callers).
+                candidates = list(dict.fromkeys(m.group(1) for m in matches))
+                identifier = next(
+                    (c for c in candidates if _names_match(c, expected_name)), candidates[0]
+                )
             else:
                 # A presence-only pattern (no capture group) - vendor confirmed, but
                 # no slug to extract. Recorded rather than discarded (see the
@@ -192,26 +241,34 @@ def _match_data_attributes(text: str) -> dict | None:
     return None
 
 
-def _find_career_link(homepage_url: str, homepage_html: str) -> str | None:
-    soup = BeautifulSoup(homepage_html, "html.parser")
+def _find_matching_links(pattern: re.Pattern[str], base_url: str, html: str) -> list[str]:
+    """Every (deduped, order-preserved) link on the page whose href or text matches
+    `pattern`. Deliberately returns *all* matches, not just the first - a homepage
+    can have an earlier, unrelated match (verified live: Taxfix's homepage links to
+    a blog post titled "Personen mit Zweitjob" - a German compound word for "second
+    job" - before its real "Karriere" link; taking only the first match picked the
+    blog post and the real careers page was never even tried).
+    """
+    soup = BeautifulSoup(html, "html.parser")
+    links: list[str] = []
     for a in soup.find_all("a", href=True):
         href = str(a["href"])
         text = a.get_text()
-        if CAREER_LINK_PATTERN.search(href) or CAREER_LINK_PATTERN.search(text):
-            return urljoin(homepage_url, href)
-    return None
+        if pattern.search(href) or pattern.search(text):
+            url = urljoin(base_url, href)
+            if url not in links:
+                links.append(url)
+    return links
 
 
 def _candidate_career_urls(company_url: str, homepage_url: str, homepage_html: str) -> list[str]:
-    candidates = []
-    career_link = _find_career_link(homepage_url, homepage_html)
-    if career_link:
-        candidates.append(career_link)
+    candidates = _find_matching_links(CAREER_LINK_PATTERN, homepage_url, homepage_html)
 
     parsed = urlparse(company_url)
     base = f"{parsed.scheme}://{parsed.netloc}"
     candidates.extend(base + path for path in CAREER_PATH_GUESSES)
-    return candidates
+    # dedupe, keep order - a discovered link can coincide with a path guess
+    return list(dict.fromkeys(candidates))
 
 
 def _normalize_name(text: str) -> str:
@@ -332,8 +389,73 @@ def _probe_all_platforms(company: dict) -> dict | None:
     return None
 
 
+# Vendors resolve_ats can only presence-detect (no capture group anywhere in
+# ATS_PATTERNS - see the comment above that list) - identifier stays null forever
+# once one of these matches, so treating a null identifier there as "still needs
+# resolving" would re-issue the same live requests every single call to
+# resolve_pending() for no possible change in outcome.
+PRESENCE_ONLY_ATS = {"rexx", "dvinci", "jazzhr"}
+
+
+# `ats` has three "not a real vendor" states, kept deliberately distinct so `null`
+# means exactly one thing (never attempted) instead of doing double duty for both
+# "never tried" and "tried, found nothing":
+#   - None        - never been through resolution at all (a bare name+url entry).
+#   - "unresolved" - resolution ran and found no careers page/vendor anywhere.
+#   - "custom"     - resolution found a real careers page, but no recognized vendor.
+# _detect_ats/_unresolved() below only ever produce the latter two for an entry
+# that's actually been attempted - `ats: null` in companies.yaml after this file has
+# touched an entry would be a bug, not an outcome.
+UNRESOLVED = "unresolved"
+
+
+def needs_resolution(company: dict) -> bool:
+    """True for a company worth *retrying* by hand: never attempted (`ats: null`),
+    `ats: "unresolved"`/`"custom"` (resolve_ats didn't find a vendor last time -
+    worth another shot since the company's own site can change), or a null
+    `identifier` on a vendor that should have one - the last case guards against a
+    hand-edited or partially-written companies.yaml entry, not just resolve_ats.py's
+    own output.
+
+    This is the CLI's own default filter (`python -m tools.resolve_ats`, no
+    `--force`) - a deliberate, on-demand retry a person chooses to run. It is NOT
+    what `resolve_pending()` uses for the automatic pre-`main.py` check below: an
+    `"unresolved"`/`"custom"` result already reflects a real attempt, and
+    re-fetching the same dead/vendor-less careers page on every single `main.py` run
+    would add real latency for an outcome that essentially never changes between
+    runs. See `is_new_entry()`.
+    """
+    ats = company.get("ats")
+    if ats in (None, UNRESOLVED, "custom"):
+        return True
+    return company.get("identifier") is None and ats not in PRESENCE_ONLY_ATS
+
+
+def is_new_entry(company: dict) -> bool:
+    """True only for a company that has never been through resolution at all.
+    `ats: null` is reserved exclusively for this case (see the `UNRESOLVED` comment
+    above) - a company that was already tried and found nothing gets `ats:
+    "unresolved"`, not null, specifically so this check can be a plain `is None`
+    rather than needing to also inspect `resolved_at`. Unlike `needs_resolution()`,
+    an already-attempted `"unresolved"`/`"custom"` company does NOT count here -
+    that's a real, already-paid-for attempt, not something worth re-fetching on
+    every `main.py` run. Use `python -m tools.resolve_ats` by hand to retry those.
+    """
+    return company.get("ats") is None
+
+
 def _unresolved() -> dict:
-    return {"ats": None, "identifier": None, "careers_url": None, "match_method": None}
+    return {"ats": UNRESOLVED, "identifier": None, "careers_url": None, "match_method": None}
+
+
+def _scan_page(url: str, text: str, expected_name: str) -> dict | None:
+    match = _match_signature(url, text, expected_name)
+    if match:
+        return {**match, "careers_url": url, "match_method": "page_scan"}
+    data_match = _match_data_attributes(text)
+    if data_match:
+        return {**data_match, "careers_url": url, "match_method": "data_attr"}
+    return None
 
 
 def _detect_ats(company: dict) -> dict:
@@ -348,19 +470,19 @@ def _detect_ats(company: dict) -> dict:
             return {**probed, "careers_url": None, "match_method": "api_probe"}
         return _unresolved()
 
-    match = _match_signature(str(homepage.url), homepage.text)
-    if match:
-        return {**match, "careers_url": str(homepage.url), "match_method": "page_scan"}
-
-    data_match = _match_data_attributes(homepage.text)
-    if data_match:
-        return {**data_match, "careers_url": str(homepage.url), "match_method": "data_attr"}
+    found = _scan_page(str(homepage.url), homepage.text, company["name"])
+    if found:
+        return found
 
     # First real careers page found (200, regardless of fingerprint match) - kept so
     # the custom-vs-unresolved decision below can tell "found a page, no known
     # vendor" apart from "couldn't find a careers page at all".
     first_found_career_url: str | None = None
+    visited = {str(homepage.url)}
     for url in _candidate_career_urls(company_url, str(homepage.url), homepage.text):
+        if url in visited:
+            continue
+        visited.add(url)
         try:
             response = get_with_retry(url, headers=HEADERS)
         except httpx.HTTPError:
@@ -369,13 +491,30 @@ def _detect_ats(company: dict) -> dict:
         if first_found_career_url is None:
             first_found_career_url = str(response.url)
 
-        match = _match_signature(str(response.url), response.text)
-        if match:
-            return {**match, "careers_url": str(response.url), "match_method": "page_scan"}
+        found = _scan_page(str(response.url), response.text, company["name"])
+        if found:
+            return found
 
-        data_match = _match_data_attributes(response.text)
-        if data_match:
-            return {**data_match, "careers_url": str(response.url), "match_method": "data_attr"}
+        # Second hop: this candidate 200'd (a real page exists) but carries no ATS
+        # signature itself - many companies put a marketing/culture hub at their
+        # "Karriere"/"Careers" link and only embed the ATS one click deeper, on an
+        # "open roles"/"job openings" sub-page. Verified live: Taxfix's own
+        # /en/careers/ hub page has zero Ashby references anywhere in its ~370KB of
+        # HTML; the real embed only appears on /en/job-openings/, reached via a
+        # "See our open roles" link on the hub page itself - a link that
+        # CAREER_LINK_PATTERN wouldn't have matched even if this loop had started
+        # from the hub page directly.
+        for deeper_url in _find_matching_links(JOB_LISTING_LINK_PATTERN, str(response.url), response.text):
+            if deeper_url in visited:
+                continue
+            visited.add(deeper_url)
+            try:
+                deeper_response = get_with_retry(deeper_url, headers=HEADERS)
+            except httpx.HTTPError:
+                continue
+            found = _scan_page(str(deeper_response.url), deeper_response.text, company["name"])
+            if found:
+                return found
 
     # Passive scanning only sees ATS references present in static HTML/embedded
     # JSON - a company whose apply flow constructs the ATS URL entirely client-side
@@ -416,7 +555,7 @@ def resolve_all(companies: list[dict]) -> None:
         company["careers_url"] = result["careers_url"]
         company["match_method"] = result["match_method"]
         company["resolved_at"] = datetime.now(timezone.utc).isoformat()
-        logger.info("%s -> %s", company["name"], result["ats"] or "unresolved")
+        logger.info("%s -> %s", company["name"], result["ats"])
 
     with ThreadPoolExecutor(max_workers=MAX_WORKERS) as executor:
         # list() to force every future to complete (and any exception to surface)
@@ -428,7 +567,9 @@ def resolve_all(companies: list[dict]) -> None:
 def _summarize(companies: list[dict]) -> dict[str, int]:
     counts: dict[str, int] = {}
     for company in companies:
-        key = company.get("ats") or "unresolved"
+        # "new" (never attempted, ats: null) is kept distinct from the real
+        # "unresolved" outcome string - see the UNRESOLVED comment above.
+        key = company.get("ats") or "new"
         counts[key] = counts.get(key, 0) + 1
     return counts
 
@@ -436,10 +577,11 @@ def _summarize(companies: list[dict]) -> dict[str, int]:
 def _write_report(companies: list[dict]) -> None:
     total = len(companies)
     counts = _summarize(companies)
-    vendor_counts = {k: v for k, v in counts.items() if k not in ("unresolved", "custom")}
+    vendor_counts = {k: v for k, v in counts.items() if k not in (UNRESOLVED, "custom", "new")}
     resolved_count = sum(vendor_counts.values())
     custom = [c for c in companies if c.get("ats") == "custom"]
-    unresolved = [c for c in companies if c.get("ats") is None]
+    unresolved = [c for c in companies if c.get("ats") == UNRESOLVED]
+    new = [c for c in companies if c.get("ats") is None]
 
     def _pct(count: int) -> float:
         return (count / total * 100) if total else 0.0
@@ -453,7 +595,8 @@ def _write_report(companies: list[dict]) -> None:
         "",
         f"- Resolved (real vendor): {resolved_count} ({_pct(resolved_count):.1f}%)",
         f"- Custom (careers page found, no recognized vendor): {len(custom)} ({_pct(len(custom)):.1f}%)",
-        f"- Unresolved (no careers page found): {len(unresolved)} ({_pct(len(unresolved)):.1f}%)",
+        f"- Unresolved (attempted, no careers page found): {len(unresolved)} ({_pct(len(unresolved)):.1f}%)",
+        f"- New (never attempted): {len(new)} ({_pct(len(new)):.1f}%)",
         "",
         "## Resolved by vendor",
         "",
@@ -461,14 +604,51 @@ def _write_report(companies: list[dict]) -> None:
     for vendor, count in sorted(vendor_counts.items(), key=lambda kv: -kv[1]):
         lines.append(f"- {vendor}: {count}")
 
-    lines += ["", "## Unresolved companies", ""]
+    lines += ["", "## Unresolved companies (attempted, found nothing)", ""]
     lines += [f"- {c['name']} — {c['url']}" for c in unresolved] or ["(none)"]
 
     lines += ["", "## Custom (candidate for a future generic scraper)", ""]
     lines += [f"- {c['name']} — {c.get('careers_url') or c['url']}" for c in custom] or ["(none)"]
 
+    lines += ["", "## New (never attempted)", ""]
+    lines += [f"- {c['name']} — {c['url']}" for c in new] or ["(none)"]
+
     REPORT_PATH.write_text("\n".join(lines) + "\n", encoding="utf-8")
     logger.info("wrote report to %s", REPORT_PATH)
+
+
+def resolve_pending() -> list[dict]:
+    """Resolve every company entry that `is_new_entry()` - never been through
+    resolution at all - in place on disk, and return just that subset. Called by
+    main.py before each run - a freshly-added companies.yaml entry (name+url only)
+    has no `ats`, so `adapters/registry.py`'s
+    `ATS_ADAPTERS.get(company.get("ats"))` would silently return None and skip it
+    forever without this.
+
+    Deliberately narrower than `needs_resolution()` - an already-attempted
+    `null`/`custom` result is not re-fetched here (see `is_new_entry()`'s
+    docstring for why); run `python -m tools.resolve_ats` by hand to retry those.
+    No-op (returns `[]`, doesn't touch the file) once every company has been
+    through resolution at least once, which is the common case on every run after
+    a company's first.
+    """
+    with open(COMPANIES_PATH, encoding="utf-8") as f:
+        data = yaml.safe_load(f)
+
+    companies = data["companies"]
+    to_resolve = [c for c in companies if is_new_entry(c)]
+    if not to_resolve:
+        return []
+
+    logger.info("resolving %d pending company ATS entries", len(to_resolve))
+    resolve_all(to_resolve)
+
+    with open(COMPANIES_PATH, "w", encoding="utf-8") as f:
+        yaml.safe_dump(data, f, sort_keys=False, allow_unicode=True, default_flow_style=False)
+
+    logger.info("pending resolution summary: %s", _summarize(to_resolve))
+    _write_report(companies)
+    return to_resolve
 
 
 def main(argv: list[str] | None = None) -> None:
@@ -486,7 +666,7 @@ def main(argv: list[str] | None = None) -> None:
         data = yaml.safe_load(f)
 
     companies = data["companies"]
-    to_resolve = companies if args.force else [c for c in companies if c.get("ats") in (None, "custom")]
+    to_resolve = companies if args.force else [c for c in companies if needs_resolution(c)]
     logger.info("resolving %d of %d companies (force=%s)", len(to_resolve), len(companies), args.force)
 
     resolve_all(to_resolve)

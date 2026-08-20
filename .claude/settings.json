@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(.venv/bin/python -c ' *)",
+      "Bash(.venv/bin/python -m pytest tests/test_resolve_ats.py -q)",
+      "Bash(.venv/bin/python -m tools.resolve_ats)"
+    ]
+  }
+}
