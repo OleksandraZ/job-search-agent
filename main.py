@@ -7,7 +7,7 @@ import yaml
 from dotenv import load_dotenv
 
 from adapters.boards import NormalizedJob
-from adapters.registry import fetch_from_sources
+from adapters.registry import fetch_from_companies, fetch_from_sources
 from agents import germany_remote, munich_local
 from agents._common import SOURCE_IDS
 from notifier import telegram
@@ -19,6 +19,12 @@ CONFIG_DIR = Path(__file__).parent / "config"
 load_dotenv()
 
 logging.basicConfig(level=logging.INFO, format="%(levelname)s %(name)s: %(message)s")
+# httpx/httpcore log each request's full URL at INFO - for Telegram that URL embeds
+# the bot token (https://api.telegram.org/bot<token>/sendMessage), so leaving this at
+# INFO would put a live secret in whatever this run's logs land in (cron output,
+# persisted log files, etc).
+logging.getLogger("httpx").setLevel(logging.WARNING)
+logging.getLogger("httpcore").setLevel(logging.WARNING)
 logger = logging.getLogger(__name__)
 
 
@@ -56,10 +62,15 @@ def build_report(
 def main(dry_run: bool = False) -> None:
     sources_config = load_yaml("sources.yaml")
     keywords_config = load_yaml("keywords.yaml")
+    companies_config = load_yaml("companies.yaml")
     db_path = dedupe.DB_PATH
 
-    raw_jobs = fetch_from_sources(sources_config, keywords_config, sorted(SOURCE_IDS))
-    logger.info("fetched %d jobs total", len(raw_jobs))
+    raw_board_jobs = fetch_from_sources(sources_config, keywords_config, sorted(SOURCE_IDS))
+    raw_company_jobs = fetch_from_companies(companies_config, keywords_config)
+    logger.info(
+        "fetched %d board jobs, %d company jobs", len(raw_board_jobs), len(raw_company_jobs)
+    )
+    raw_jobs = raw_board_jobs + raw_company_jobs
 
     german_jobs, english_jobs = build_report(raw_jobs, keywords_config, db_path)
 

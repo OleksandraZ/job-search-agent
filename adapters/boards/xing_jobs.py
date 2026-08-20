@@ -7,13 +7,16 @@ import re
 from bs4 import BeautifulSoup
 
 from adapters.boards import NormalizedJob, title_matches
-from http_client import fetch_each, get_with_retry
+from http_client import fetch_each, fetch_each_concurrent, get_with_retry
 
 logger = logging.getLogger(__name__)
 
 BASE_URL = "https://www.xing.com"
 SEARCH_URL = BASE_URL + "/jobs/search"
 REQUEST_DELAY_SECONDS = 1.5
+# See http_client.fetch_each_concurrent's docstring - kept modest since every
+# description request here hits the same host (www.xing.com).
+DESCRIPTION_FETCH_WORKERS = 4
 
 # XING's robots.txt disallows /jobs/search(?*) for generic crawlers ("User-agent: *")
 # but has a separate block explicitly allowing it for named AI-agent bots, including
@@ -115,10 +118,10 @@ def _fill_descriptions(jobs_by_url: dict[str, NormalizedJob], search_terms: list
     # non-title-matched jobs never get a populated description and pipeline/
     # location.py's is_munich()/is_remote() already only trust structured location
     # text for those, which is real city/region data with no country ambiguity risk).
-    for job, (description, country) in fetch_each(
+    for job, (description, country) in fetch_each_concurrent(
         candidates,
         lambda j: _fetch_description_and_country(j.url),
-        delay_seconds=REQUEST_DELAY_SECONDS,
+        max_workers=DESCRIPTION_FETCH_WORKERS,
         logger=logger,
         log_context="xing description fetch",
     ):

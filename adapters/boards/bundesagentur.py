@@ -6,7 +6,7 @@ import logging
 from bs4 import BeautifulSoup
 
 from adapters.boards import NormalizedJob, title_matches
-from http_client import fetch_each, get_with_retry
+from http_client import fetch_each, fetch_each_concurrent, get_with_retry
 
 logger = logging.getLogger(__name__)
 
@@ -22,6 +22,12 @@ SEARCH_API_URL = "https://rest.arbeitsagentur.de/jobboerse/jobsuche-service/pc/v
 API_HEADERS = {"X-API-Key": "jobboerse-jobsuche"}
 REQUEST_DELAY_SECONDS = 1.0
 GERMANY = "DEUTSCHLAND"
+# See http_client.fetch_each_concurrent's docstring - kept modest since every
+# description request here hits the same host (www.arbeitsagentur.de). This is
+# usually the largest single source (biggest raw job count of any adapter, per
+# job_search_agent_phase5 memory), so its own description-fetch pass was one of the
+# biggest single contributors to main.py's total wall time.
+DESCRIPTION_FETCH_WORKERS = 4
 
 
 def fetch_jobs(source_config: dict) -> list[NormalizedJob]:
@@ -98,10 +104,10 @@ def _fill_descriptions(jobs_by_url: dict[str, NormalizedJob], search_terms: list
         len(jobs_by_url),
     )
 
-    for job, description in fetch_each(
+    for job, description in fetch_each_concurrent(
         candidates,
         lambda j: _fetch_description(j.url),
-        delay_seconds=REQUEST_DELAY_SECONDS,
+        max_workers=DESCRIPTION_FETCH_WORKERS,
         logger=logger,
         log_context="bundesagentur description fetch",
     ):

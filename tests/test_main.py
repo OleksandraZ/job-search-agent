@@ -54,7 +54,12 @@ def _patch_orchestration(monkeypatch, *, german_jobs, english_jobs, calls):
     """Stub out only main()'s true I/O seams - config loading, the pure build_report
     computation (covered separately above), sending, and marking-seen.
     """
-    monkeypatch.setattr(main, "load_yaml", lambda name: {"sources": [], "title_match_terms": []})
+    def fake_load_yaml(name):
+        if name == "companies.yaml":
+            return {"companies": []}
+        return {"sources": [], "title_match_terms": []}
+
+    monkeypatch.setattr(main, "load_yaml", fake_load_yaml)
     monkeypatch.setattr(
         main, "build_report", lambda raw_jobs, keywords_config, db_path: (german_jobs, english_jobs)
     )

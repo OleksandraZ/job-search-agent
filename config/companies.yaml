@@ -1,401 +1,3677 @@
 companies:
 - name: FINN
   url: https://www.finn.com
+  ats: lever
+  identifier: finn
 - name: Quantum Systems
   url: https://quantum-systems.com
+  ats: personio
+  identifier: quantum-systems
 - name: Parloa
   url: https://www.parloa.com
+  ats: greenhouse
+  identifier: parloa
 - name: n8n
   url: https://n8n.io
+  ats: ashby
+  identifier: n8n
 - name: Trade Republic
   url: https://traderepublic.com
+  ats: greenhouse
+  identifier: traderepublic
 - name: DeepL
   url: https://www.deepl.com
+  ats: ashby
+  identifier: DeepL
 - name: N26
   url: https://n26.com
+  ats: greenhouse
+  identifier: n26
 - name: Celonis
   url: https://www.celonis.com
+  ats: greenhouse
+  identifier: celonis
 - name: Flix
   url: https://flix.com
+  ats: greenhouse
+  identifier: flix
 - name: Personio
   url: https://www.personio.com
+  ats: personio
+  identifier: personio
 - name: Scalable Capital
   url: https://de.scalable.capital
+  ats: custom
+  identifier: null
+  careers_url: https://de.scalable.capital/careers
+  match_method: null
+  resolved_at: '2026-08-20T13:23:18.229459+00:00'
 - name: GetYourGuide
   url: https://www.getyourguide.com
+  ats: greenhouse
+  identifier: getyourguide
 - name: EGYM
   url: https://egym.com
+  ats: ashby
+  identifier: egym
 - name: AMBOSS
   url: https://www.amboss.com
+  ats: ashby
+  identifier: amboss
 - name: commercetools
   url: https://commercetools.com
+  ats: greenhouse
+  identifier: commercetools
 - name: Contentful
   url: https://www.contentful.com
+  ats: greenhouse
+  identifier: contentful
 - name: Staffbase
   url: https://staffbase.com
+  ats: greenhouse
+  identifier: staffbase
 - name: Upvest
   url: https://upvest.co
+  ats: ashby
+  identifier: upvest
 - name: Raisin
   url: https://www.raisin.com
+  ats: greenhouse
+  identifier: raisin
 - name: Choco
   url: https://choco.com
+  ats: ashby
+  identifier: choco
 - name: Taktile
   url: https://taktile.com
+  ats: ashby
+  identifier: taktile
 - name: Urban Sports Club
   url: https://urbansportsclub.com
+  ats: greenhouse
+  identifier: urbansportsclub
 - name: Omio
   url: https://www.omio.com
+  ats: smartrecruiters
+  identifier: omio
 - name: Taxfix
   url: https://taxfix.de
+  ats: custom
+  identifier: null
+  careers_url: https://taxfix.de/steuerklasse-6-zweitjob/
+  match_method: null
+  resolved_at: '2026-08-20T13:23:13.514303+00:00'
 - name: Solaris
   url: https://www.solarisgroup.com
+  ats: custom
+  identifier: null
+  careers_url: https://www.solarisgroup.com/en/careers/
+  match_method: null
+  resolved_at: '2026-08-20T13:23:22.495439+00:00'
 - name: Holidu
   url: https://www.holidu.com
+  ats: ashby
+  identifier: holidu
 - name: Pliant
   url: https://www.getpliant.com
+  ats: ashby
+  identifier: pliant
 - name: Moonfare
   url: https://www.moonfare.com
+  ats: greenhouse
+  identifier: moonfare
 - name: Billie
   url: https://www.billie.io
+  ats: ashby
+  identifier: billie
 - name: Moss
   url: https://www.getmoss.com
+  ats: ashby
+  identifier: moss
 - name: Clark
   url: https://www.clark.de
+  ats: personio
+  identifier: clark
 - name: Vivid Money
   url: https://vivid.money
+  ats: personio
+  identifier: vivid
 - name: Getsafe
   url: https://www.hellogetsafe.com
+  ats: personio
+  identifier: getsafe
 - name: ELEMENT
   url: https://www.element.in
+  ats: personio
+  identifier: element
 - name: Hawk AI
   url: https://hawk.ai
+  ats: ashby
+  identifier: hawk
 - name: Payrails
   url: https://www.payrails.com
+  ats: ashby
+  identifier: payrails
 - name: Mondu
   url: https://www.mondu.ai
+  ats: custom
+  identifier: null
+  careers_url: https://www.mondu.ai/careers/
+  match_method: null
+  resolved_at: '2026-08-20T13:23:29.906378+00:00'
 - name: bunch
   url: https://www.bunch.capital
+  ats: ashby
+  identifier: bunch
 - name: Blacklane
   url: https://www.blacklane.com
+  ats: greenhouse
+  identifier: blacklane
 - name: AnyDesk
   url: https://anydesk.com
+  ats: greenhouse
+  identifier: anydesk
 - name: Camunda
   url: https://camunda.com
+  ats: ashby
+  identifier: camunda
 - name: Spryker
   url: https://spryker.com
+  ats: greenhouse
+  identifier: spryker
 - name: Productsup
   url: https://www.productsup.com
+  ats: custom
+  identifier: null
+  careers_url: https://www.productsup.com/careers/
+  match_method: null
+  resolved_at: '2026-08-20T13:23:35.231748+00:00'
 - name: Talon.One
   url: https://www.talon.one
+  ats: custom
+  identifier: null
+  careers_url: https://www.talon.one/jobs
+  match_method: null
+  resolved_at: '2026-08-20T13:23:39.504855+00:00'
 - name: Shopware
   url: https://www.shopware.com
+  ats: recruitee
+  identifier: shopwareag
+  careers_url: https://careers.shopware.com/en/
+  match_method: page_scan
+  resolved_at: '2026-08-20T13:23:24.636474+00:00'
 - name: SimScale
   url: https://www.simscale.com
+  ats: greenhouse
+  identifier: simscale
 - name: Tacto
   url: https://www.tacto.ai
+  ats: ashby
+  identifier: tacto
 - name: osapiens
   url: https://osapiens.com
+  ats: null
+  identifier: null
+  careers_url: null
+  match_method: null
+  resolved_at: '2026-08-20T13:23:31.091738+00:00'
 - name: IntegrityNext
   url: https://www.integritynext.com
+  ats: personio
+  identifier: integrity-next-gmbh
 - name: Makersite
   url: https://makersite.io
+  ats: recruitee
+  identifier: makersitegmbh
+  careers_url: https://makersite.io
+  match_method: page_scan
+  resolved_at: '2026-08-20T13:23:30.163468+00:00'
 - name: Buynomics
   url: https://www.buynomics.com
+  ats: greenhouse
+  identifier: buynomics
 - name: Sastrify
   url: https://www.sastrify.com
+  ats: personio
+  identifier: sastrify
 - name: Plan A
   url: https://plana.earth
+  ats: custom
+  identifier: null
+  careers_url: https://plana.earth/careers
+  match_method: null
+  resolved_at: '2026-08-20T13:23:47.733706+00:00'
 - name: ottonova
   url: https://www.ottonova.de
+  ats: personio
+  identifier: ottonova
 - name: gridX
   url: https://www.gridx.ai
+  ats: personio
+  identifier: gridx
 - name: TWAICE
   url: https://www.twaice.com
+  ats: personio
+  identifier: twaice
 - name: tado°
   url: https://www.tado.com
+  ats: personio
+  identifier: tado
 - name: The Mobility House
   url: https://www.mobilityhouse.com
+  ats: personio
+  identifier: tmh
 - name: cargo.one
   url: https://www.cargo.one
+  ats: ashby
+  identifier: cargo-one
 - name: ResearchGate
   url: https://www.researchgate.net
+  ats: lever
+  identifier: researchgate
 - name: parcelLab
   url: https://parcellab.com
+  ats: null
+  identifier: null
+  careers_url: null
+  match_method: null
+  resolved_at: '2026-08-20T13:23:44.069278+00:00'
 - name: Seven Senders
   url: https://sevensenders.com
+  ats: smartrecruiters
+  identifier: SevenSenders
 - name: WorkMotion
   url: https://workmotion.com
+  ats: custom
+  identifier: null
+  careers_url: https://workmotion.com/careers/
+  match_method: null
+  resolved_at: '2026-08-20T13:23:59.761992+00:00'
 - name: Zenjob
   url: https://www.zenjob.com
+  ats: ashby
+  identifier: zenjob
 - name: Uberall
   url: https://uberall.com
+  ats: ashby
+  identifier: Uberall
 - name: Patient21
   url: https://www.patient21.com
+  ats: custom
+  identifier: null
+  careers_url: https://patient21.com/jobs
+  match_method: null
+  resolved_at: '2026-08-20T13:23:53.422123+00:00'
 - name: Everphone
   url: https://www.everphone.com
+  ats: personio
+  identifier: everphone
 - name: Grover
   url: https://www.grover.com
+  ats: greenhouse
+  identifier: grover
 - name: Helsing
   url: https://helsing.ai
+  ats: greenhouse
+  identifier: helsing
 - name: NEURA Robotics
   url: https://neura-robotics.com
+  ats: personio
+  identifier: neura-robotics
 - name: 1KOMMA5°
   url: https://1komma5.com
+  ats: personio
+  identifier: 1komma5grad
 - name: Enpal
   url: https://www.enpal.com
+  ats: ashby
+  identifier: enpal
 - name: Black Forest Labs
   url: https://blackforestlabs.ai
+  ats: greenhouse
+  identifier: blackforestlabs
 - name: STARK
   url: https://stark-defence.com
+  ats: personio
+  identifier: stark
 - name: Forto
   url: https://www.forto.com
+  ats: ashby
+  identifier: forto
 - name: sennder
   url: https://www.sennder.com
+  ats: custom
+  identifier: null
+  careers_url: https://www.sennder.com/career
+  match_method: null
+  resolved_at: '2026-08-20T13:23:57.324510+00:00'
 - name: Sereact
   url: https://sereact.ai
+  ats: ashby
+  identifier: sereact
 - name: Agile Robots
   url: https://www.agile-robots.com
+  ats: personio
+  identifier: agile-robots-se
 - name: Aleph Alpha
   url: https://aleph-alpha.com
+  ats: ashby
+  identifier: AlephAlpha
 - name: Flink
   url: https://www.goflink.com
+  ats: ashby
+  identifier: flink
 - name: Wandelbots
   url: https://www.wandelbots.com
+  ats: personio
+  identifier: wandelbots
 - name: RobCo
   url: https://www.rob.co
+  ats: ashby
+  identifier: robco
 - name: OroraTech
   url: https://ororatech.com
+  ats: personio
+  identifier: ororatech
 - name: Orbem
   url: https://orbem.ai
+  ats: ashby
+  identifier: orbem
 - name: Caresyntax
   url: https://caresyntax.com
+  ats: null
+  identifier: null
+  careers_url: null
+  match_method: null
+  resolved_at: '2026-08-20T13:24:00.428521+00:00'
 - name: Ada Health
   url: https://ada.com
+  ats: greenhouse
+  identifier: adahealth
 - name: Isar Aerospace
   url: https://www.isaraerospace.com
+  ats: greenhouse
+  identifier: isaraerospace
 - name: The Exploration Company
   url: https://www.exploration.space
+  ats: ashby
+  identifier: the-exploration-company
 - name: Sunfire
   url: https://www.sunfire.de
+  ats: custom
+  identifier: null
+  careers_url: https://sunfire.de/en/career/
+  match_method: null
+  resolved_at: '2026-08-20T13:24:03.986882+00:00'
 - name: CMBlu Energy
   url: https://www.cmblu.com
+  ats: greenhouse
+  identifier: engcmbluenergyag
 - name: Instagrid
   url: https://instagrid.co
+  ats: personio
+  identifier: instagrid
 - name: ENVIRIA
   url: https://enviria.energy
+  ats: personio
+  identifier: enviria
 - name: air up
   url: https://www.air-up.com
+  ats: null
+  identifier: null
+  careers_url: null
+  match_method: null
+  resolved_at: '2026-08-20T13:24:09.198759+00:00'
 - name: KoRo
   url: https://www.koro.com
+  ats: personio
+  identifier: koro-handels-gmbh
 - name: Voltfang
   url: https://voltfang.de
+  ats: personio
+  identifier: voltfang
 - name: Terra One
   url: https://www.terra.one
+  ats: ashby
+  identifier: terra
 - name: Kraftblock
   url: https://kraftblock.com
+  ats: personio
+  identifier: kraftblock
 - name: Tubulis
   url: https://tubulis.com
+  ats: personio
+  identifier: tubulis-gmbh
 - name: Proxima Fusion
   url: https://www.proximafusion.com
+  ats: ashby
+  identifier: proxima-fusion
 - name: Marvel Fusion
   url: https://marvelfusion.com
+  ats: greenhouse
+  identifier: marvelfusion
 - name: Atruvia AG
   url: https://www.atruvia.de/
+  ats: custom
+  identifier: null
+  careers_url: https://atruvia.de/karriere
+  match_method: null
+  resolved_at: '2026-08-20T13:24:19.801450+00:00'
 - name: Provinzial Konzern
   url: https://www.provinzial.de/
+  ats: null
+  identifier: null
+  careers_url: null
+  match_method: null
+  resolved_at: '2026-08-20T13:24:26.798645+00:00'
 - name: AXA Konzern AG
   url: https://www.axa.de/
+  ats: custom
+  identifier: null
+  careers_url: https://www.axa.de/karriere
+  match_method: null
+  resolved_at: '2026-08-20T13:24:43.639569+00:00'
 - name: Zurich Gruppe Deutschland
   url: https://www.zurich.de/
+  ats: custom
+  identifier: null
+  careers_url: https://www.zurich.de/careers
+  match_method: null
+  resolved_at: '2026-08-20T13:24:23.467700+00:00'
 - name: EnBW Energie Baden-Württemberg AG
   url: https://www.enbw.com/
+  ats: custom
+  identifier: null
+  careers_url: https://www.enbw.com/karriere/
+  match_method: null
+  resolved_at: '2026-08-20T13:24:39.656994+00:00'
 - name: Commerzbank AG
   url: https://www.commerzbank.de/
+  ats: custom
+  identifier: null
+  careers_url: https://www.commerzbank.de/konzern/karriere/
+  match_method: null
+  resolved_at: '2026-08-20T13:24:41.043021+00:00'
 - name: BITMARCK-Unternehmensgruppe
   url: https://www.bitmarck.de/
+  ats: custom
+  identifier: null
+  careers_url: https://www.bitmarck.de/
+  match_method: null
+  resolved_at: '2026-08-20T13:24:43.441396+00:00'
 - name: Dataport AöR
   url: https://www.dataport.de/
+  ats: custom
+  identifier: null
+  careers_url: https://www.dataport.de/karriere/arbeiten-bei-dataport/
+  match_method: null
+  resolved_at: '2026-08-20T13:24:58.655610+00:00'
 - name: Siemens AG
   url: https://www.siemens.com/de/de.html
+  ats: custom
+  identifier: null
+  careers_url: https://www.siemens.com/de-de/company/jobs/
+  match_method: null
+  resolved_at: '2026-08-20T13:25:07.037103+00:00'
 - name: Allianz in Deutschland
   url: https://www.allianz.de/
+  ats: null
+  identifier: null
+  careers_url: null
+  match_method: null
+  resolved_at: '2026-08-20T13:24:57.131569+00:00'
 - name: BWI GmbH
   url: https://www.bwi.de/
+  ats: custom
+  identifier: null
+  careers_url: https://www.bwi.de/karriere
+  match_method: null
+  resolved_at: '2026-08-20T13:25:03.246190+00:00'
 - name: Airbus
   url: https://www.airbus.com/
+  ats: workday
+  identifier:
+    tenant: ag
+    wd_host: wd3
+    site: Airbus
 - name: AUDI AG
   url: https://www.audi.de/
+  ats: null
+  identifier: null
+  careers_url: null
+  match_method: null
+  resolved_at: '2026-08-20T13:25:10.664300+00:00'
 - name: E.ON
   url: https://www.eon.com/de.html
+  ats: ashby
+  identifier: eon
+  careers_url: null
+  match_method: api_probe
+  resolved_at: '2026-08-20T13:24:59.069940+00:00'
 - name: Siemens Energy
   url: https://www.siemens-energy.com/de/de/home.html
+  ats: custom
+  identifier: null
+  careers_url: https://jobs.siemens-energy.com/de_DE/jobs
+  match_method: null
+  resolved_at: '2026-08-20T13:25:12.742011+00:00'
 - name: Finanz Informatik GmbH & Co.KG
   url: https://www.f-i.de/
+  ats: custom
+  identifier: null
+  careers_url: https://www.f-i.de/karriere
+  match_method: null
+  resolved_at: '2026-08-20T13:25:20.632415+00:00'
 - name: BMW Group
   url: https://www.bmwgroup.com/
+  ats: null
+  identifier: null
+  careers_url: null
+  match_method: null
+  resolved_at: '2026-08-20T13:26:26.841115+00:00'
 - name: AEB SE
   url: https://www.aeb.com/
+  ats: custom
+  identifier: null
+  careers_url: https://www.aeb.com/en/work-at-aeb/jobs.php
+  match_method: null
+  resolved_at: '2026-08-20T13:25:29.015182+00:00'
 - name: SECUINFRA GmbH
   url: https://www.secuinfra.com/
+  ats: personio
+  identifier: secuinfra
 - name: Vodafone GmbH
   url: https://www.vodafone.de/
+  ats: custom
+  identifier: null
+  careers_url: https://careers.vodafone.com/de/
+  match_method: null
+  resolved_at: '2026-08-20T13:25:29.849789+00:00'
 - name: BROCKHAUS AG
   url: https://www.brockhaus-ag.de/
+  ats: custom
+  identifier: null
+  careers_url: https://www.brockhaus-ag.de/#Karriere
+  match_method: null
+  resolved_at: '2026-08-20T13:25:33.843364+00:00'
 - name: Bosch Gruppe
   url: https://www.bosch.de/
+  ats: custom
+  identifier: null
+  careers_url: https://www.bosch.de/karriere/
+  match_method: null
+  resolved_at: '2026-08-20T13:25:44.682580+00:00'
 - name: Bundesagentur für Arbeit
   url: https://www.arbeitsagentur.de/
+  ats: custom
+  identifier: null
+  careers_url: https://www.arbeitsagentur.de/karriere-und-weiterbildung
+  match_method: null
+  resolved_at: '2026-08-20T13:25:52.140389+00:00'
 - name: TauRes Gesellschaft für Investmentberatung mbH
   url: https://taures.de/
+  ats: personio
+  identifier: taures
 - name: Bayernwerk
   url: https://www.bayernwerk.de/
+  ats: null
+  identifier: null
+  careers_url: null
+  match_method: null
+  resolved_at: '2026-08-20T13:25:40.595504+00:00'
 - name: HanseWerk-Gruppe
   url: https://www.hansewerk.com/
+  ats: null
+  identifier: null
+  careers_url: null
+  match_method: null
+  resolved_at: '2026-08-20T13:25:53.898116+00:00'
 - name: TenneT Deutschland
   url: https://www.tennet.eu/de/
+  ats: null
+  identifier: null
+  careers_url: null
+  match_method: null
+  resolved_at: '2026-08-20T13:25:59.176664+00:00'
 - name: Hamburger Sparkasse AG (Haspa)
   url: https://www.haspa.de/
+  ats: custom
+  identifier: null
+  careers_url: https://www.haspa.de/de/home/karriere.html?n=true&stref=hnav
+  match_method: null
+  resolved_at: '2026-08-20T13:26:09.001616+00:00'
 - name: Westnetz GmbH
   url: https://www.westnetz.de/
+  ats: null
+  identifier: null
+  careers_url: null
+  match_method: null
+  resolved_at: '2026-08-20T13:26:07.339038+00:00'
 - name: AVEDO
   url: https://www.avedo.de/
+  ats: recruitee
+  identifier: careers-analytics
+  careers_url: https://jobs.avedo.de/
+  match_method: page_scan
+  resolved_at: '2026-08-20T13:26:00.175525+00:00'
 - name: Kassenärztliche Vereinigung Baden-Württemberg
   url: https://www.kvbawue.de/
+  ats: custom
+  identifier: null
+  careers_url: https://www.kvbawue.de/ueber-uns/karriere
+  match_method: null
+  resolved_at: '2026-08-20T13:26:16.244828+00:00'
 - name: ZEISS
   url: https://www.zeiss.de/
+  ats: lever
+  identifier: zeiss
 - name: Landschaftsverband Rheinland
   url: https://www.lvr.de/
+  ats: custom
+  identifier: null
+  careers_url: https://www.lvr.de/lvr/karriere/
+  match_method: null
+  resolved_at: '2026-08-20T13:26:25.068882+00:00'
 - name: Syna GmbH
   url: https://www.syna.de/
+  ats: null
+  identifier: null
+  careers_url: null
+  match_method: null
+  resolved_at: '2026-08-20T13:26:22.714353+00:00'
 - name: Swiss Life Deutschland
   url: https://www.swisslife.de/
+  ats: null
+  identifier: null
+  careers_url: null
+  match_method: null
+  resolved_at: '2026-08-20T13:26:29.938237+00:00'
 - name: enmore consulting ag
   url: https://www.enmore.de/
+  ats: custom
+  identifier: null
+  careers_url: https://www.enmore.de/jobs/
+  match_method: null
+  resolved_at: '2026-08-20T13:26:40.931968+00:00'
 - name: R+V Versicherung
   url: https://www.ruv.de/
+  ats: custom
+  identifier: null
+  careers_url: https://www.ruv.de/karriere
+  match_method: null
+  resolved_at: '2026-08-20T13:26:45.632483+00:00'
 - name: profine GmbH
   url: https://www.profine-group.com/
+  ats: custom
+  identifier: null
+  careers_url: https://jobs.profine-group.com
+  match_method: null
+  resolved_at: '2026-08-20T13:26:47.717302+00:00'
 - name: DZ BANK AG / Deutsche Zentral-Genossenschaftsbank
   url: https://www.dzbank.de/
+  ats: custom
+  identifier: null
+  careers_url: https://karriere.dzbank.de/
+  match_method: null
+  resolved_at: '2026-08-20T13:26:46.972018+00:00'
 - name: LVM Versicherung
   url: https://www.lvm.de/
+  ats: custom
+  identifier: null
+  careers_url: https://karriere.lvm.de/
+  match_method: null
+  resolved_at: '2026-08-20T13:27:12.810683+00:00'
 - name: Techniker Krankenkasse
   url: https://www.tk.de/
+  ats: custom
+  identifier: null
+  careers_url: https://www.tk.de/service/app/2055100/stellenmarkt/suche.app
+  match_method: null
+  resolved_at: '2026-08-20T13:27:03.010314+00:00'
 - name: Sparkasse Vorpommern
   url: https://www.spk-vorpommern.de/
+  ats: custom
+  identifier: null
+  careers_url: https://www.spk-vorpommern.de/de/home/misc/stellen-und-ausbildung.html?n=true
+  match_method: null
+  resolved_at: '2026-08-20T13:27:06.429321+00:00'
 - name: SachsenEnergie AG
   url: https://www.sachsenenergie.de/
+  ats: custom
+  identifier: null
+  careers_url: https://www.sachsenenergie.de/wps/portal/energie/cms/menu_main/karriere
+  match_method: null
+  resolved_at: '2026-08-20T13:27:23.955494+00:00'
 - name: AOK - Die Gesundheitskasse
   url: https://www.aok.de/
+  ats: custom
+  identifier: null
+  careers_url: https://www.aok.de/karriere/
+  match_method: null
+  resolved_at: '2026-08-20T13:27:23.074002+00:00'
 - name: Deutsche Leasing Gruppe
   url: https://www.deutsche-leasing.com/
+  ats: null
+  identifier: null
+  careers_url: null
+  match_method: null
+  resolved_at: '2026-08-20T13:27:31.201787+00:00'
 - name: Avacon AG
   url: https://www.avacon.de/
+  ats: null
+  identifier: null
+  careers_url: null
+  match_method: null
+  resolved_at: '2026-08-20T13:27:29.954954+00:00'
 - name: GROB-WERKE GmbH & Co. KG
   url: https://www.grobgroup.com/
+  ats: custom
+  identifier: null
+  careers_url: https://karriere.grobgroup.com/
+  match_method: null
+  resolved_at: '2026-08-20T13:28:44.350528+00:00'
 - name: VR Bank Augsburg-Ostallgäu eG
   url: https://www.vrbank-augsburg-ostallgaeu.de/
+  ats: custom
+  identifier: null
+  careers_url: https://www.vrbank-augsburg-ostallgaeu.de/meine-bank/karriere.html
+  match_method: null
+  resolved_at: '2026-08-20T13:27:40.149412+00:00'
 - name: KPMG AG Wirtschaftsprüfungsgesellschaft
   url: https://kpmg.com/de/de.html
+  ats: lever
+  identifier: kpmg
 - name: verticus Finanzmanagement AG
   url: https://www.verticus.ag/
+  ats: personio
+  identifier: verticus
 - name: Lufthansa Technik AG
   url: https://www.lufthansa-technik.com/
-- name: Stadtwerke Potsdam GmbH
-  url: https://www.swp-potsdam.de/
+  ats: null
+  identifier: null
+  careers_url: null
+  match_method: null
+  resolved_at: '2026-08-20T13:27:51.479800+00:00'
 - name: DEVK
   url: https://www.devk.de/
+  ats: custom
+  identifier: null
+  careers_url: https://jobs.devk.de/
+  match_method: null
+  resolved_at: '2026-08-20T13:27:40.198388+00:00'
 - name: Elektro Breitling GmbH
   url: https://www.elektro-breitling.de/
+  ats: custom
+  identifier: null
+  careers_url: https://www.eb-karriere.de/
+  match_method: null
+  resolved_at: '2026-08-20T13:30:10.372538+00:00'
 - name: Dräger
   url: https://www.draeger.com/de_de/Home
+  ats: null
+  identifier: null
+  careers_url: null
+  match_method: null
+  resolved_at: '2026-08-20T13:30:03.513827+00:00'
 - name: EVOMOTIV
   url: https://www.evomotiv.com/
+  ats: custom
+  identifier: null
+  careers_url: https://www.evomotiv.com/career/
+  match_method: null
+  resolved_at: '2026-08-20T13:30:04.984575+00:00'
 - name: Maschinenfabrik Reinhausen GmbH
   url: https://www.reinhausen.com/
+  ats: custom
+  identifier: null
+  careers_url: https://www.reinhausen.com/career
+  match_method: null
+  resolved_at: '2026-08-20T13:30:18.479175+00:00'
 - name: Sparkasse Pforzheim Calw
   url: https://www.sparkasse-pforzheim-calw.de/
+  ats: custom
+  identifier: null
+  careers_url: https://www.sparkasse-pforzheim-calw.de/de/home/karriere.html?n=true&stref=hnav
+  match_method: null
+  resolved_at: '2026-08-20T13:30:14.354815+00:00'
 - name: VerbundVolksbank OWL eG
   url: https://www.verbundvolksbank-owl.de/
-- name: FAIR DOCTORS Gruppe
-  url: https://fair-doctors.de/
+  ats: custom
+  identifier: null
+  careers_url: https://www.verbundvolksbank-owl.de/karriere.html
+  match_method: null
+  resolved_at: '2026-08-20T13:30:21.498776+00:00'
 - name: pme Familienservice GmbH
   url: https://www.familienservice.de/
+  ats: softgarden
+  identifier: familienservice
 - name: PraeLux
   url: https://praelux.de/
+  ats: custom
+  identifier: null
+  careers_url: https://praelux.de/karriere/
+  match_method: null
+  resolved_at: '2026-08-20T13:30:44.125819+00:00'
 - name: m&i-Klinikgruppe Enzensberg
   url: https://www.enzensberg.de/
+  ats: custom
+  identifier: null
+  careers_url: https://www.enzensberg.de/jobs
+  match_method: null
+  resolved_at: '2026-08-20T13:30:29.996178+00:00'
 - name: koenig.solutions
   url: https://www.koenig.solutions/
+  ats: recruitee
+  identifier: careers-analytics
+  careers_url: https://jobs.koenig.solutions/
+  match_method: page_scan
+  resolved_at: '2026-08-20T13:30:19.860908+00:00'
 - name: Dorow Clinic
   url: https://dorow-clinic.de/
+  ats: recruitee
+  identifier: careers-analytics
+  careers_url: https://karriere.dorow-clinic.de/
+  match_method: page_scan
+  resolved_at: '2026-08-20T13:30:21.578927+00:00'
 - name: GOLDBECK GmbH
   url: https://www.goldbeck.de/
+  ats: null
+  identifier: null
+  careers_url: null
+  match_method: null
+  resolved_at: '2026-08-20T13:30:40.654697+00:00'
 - name: LEONHARD WEISS GmbH & Co. KG
   url: https://www.leonhard-weiss.de/
+  ats: custom
+  identifier: null
+  careers_url: https://www.leonhard-weiss.de/karriere
+  match_method: null
+  resolved_at: '2026-08-20T13:30:37.740513+00:00'
 - name: Bayer (Deutschland)
   url: https://www.bayer.com/de/de/
+  ats: null
+  identifier: null
+  careers_url: null
+  match_method: null
+  resolved_at: '2026-08-20T13:30:44.873924+00:00'
 - name: STRABAG SE
   url: https://www.strabag.com/
+  ats: custom
+  identifier: null
+  careers_url: https://karriere.strabag.com/at
+  match_method: null
+  resolved_at: '2026-08-20T13:30:56.971267+00:00'
 - name: XXXLutz Deutschland
   url: https://www.xxxlutz.de/
+  ats: custom
+  identifier: null
+  careers_url: https://www.xxxlutz.de/en/careers
+  match_method: null
+  resolved_at: '2026-08-20T13:30:58.257007+00:00'
 - name: Roche in Deutschland
   url: https://www.roche.de/
+  ats: workday
+  identifier:
+    tenant: roche
+    wd_host: wd3
+    site: roche-ext
 - name: Agentur für Haushaltshilfe GmbH
   url: https://www.agentur-fuer-haushaltshilfe.de/
+  ats: null
+  identifier: null
+  careers_url: null
+  match_method: null
+  resolved_at: '2026-08-20T13:31:03.099791+00:00'
 - name: ACTIEF Personalmanagement GmbH
   url: https://www.actief-personal.de/
+  ats: custom
+  identifier: null
+  careers_url: https://www.actief-personal.de/interne-karriere/
+  match_method: null
+  resolved_at: '2026-08-20T13:31:05.843276+00:00'
 - name: Amadeus Fire AG
   url: https://www.amadeus-fire.de/
+  ats: custom
+  identifier: null
+  careers_url: https://www.amadeus-fire.de/fuer-bewerber/jobvermittlung/zeitarbeit-jobs
+  match_method: null
+  resolved_at: '2026-08-20T13:31:15.811701+00:00'
 - name: TÜV SÜD
   url: https://www.tuvsud.com/de-de/
+  ats: null
+  identifier: null
+  careers_url: null
+  match_method: null
+  resolved_at: '2026-08-20T13:31:13.779277+00:00'
 - name: AllDent Zahnzentrum
   url: https://www.alldent-zahnzentrum.de/
+  ats: custom
+  identifier: null
+  careers_url: https://www.alldent-karriere.de/
+  match_method: null
+  resolved_at: '2026-08-20T13:31:13.669667+00:00'
 - name: Graf Recke Stiftung
   url: https://www.graf-recke-stiftung.de/
+  ats: softgarden
+  identifier: graf-recke-stiftung
 - name: POLYGON Deutschland GmbH
   url: https://www.polygongroup.com/de-DE/
+  ats: custom
+  identifier: null
+  careers_url: https://karriere.polygon-deutschland.de/
+  match_method: null
+  resolved_at: '2026-08-20T13:31:23.078828+00:00'
 - name: Pflegedienst Kremer
   url: https://pflegedienst-kremer.de/
+  ats: custom
+  identifier: null
+  careers_url: https://pflegedienst-kremer.de/karriere/
+  match_method: null
+  resolved_at: '2026-08-20T13:31:30.387487+00:00'
 - name: DIS AG
   url: https://www.dis-ag.com/
+  ats: custom
+  identifier: null
+  careers_url: https://www.dis-ag.com/de-de/bewerber/zeitarbeit
+  match_method: null
+  resolved_at: '2026-08-20T13:32:08.011392+00:00'
 - name: Johanniter Seniorenhäuser GmbH
   url: https://www.johanniter.de/johanniter-seniorenhaeuser/
+  ats: custom
+  identifier: null
+  careers_url: https://www.johanniter.de/johanniter-seniorenhaeuser/karriere/als-pflegefachkraft-arbeiten/
+  match_method: null
+  resolved_at: '2026-08-20T13:31:35.406091+00:00'
 - name: Adecco Personaldienstleistungen GmbH
   url: https://www.adecco.de/
+  ats: custom
+  identifier: null
+  careers_url: https://jobs.de.adecco.com/
+  match_method: null
+  resolved_at: '2026-08-20T13:31:53.829649+00:00'
 - name: Neukirchener Erziehungsverein
   url: https://www.neukirchener.de/
+  ats: custom
+  identifier: null
+  careers_url: https://www.neukirchener.de/beruf-karriere/wir-als-arbeitgeber/
+  match_method: null
+  resolved_at: '2026-08-20T13:31:46.375051+00:00'
 - name: Terminal for Kids gGmbH
   url: https://www.terminalforkids.de/
+  ats: custom
+  identifier: null
+  careers_url: https://www.terminalforkids.de/jobs
+  match_method: null
+  resolved_at: '2026-08-20T13:31:51.059803+00:00'
 - name: Kaiserswerther Diakonie
   url: https://www.kaiserswerther-diakonie.de/
+  ats: softgarden
+  identifier: kaiserswerther-diakonie
 - name: Rail Unit GmbH
   url: https://rail-unit.de/
+  ats: custom
+  identifier: null
+  careers_url: https://rail-unit.de/jobs/
+  match_method: null
+  resolved_at: '2026-08-20T13:32:03.323448+00:00'
 - name: Klinikum Siegen
   url: https://www.klinikum-siegen.de/
+  ats: softgarden
+  identifier: klinikum-siegen
 - name: Schülerhilfe Deutschland
   url: https://www.schuelerhilfe.de/
+  ats: softgarden
+  identifier: schuelerhilfe
 - name: PASSAUER WOLF Medizin fürs Leben
   url: https://www.passauerwolf.de/
+  ats: softgarden
+  identifier: passauerwolf1
 - name: Office Events P & B GmbH
   url: https://www.office-events.de/
+  ats: custom
+  identifier: null
+  careers_url: https://www.office-events.de/stellenangebote/
+  match_method: null
+  resolved_at: '2026-08-20T13:32:21.511378+00:00'
 - name: ep group
   url: https://www.ep-group.de/
+  ats: custom
+  identifier: null
+  careers_url: https://www.ep-group.de/job-application?tx_stellenboerse_createapplication%5Baction%5D=newPre&tx_stellenboerse_createapplication%5Bcontroller%5D=Application&tx_stellenboerse_createapplication%5Bstelle%5D=0&cHash=c7f9e1ffd4f98e280252eedb76365b67cab331dc38be86647a11f997f011321a
+  match_method: null
+  resolved_at: '2026-08-20T13:32:05.900609+00:00'
 - name: Fürst Gruppe
   url: https://www.fuerst-gruppe.de/
+  ats: custom
+  identifier: null
+  careers_url: https://www.fuerst-gruppe.de/karriere/
+  match_method: null
+  resolved_at: '2026-08-20T13:32:19.545565+00:00'
 - name: Atemzug Intensivpflege Burkart GmbH
   url: https://www.atemzug.online/
+  ats: custom
+  identifier: null
+  careers_url: https://www.atemzug.online/intensivpflege-jobs.html
+  match_method: null
+  resolved_at: '2026-08-20T13:32:20.294604+00:00'
 - name: TEMPTON
   url: https://www.tempton.de/
+  ats: custom
+  identifier: null
+  careers_url: https://www.tempton.de/bewerber
+  match_method: null
+  resolved_at: '2026-08-20T13:32:15.946568+00:00'
 - name: tristar GmbH
   url: https://www.tristar-hotelgruppe.de/
+  ats: softgarden
+  identifier: matomo
 - name: FitX
   url: https://www.fitx.de/
+  ats: softgarden
+  identifier: certificate
 - name: Maritim Hotels
   url: https://www.maritim.de/
+  ats: custom
+  identifier: null
+  careers_url: https://karriere.maritim.de/de/
+  match_method: null
+  resolved_at: '2026-08-20T13:32:35.517726+00:00'
 - name: Aramark
   url: https://www.aramark.de/
+  ats: null
+  identifier: null
+  careers_url: null
+  match_method: null
+  resolved_at: '2026-08-20T13:32:36.777021+00:00'
 - name: Leonardo Hotels
   url: https://www.leonardo-hotels.de/
+  ats: custom
+  identifier: null
+  careers_url: https://www.leonardo-hotels-cyprus.com/careers
+  match_method: null
+  resolved_at: '2026-08-20T13:32:38.668285+00:00'
 - name: Fitness First Germany GmbH
   url: https://www.fitnessfirst.de/
+  ats: custom
+  identifier: null
+  careers_url: https://www.fitnessfirst.de/karriere
+  match_method: null
+  resolved_at: '2026-08-20T13:32:45.048625+00:00'
+- name: BurdaForward
+  url: https://www.burda-forward.de/
+  ats: custom
+  identifier: null
+  careers_url: https://www.burda-forward.de/career
+  match_method: null
+  resolved_at: '2026-08-20T13:32:51.734997+00:00'
+- name: trbo
+  url: https://www.trbo.com/
+  ats: personio
+  identifier: trbo
+- name: combyne
+  url: https://www.combyne.com/
+  ats: null
+  identifier: null
+  careers_url: null
+  match_method: null
+  resolved_at: '2026-08-20T13:32:44.816546+00:00'
+- name: Freeletics
+  url: https://www.freeletics.com/
+  ats: personio
+  identifier: freeletics
+- name: MING Labs
+  url: https://minglabs.com/
+  ats: custom
+  identifier: null
+  careers_url: https://www.minglabs.com/insights/articles/hire-dont-deploy
+  match_method: null
+  resolved_at: '2026-08-20T13:33:09.102005+00:00'
+- name: BetterTaxi
+  url: https://www.bettertaxi.com/
+  ats: custom
+  identifier: null
+  careers_url: https://www.bettertaxi.com/jobs/
+  match_method: null
+  resolved_at: '2026-08-20T13:32:54.097181+00:00'
+- name: FAZUA
+  url: https://fazua.com/
+  ats: null
+  identifier: null
+  careers_url: null
+  match_method: null
+  resolved_at: '2026-08-20T13:33:00.670226+00:00'
+- name: fleetster
+  url: https://www.fleetster.net/
+  ats: personio
+  identifier: fleetster
+- name: ParkHere
+  url: https://park-here.eu/
+  ats: ashby
+  identifier: everfield
+- name: SIXT
+  url: https://www.sixt.com/
+  ats: smartrecruiters
+  identifier: sixt
+- name: Adobe
+  url: https://www.adobe.com/
+  ats: null
+  identifier: null
+  careers_url: null
+  match_method: null
+  resolved_at: '2026-08-20T13:49:04.232890+00:00'
+- name: Cisco
+  url: https://www.cisco.com/
+  ats: null
+  identifier: null
+  careers_url: null
+  match_method: null
+  resolved_at: '2026-08-20T13:33:00.848565+00:00'
+- name: Google
+  url: https://about.google/
+  ats: custom
+  identifier: null
+  careers_url: https://www.google.com/about/careers/applications/?utm_source=about&utm_medium=referral&utm_campaign=footer-link
+  match_method: null
+  resolved_at: '2026-08-20T13:33:17.921792+00:00'
+- name: Hubert Burda Media
+  url: https://www.burda.com/
+  ats: custom
+  identifier: null
+  careers_url: https://www.burda.com/de/karriere/
+  match_method: null
+  resolved_at: '2026-08-20T13:33:29.034375+00:00'
+- name: IBM
+  url: https://www.ibm.com/de-de
+  ats: custom
+  identifier: null
+  careers_url: https://www.ibm.com/de-de/careers?lnk=hpii5de
+  match_method: null
+  resolved_at: '2026-08-20T13:33:22.370100+00:00'
+- name: mgm technology partners
+  url: https://www.mgm-tp.com/
+  ats: custom
+  identifier: null
+  careers_url: https://jobs.mgm-tp.com/
+  match_method: null
+  resolved_at: '2026-08-20T13:33:34.408653+00:00'
+- name: Microsoft
+  url: https://www.microsoft.com/de-de/
+  ats: custom
+  identifier: null
+  careers_url: https://careers.microsoft.com/v2/global/en/home.html
+  match_method: null
+  resolved_at: '2026-08-20T13:33:36.553011+00:00'
+- name: ams OSRAM
+  url: https://ams-osram.com/
+  ats: custom
+  identifier: null
+  careers_url: https://careers.ams-osram.com/en/ams-osram-career/
+  match_method: null
+  resolved_at: '2026-08-20T13:33:39.684516+00:00'
+- name: ProSiebenSat.1 Media
+  url: https://www.prosiebensat1.com/
+  ats: null
+  identifier: null
+  careers_url: null
+  match_method: null
+  resolved_at: '2026-08-20T13:33:50.434105+00:00'
+- name: Rohde & Schwarz
+  url: https://www.rohde-schwarz.com/
+  ats: custom
+  identifier: null
+  careers_url: https://www.rohde-schwarz.com/de/karriere/career-overview/career-overview_257552.html
+  match_method: null
+  resolved_at: '2026-08-20T13:33:46.281725+00:00'
+- name: Thoughtworks
+  url: https://www.thoughtworks.com/
+  ats: greenhouse
+  identifier: thoughtworks
+- name: Yahoo
+  url: https://www.yahooinc.com/
+  ats: custom
+  identifier: null
+  careers_url: https://www.yahooinc.com/careers/
+  match_method: null
+  resolved_at: '2026-08-20T13:34:03.423043+00:00'
+- name: Amazon
+  url: https://www.aboutamazon.de/
+  ats: personio
+  identifier: amazon
+- name: NFON
+  url: https://www.nfon.com/
+  ats: personio
+  identifier: nfon
+- name: Datarella
+  url: https://datarella.com/
+  ats: null
+  identifier: null
+  careers_url: null
+  match_method: null
+  resolved_at: '2026-08-20T13:33:58.580037+00:00'
+- name: Building Radar
+  url: https://buildingradar.com/
+  ats: personio
+  identifier: building-radar
+- name: CHECK24
+  url: https://www.check24.de/
+  ats: smartrecruiters
+  identifier: check24
+- name: Global Savings Group
+  url: https://www.global-savings-group.com/
+  ats: custom
+  identifier: null
+  careers_url: https://atolls.com/insights/category/careers/
+  match_method: null
+  resolved_at: '2026-08-20T13:49:05.424313+00:00'
+- name: givve
+  url: https://givve.com/
+  ats: personio
+  identifier: givve
+- name: limango
+  url: https://www.limango.de/
+  ats: rexx
+  identifier: null
+  careers_url: https://joinus.limango.com/
+  match_method: page_scan
+  resolved_at: '2026-08-20T13:34:00.321525+00:00'
+- name: lingoking
+  url: https://www.lingoking.com/
+  ats: softgarden
+  identifier: lingoking
+- name: Mytheresa
+  url: https://www.mytheresa.com/
+  ats: custom
+  identifier: null
+  careers_url: https://www.mytheresa.com/careers
+  match_method: null
+  resolved_at: '2026-08-20T13:49:07.434381+00:00'
+- name: Scout24
+  url: https://www.scout24.com/
+  ats: greenhouse
+  identifier: scout24
+- name: Vitafy Brands
+  url: https://vitafybrands.de/
+  ats: personio
+  identifier: vitafy
+- name: Westwing
+  url: https://www.westwing.com/
+  ats: personio
+  identifier: westwing
+- name: aboalarm
+  url: https://www.aboalarm.de/
+  ats: null
+  identifier: null
+  careers_url: null
+  match_method: null
+  resolved_at: '2026-08-20T13:49:15.308537+00:00'
+- name: Bilendo
+  url: https://www.bilendo.de/
+  ats: personio
+  identifier: bilendogmbh
+- name: Boku
+  url: https://www.boku.com/
+  ats: greenhouse
+  identifier: boku
+- name: Gini
+  url: https://gini.net/
+  ats: custom
+  identifier: null
+  careers_url: https://gini.net/ueber-gini/#jobs
+  match_method: null
+  resolved_at: '2026-08-20T13:49:16.006923+00:00'
+- name: Interhyp
+  url: https://www.interhyp.de/
+  ats: null
+  identifier: null
+  careers_url: null
+  match_method: null
+  resolved_at: '2026-08-20T13:49:28.691723+00:00'
+- name: PAYBACK
+  url: https://www.payback.group/
+  ats: custom
+  identifier: null
+  careers_url: https://www.payback.group/de/karriere
+  match_method: null
+  resolved_at: '2026-08-20T13:49:20.171343+00:00'
+- name: MegaZebra
+  url: https://www.megazebra.com/
+  ats: custom
+  identifier: null
+  careers_url: https://www.megazebra.com/careers/
+  match_method: null
+  resolved_at: '2026-08-20T14:04:50.420374+00:00'
+- name: Travian Games
+  url: https://traviangames.com/
+  ats: personio
+  identifier: traviangames
+- name: Cobrainer
+  url: https://www.cobrainer.com/
+  ats: personio
+  identifier: cobrainer
+- name: Speexx
+  url: https://www.speexx.com/
+  ats: personio
+  identifier: speexx
+- name: Bragi
+  url: https://www.bragi.com/
+  ats: bamboohr
+  identifier: bragi
+  careers_url: https://www.bragi.com/careers
+  match_method: page_scan
+  resolved_at: '2026-08-20T13:49:20.321399+00:00'
+- name: Cosinuss
+  url: https://www.cosinuss.com/
+  ats: custom
+  identifier: null
+  careers_url: https://www.cosinuss.com/en/jobs/
+  match_method: null
+  resolved_at: '2026-08-20T14:04:52.828452+00:00'
+- name: KINEXON
+  url: https://kinexon.com/
+  ats: greenhouse
+  identifier: kinexon
+- name: KONUX
+  url: https://www.konux.com/
+  ats: greenhouse
+  identifier: konux
+- name: ProGlove
+  url: https://proglove.com/
+  ats: personio
+  identifier: proglove
+- name: tacterion
+  url: https://www.tacterion.com/
+  ats: personio
+  identifier: tacterion
+- name: Power Factors
+  url: https://www.powerfactors.com/
+  ats: custom
+  identifier: null
+  careers_url: https://www.powerfactors.com/careers
+  match_method: null
+  resolved_at: '2026-08-20T14:04:50.485052+00:00'
+- name: Elgato
+  url: https://www.elgato.com/
+  ats: smartrecruiters
+  identifier: elgato
+- name: innosabi
+  url: https://innosabi.com/
+  ats: custom
+  identifier: null
+  careers_url: https://www.innosabi.com/company/careers
+  match_method: null
+  resolved_at: '2026-08-20T14:04:50.925111+00:00'
+- name: JetBrains
+  url: https://www.jetbrains.com/
+  ats: greenhouse
+  identifier: jetbrains
+- name: Userlane
+  url: https://www.userlane.com/
+  ats: personio
+  identifier: userlane
+- name: Testbirds
+  url: https://www.testbirds.com/
+  ats: custom
+  identifier: null
+  careers_url: https://www.testbirds.com/en/
+  match_method: null
+  resolved_at: '2026-08-20T14:05:14.644348+00:00'
+- name: censhare
+  url: https://www.censhare.com/
+  ats: custom
+  identifier: null
+  careers_url: https://www.censhare.com/en/careers
+  match_method: null
+  resolved_at: '2026-08-20T14:05:20.140984+00:00'
+- name: VEACT
+  url: https://veact.com/
+  ats: personio
+  identifier: veact
+- name: ysura
+  url: https://www.ysura.com/
+  ats: null
+  identifier: null
+  careers_url: null
+  match_method: null
+  resolved_at: '2026-08-20T14:05:02.059373+00:00'
+- name: Brainlab
+  url: https://www.brainlab.com/
+  ats: smartrecruiters
+  identifier: brainlab
+- name: jameda
+  url: https://www.jameda.de/
+  ats: ashby
+  identifier: jameda
+- name: IDnow
+  url: https://www.idnow.io/
+  ats: greenhouse
+  identifier: idnow
+- name: Sphera
+  url: https://sphera.com/
+  ats: workday
+  identifier:
+    tenant: sphera
+    wd_host: wd1
+    site: careers
+- name: HolidayCheck Group
+  url: https://www.holidaycheckgroup.com/
+  ats: custom
+  identifier: null
+  careers_url: https://www.holidaycheckgroup.com/jobs-join-our-team/?lang=en
+  match_method: null
+  resolved_at: '2026-08-20T14:05:13.283652+00:00'
+- name: Regiondo
+  url: https://pro.regiondo.com/
+  ats: custom
+  identifier: null
+  careers_url: https://pro.regiondo.com/careers/
+  match_method: null
+  resolved_at: '2026-08-20T14:05:40.792810+00:00'
+- name: ICAROS
+  url: https://www.icaros.com/
+  ats: null
+  identifier: null
+  careers_url: null
+  match_method: null
+  resolved_at: '2026-08-20T14:05:24.915239+00:00'
+- name: Innoactive
+  url: https://www.innoactive.io/
+  ats: personio
+  identifier: innoactive
+- name: Munich Re
+  url: https://www.munichre.com/
+  ats: custom
+  identifier: null
+  careers_url: https://careers.munichre.com/en/munichre
+  match_method: null
+  resolved_at: '2026-08-20T14:05:39.756608+00:00'
+- name: Infineon Technologies
+  url: https://www.infineon.com/
+  ats: custom
+  identifier: null
+  careers_url: https://www.infineon.com/careers
+  match_method: null
+  resolved_at: '2026-08-20T14:05:42.238399+00:00'
+- name: MTU Aero Engines
+  url: https://www.mtu.de/
+  ats: custom
+  identifier: null
+  careers_url: https://www.mtu.de/careers/
+  match_method: null
+  resolved_at: '2026-08-20T14:05:42.457226+00:00'
+- name: MAN Truck & Bus
+  url: https://www.man.eu/
+  ats: custom
+  identifier: null
+  careers_url: https://www.man.eu/de/de/ueber-uns/unternehmen/karriere-bei-man/grosses-bewegen-bei-man/grosses-bewegen-mit-man.html
+  match_method: null
+  resolved_at: '2026-08-20T14:10:26.055065+00:00'
+- name: Knorr-Bremse
+  url: https://www.knorr-bremse.com/
+  ats: custom
+  identifier: null
+  careers_url: https://careers.knorr-bremse.com/?locale=en_US
+  match_method: null
+  resolved_at: '2026-08-20T14:10:28.029127+00:00'
+- name: Wacker Chemie
+  url: https://www.wacker.com/
+  ats: custom
+  identifier: null
+  careers_url: https://jobs.wacker.com/?locale=en_US
+  match_method: null
+  resolved_at: '2026-08-20T14:10:35.387411+00:00'
+- name: Linde
+  url: https://www.linde.com/
+  ats: custom
+  identifier: null
+  careers_url: https://www.lindecareers.com/en/
+  match_method: null
+  resolved_at: '2026-08-20T14:10:35.704892+00:00'
+- name: BayWa
+  url: https://www.baywa.com/
+  ats: custom
+  identifier: null
+  careers_url: https://www.baywa.com/jobs-karriere/auf-einen-blick
+  match_method: null
+  resolved_at: '2026-08-20T14:10:34.734782+00:00'
+- name: HypoVereinsbank / UniCredit Bank
+  url: https://www.hypovereinsbank.de/
+  ats: custom
+  identifier: null
+  careers_url: https://www.hypovereinsbank.de/hvb/ueber-uns/jobs-karriere
+  match_method: null
+  resolved_at: '2026-08-20T14:10:46.604677+00:00'
+- name: BayernLB
+  url: https://www.bayernlb.de/
+  ats: custom
+  identifier: null
+  careers_url: https://www.bayernlb.de/internet/de/blb/resp/karriere_1/berufserfahrene/uebersicht_5/uebersicht_berufs.jsp
+  match_method: null
+  resolved_at: '2026-08-20T14:10:47.606712+00:00'
+- name: Flughafen München
+  url: https://www.munich-airport.com/
+  ats: custom
+  identifier: null
+  careers_url: https://www.munich-airport.com/careers-263141?hl=15404919
+  match_method: null
+  resolved_at: '2026-08-20T14:10:56.313333+00:00'
+- name: Stadtwerke München
+  url: https://www.swm.de/
+  ats: custom
+  identifier: null
+  careers_url: https://www.swm.de/karriere
+  match_method: null
+  resolved_at: '2026-08-20T14:10:53.939232+00:00'
+- name: Deutsche Pfandbriefbank
+  url: https://www.pfandbriefbank.com/
+  ats: custom
+  identifier: null
+  careers_url: https://www.pfandbriefbank.com/karriere/
+  match_method: null
+  resolved_at: '2026-08-20T14:11:03.909375+00:00'
+- name: BSH Hausgeräte
+  url: https://www.bsh-group.com/
+  ats: custom
+  identifier: null
+  careers_url: https://www.bsh-group.com/career/welcome-at-bsh/
+  match_method: null
+  resolved_at: '2026-08-20T14:11:06.236476+00:00'
+- name: Giesecke+Devrient
+  url: https://www.gi-de.com/
+  ats: custom
+  identifier: null
+  careers_url: https://www.gi-de.com/en/careers
+  match_method: null
+  resolved_at: '2026-08-20T14:11:13.134981+00:00'
+- name: ARRI
+  url: https://www.arri.com/
+  ats: custom
+  identifier: null
+  careers_url: https://www.arri.com/en/company/careers
+  match_method: null
+  resolved_at: '2026-08-20T14:11:07.359949+00:00'
+- name: KraussMaffei
+  url: https://www.kraussmaffei.com/
+  ats: custom
+  identifier: null
+  careers_url: https://www.kraussmaffei.com/en
+  match_method: null
+  resolved_at: '2026-08-20T14:11:16.945190+00:00'
+- name: Webasto
+  url: https://www.webasto-group.com/
+  ats: personio
+  identifier: webasto
+- name: EOS
+  url: https://www.eos.info/
+  ats: workday
+  identifier:
+    tenant: eosgroup
+    wd_host: wd3
+    site: en-US
+- name: Messe München
+  url: https://messe-muenchen.de/
+  ats: custom
+  identifier: null
+  careers_url: https://messe-muenchen.de/de/karriere/
+  match_method: null
+  resolved_at: '2026-08-20T14:11:22.993870+00:00'
+- name: IABG
+  url: https://www.iabg.de/
+  ats: custom
+  identifier: null
+  careers_url: https://www.iabg.de/karriere
+  match_method: null
+  resolved_at: '2026-08-20T14:11:21.902698+00:00'
+- name: IAV
+  url: https://www.iav.com/
+  ats: custom
+  identifier: null
+  careers_url: https://www.iav.com/career/
+  match_method: null
+  resolved_at: '2026-08-20T14:11:25.276319+00:00'
+- name: EDAG Engineering
+  url: https://www.edag.com/
+  ats: personio
+  identifier: edag
+- name: Bertrandt
+  url: https://www.bertrandt.com/
+  ats: custom
+  identifier: null
+  careers_url: https://www.bertrandt.com/karriere
+  match_method: null
+  resolved_at: '2026-08-20T14:11:25.863366+00:00'
+- name: ARRK Engineering
+  url: https://www.arrk-engineering.com/
+  ats: onlyfy
+  identifier: arrkeurope
+  careers_url: https://engineering.arrk.com/jobs-career
+  match_method: page_scan
+  resolved_at: '2026-08-20T14:11:22.718194+00:00'
+- name: Capgemini Engineering
+  url: https://www.capgemini.com/de-de/about-us/who-we-are/our-brands/capgemini-engineering/
+  ats: null
+  identifier: null
+  careers_url: null
+  match_method: null
+  resolved_at: '2026-08-20T14:11:38.801970+00:00'
+- name: FEV
+  url: https://www.fev.com/
+  ats: personio
+  identifier: fev
+- name: AVL Deutschland
+  url: https://www.avl.com/
+  ats: custom
+  identifier: null
+  careers_url: https://www.avl.com/en/career
+  match_method: null
+  resolved_at: '2026-08-20T14:11:51.169540+00:00'
+- name: Akkodis
+  url: https://www.akkodis.com/
+  ats: custom
+  identifier: null
+  careers_url: https://www.akkodis.com/en/careers
+  match_method: null
+  resolved_at: '2026-08-20T14:12:02.409475+00:00'
+- name: PTC
+  url: https://www.ptc.com/
+  ats: workday
+  identifier:
+    tenant: ptc
+    wd_host: wd1
+    site: PTC
+- name: Dassault Systèmes
+  url: https://www.3ds.com/
+  ats: custom
+  identifier: null
+  careers_url: https://www.3ds.com/careers
+  match_method: null
+  resolved_at: '2026-08-20T14:11:46.557035+00:00'
+- name: Autodesk
+  url: https://www.autodesk.com/
+  ats: null
+  identifier: null
+  careers_url: null
+  match_method: null
+  resolved_at: '2026-08-20T14:11:46.589437+00:00'
+- name: Nemetschek Group
+  url: https://www.nemetschek.com/
+  ats: custom
+  identifier: null
+  careers_url: https://www.nemetschek.com/en/company/career
+  match_method: null
+  resolved_at: '2026-08-20T14:12:08.307310+00:00'
+- name: CANCOM
+  url: https://www.cancom.de/
+  ats: rexx
+  identifier: null
+  careers_url: https://karriere.cancom.de/
+  match_method: page_scan
+  resolved_at: '2026-08-20T14:11:50.011690+00:00'
+- name: Dynatrace
+  url: https://www.dynatrace.com/
+  ats: custom
+  identifier: null
+  careers_url: https://www.dynatrace.com/careers/
+  match_method: null
+  resolved_at: '2026-08-20T14:12:01.226955+00:00'
+- name: Mirakl
+  url: https://www.mirakl.com/
+  ats: greenhouse
+  identifier: mirakl
+- name: Rapid7
+  url: https://www.rapid7.com/
+  ats: custom
+  identifier: null
+  careers_url: https://careers.rapid7.com/
+  match_method: null
+  resolved_at: '2026-08-20T14:12:12.160179+00:00'
+- name: ServiceNow
+  url: https://www.servicenow.com/
+  ats: smartrecruiters
+  identifier: servicenow
+- name: Salesforce
+  url: https://www.salesforce.com/de/
+  ats: personio
+  identifier: salesforce
+- name: SAP
+  url: https://www.sap.com/germany/
+  ats: null
+  identifier: null
+  careers_url: null
+  match_method: null
+  resolved_at: '2026-08-20T14:12:08.306979+00:00'
+- name: Oracle
+  url: https://www.oracle.com/de/
+  ats: custom
+  identifier: null
+  careers_url: https://www.oracle.com/de/careers/
+  match_method: null
+  resolved_at: '2026-08-20T14:12:20.727498+00:00'
+- name: Red Hat
+  url: https://www.redhat.com/de
+  ats: workday
+  identifier:
+    tenant: redhat
+    wd_host: wd5
+    site: jobs
+- name: NVIDIA
+  url: https://www.nvidia.com/de-de/
+  ats: custom
+  identifier: null
+  careers_url: https://nvidianews.nvidia.com/news/drive-hyperion-level-4
+  match_method: null
+  resolved_at: '2026-08-20T14:12:24.146805+00:00'
+- name: Intel
+  url: https://www.intel.de/
+  ats: null
+  identifier: null
+  careers_url: null
+  match_method: null
+  resolved_at: '2026-08-20T14:12:17.504239+00:00'
+- name: Qualcomm
+  url: https://www.qualcomm.com/
+  ats: custom
+  identifier: null
+  careers_url: https://www.qualcomm.com/company/careers
+  match_method: null
+  resolved_at: '2026-08-20T14:12:24.147282+00:00'
+- name: Apple
+  url: https://www.apple.com/de/
+  ats: custom
+  identifier: null
+  careers_url: https://www.apple.com/careers/de/
+  match_method: null
+  resolved_at: '2026-08-20T14:12:30.230537+00:00'
+- name: Meta
+  url: https://about.meta.com/
+  ats: custom
+  identifier: null
+  careers_url: https://www.metacareers.com/?utm_source=about.meta.com&utm_medium=redirect
+  match_method: null
+  resolved_at: '2026-08-20T14:12:45.145591+00:00'
+- name: Snowflake
+  url: https://www.snowflake.com/
+  ats: ashby
+  identifier: snowflake
+- name: Databricks
+  url: https://www.databricks.com/
+  ats: greenhouse
+  identifier: databricks
+- name: Broadcom
+  url: https://www.broadcom.com/
+  ats: custom
+  identifier: null
+  careers_url: https://www.broadcom.com/company/careers
+  match_method: null
+  resolved_at: '2026-08-20T14:12:38.304757+00:00'
+- name: Cloudflare
+  url: https://www.cloudflare.com/
+  ats: greenhouse
+  identifier: cloudflare
+- name: Workday
+  url: https://www.workday.com/
+  ats: workday
+  identifier:
+    tenant: workday
+    wd_host: wd5
+    site: Workday
+- name: Palo Alto Networks
+  url: https://www.paloaltonetworks.com/
+  ats: workday
+  identifier:
+    tenant: paloaltonetworks
+    wd_host: wd5
+    site: en-US
+- name: Fortinet
+  url: https://www.fortinet.com/
+  ats: custom
+  identifier: null
+  careers_url: https://www.fortinet.com/corporate/careers
+  match_method: null
+  resolved_at: '2026-08-20T14:12:36.634663+00:00'
+- name: Check Point Software Technologies
+  url: https://www.checkpoint.com/
+  ats: custom
+  identifier: null
+  careers_url: https://www.checkpoint.com/careers/
+  match_method: null
+  resolved_at: '2026-08-20T14:12:46.916005+00:00'
+- name: Sophos
+  url: https://www.sophos.com/
+  ats: ashby
+  identifier: sophos
+- name: Accenture
+  url: https://www.accenture.com/de-de
+  ats: workday
+  identifier:
+    tenant: accenture
+    wd_host: wd103
+    site: AccentureCareers
+- name: Deloitte
+  url: https://www.deloitte.com/de/de.html
+  ats: lever
+  identifier: deloitte
+- name: PwC Germany
+  url: https://www.pwc.de/
+  ats: custom
+  identifier: null
+  careers_url: https://jobs.pwc.de/de/de
+  match_method: null
+  resolved_at: '2026-08-20T14:12:57.091007+00:00'
+- name: EY Germany
+  url: https://www.ey.com/de_de
+  ats: custom
+  identifier: null
+  careers_url: https://www.ey.com/de_de/careers
+  match_method: null
+  resolved_at: '2026-08-20T14:12:59.633975+00:00'
+- name: McKinsey & Company
+  url: https://www.mckinsey.com/de/
+  ats: null
+  identifier: null
+  careers_url: null
+  match_method: null
+  resolved_at: '2026-08-20T14:13:40.869316+00:00'
+- name: Boston Consulting Group
+  url: https://www.bcg.com/
+  ats: null
+  identifier: null
+  careers_url: null
+  match_method: null
+  resolved_at: '2026-08-20T14:13:00.763789+00:00'
+- name: Bain & Company
+  url: https://www.bain.com/
+  ats: custom
+  identifier: null
+  careers_url: https://www.bain.com/careers/
+  match_method: null
+  resolved_at: '2026-08-20T14:13:25.239301+00:00'
+- name: Roland Berger
+  url: https://www.rolandberger.com/
+  ats: smartrecruiters
+  identifier: rolandberger
+- name: Capgemini
+  url: https://www.capgemini.com/de-de/
+  ats: custom
+  identifier: null
+  careers_url: https://www.capgemini.com/de-de/karriere/
+  match_method: null
+  resolved_at: '2026-08-20T14:13:12.943237+00:00'
+- name: NTT DATA
+  url: https://de.nttdata.com/
+  ats: custom
+  identifier: null
+  careers_url: https://de.nttdata.com/karriere
+  match_method: null
+  resolved_at: '2026-08-20T14:13:18.720438+00:00'
+- name: CGI
+  url: https://www.cgi.com/de/de
+  ats: custom
+  identifier: null
+  careers_url: https://www.cgi.com/de/de/karriere/blog
+  match_method: null
+  resolved_at: '2026-08-20T14:13:24.635926+00:00'
+- name: adesso
+  url: https://www.adesso.de/
+  ats: custom
+  identifier: null
+  careers_url: https://www.adesso.de/de/#level-2627948
+  match_method: null
+  resolved_at: '2026-08-20T14:13:27.037087+00:00'
+- name: iteratec
+  url: https://www.iteratec.com/
+  ats: rexx
+  identifier: null
+  careers_url: https://jobs.iteratec.com
+  match_method: page_scan
+  resolved_at: '2026-08-20T14:13:27.857128+00:00'
+- name: MaibornWolff
+  url: https://www.maibornwolff.de/
+  ats: personio
+  identifier: maibornwolff
+- name: TNG Technology Consulting
+  url: https://www.tngtech.com/
+  ats: personio
+  identifier: tngtech
+- name: msg systems
+  url: https://www.msg.group/
+  ats: custom
+  identifier: null
+  careers_url: https://www.msg.group/de/karriere/
+  match_method: null
+  resolved_at: '2026-08-20T14:13:48.190796+00:00'
+- name: Reply
+  url: https://www.reply.com/
+  ats: lever
+  identifier: reply
+- name: MHP – A Porsche Company
+  url: https://www.mhp.com/
+  ats: greenhouse
+  identifier: mhp
+- name: Zühlke
+  url: https://www.zuehlke.com/
+  ats: workday
+  identifier:
+    tenant: zuehlke
+    wd_host: wd3
+    site: en-US
+- name: Netlight
+  url: https://www.netlight.com/
+  ats: lever
+  identifier: netlight
+- name: Publicis Sapient
+  url: https://www.publicissapient.com/
+  ats: custom
+  identifier: null
+  careers_url: https://careers.publicissapient.com/
+  match_method: null
+  resolved_at: '2026-08-20T14:13:49.600003+00:00'
+- name: Nagarro
+  url: https://www.nagarro.com/
+  ats: custom
+  identifier: null
+  careers_url: https://www.nagarro.com/en/careers
+  match_method: null
+  resolved_at: '2026-08-20T14:13:39.013813+00:00'
+- name: Sopra Steria
+  url: https://www.soprasteria.de/
+  ats: custom
+  identifier: null
+  careers_url: https://www.soprasteria.de/
+  match_method: null
+  resolved_at: '2026-08-20T14:14:13.315397+00:00'
+- name: Valtech
+  url: https://www.valtech.com/
+  ats: greenhouse
+  identifier: valtech
+- name: BearingPoint
+  url: https://www.bearingpoint.com/
+  ats: greenhouse
+  identifier: bearingpoint
+- name: Arvato Systems
+  url: https://www.arvato-systems.de/
+  ats: custom
+  identifier: null
+  careers_url: https://www.arvato-systems.de/karriere
+  match_method: null
+  resolved_at: '2026-08-20T14:13:52.613235+00:00'
+- name: BCG Platinion
+  url: https://www.bcgplatinion.com/
+  ats: custom
+  identifier: null
+  careers_url: https://www.bcgplatinion.com/careers
+  match_method: null
+  resolved_at: '2026-08-20T14:14:06.260432+00:00'
+- name: Exxeta
+  url: https://exxeta.com/
+  ats: custom
+  identifier: null
+  careers_url: https://exxeta.com/karriere
+  match_method: null
+  resolved_at: '2026-08-20T14:14:01.991800+00:00'
+- name: appliedAI Initiative
+  url: https://www.appliedai-institute.de/
+  ats: personio
+  identifier: appliedai
+- name: UnternehmerTUM
+  url: https://www.unternehmertum.de/
+  ats: personio
+  identifier: unternehmertum
+- name: UVC Partners
+  url: https://www.uvcpartners.com/
+  ats: custom
+  identifier: null
+  careers_url: https://talent.uvcpartners.com/companies
+  match_method: null
+  resolved_at: '2026-08-20T14:14:19.753658+00:00'
+- name: Start2 Group
+  url: https://www.start2.group/
+  ats: personio
+  identifier: start2
+- name: Bayern Kapital
+  url: https://www.bayernkapital.de/
+  ats: custom
+  identifier: null
+  careers_url: https://bayernkapital.de/bayern-kapital/karriere/
+  match_method: null
+  resolved_at: '2026-08-20T14:14:37.135055+00:00'
+- name: Alasco
+  url: https://www.alasco.de/
+  ats: personio
+  identifier: alasco
+- name: Capmo
+  url: https://www.capmo.com/
+  ats: personio
+  identifier: capmo
+- name: remberg
+  url: https://remberg.de/
+  ats: ashby
+  identifier: remberg
+- name: Ryte
+  url: https://en.ryte.com/
+  ats: custom
+  identifier: null
+  careers_url: https://en.ryte.com/jobs/
+  match_method: null
+  resolved_at: '2026-08-20T14:14:20.923567+00:00'
+- name: Usercentrics
+  url: https://usercentrics.com/
+  ats: custom
+  identifier: null
+  careers_url: https://usercentrics.com/career/
+  match_method: null
+  resolved_at: '2026-08-20T14:14:34.035873+00:00'
+- name: Demodesk
+  url: https://demodesk.com/
+  ats: personio
+  identifier: demodesk-gmbh
+- name: Workpath
+  url: https://www.workpath.com/
+  ats: personio
+  identifier: workpath
+- name: Xempus
+  url: https://www.xempus.com/
+  ats: personio
+  identifier: xempus
+- name: wealthpilot
+  url: https://www.wealthpilot.com/
+  ats: personio
+  identifier: wealthpilot
+- name: finway
+  url: https://finway.de/
+  ats: personio
+  identifier: finway
+- name: FTAPI
+  url: https://www.ftapi.com/
+  ats: personio
+  identifier: ftapi
+- name: Shore
+  url: https://www.shore.com/
+  ats: custom
+  identifier: null
+  careers_url: https://www.shore.com/de/ueber-uns
+  match_method: null
+  resolved_at: '2026-08-20T14:14:33.743405+00:00'
+- name: Predium
+  url: https://www.predium.de/
+  ats: personio
+  identifier: predium
+- name: Entrix
+  url: https://www.entrixenergy.com/
+  ats: personio
+  identifier: entrix
+- name: PIONIERKRAFT
+  url: https://pionierkraft.de/
+  ats: custom
+  identifier: null
+  careers_url: https://pionierkraft.workwise.io
+  match_method: null
+  resolved_at: '2026-08-20T14:14:37.654848+00:00'
+- name: VoltStorage
+  url: https://voltstorage.com/
+  ats: personio
+  identifier: voltstorage
+- name: Orcan Energy
+  url: https://www.orcan-energy.com/
+  ats: personio
+  identifier: orcan-energy
+- name: Electrochaea
+  url: https://www.electrochaea.com/
+  ats: personio
+  identifier: electrochaea-gmbh
+- name: Reverion
+  url: https://www.reverion.com/
+  ats: personio
+  identifier: reverion
+- name: EcoG
+  url: https://www.ecog.io/
+  ats: personio
+  identifier: ecog
+- name: ChargeX
+  url: https://chargex.de/
+  ats: custom
+  identifier: null
+  careers_url: https://chargex.de/
+  match_method: null
+  resolved_at: '2026-08-20T14:14:42.983217+00:00'
+- name: DeepDrive
+  url: https://www.deepdrive.tech/
+  ats: personio
+  identifier: deepdrive-gmbh
+- name: FERNRIDE
+  url: https://www.fernride.com/
+  ats: greenhouse
+  identifier: fernride
+- name: sewts
+  url: https://www.sewts.com/
+  ats: personio
+  identifier: sewts
+- name: KEWAZO
+  url: https://www.kewazo.com/
+  ats: custom
+  identifier: null
+  careers_url: https://www.kewazo.com/company#career
+  match_method: null
+  resolved_at: '2026-08-20T14:14:44.369761+00:00'
+- name: FILICS
+  url: https://www.filics.eu/
+  ats: personio
+  identifier: filics
+- name: Magazino
+  url: https://www.magazino.eu/
+  ats: personio
+  identifier: magazino
+- name: Toposens
+  url: https://toposens.com/
+  ats: null
+  identifier: null
+  careers_url: null
+  match_method: null
+  resolved_at: '2026-08-20T14:14:49.210360+00:00'
+- name: NavVis
+  url: https://www.navvis.com/
+  ats: greenhouse
+  identifier: navvis
+- name: Luminovo
+  url: https://luminovo.com/
+  ats: ashby
+  identifier: Luminovo
+- name: Blickfeld
+  url: https://www.blickfeld.com/
+  ats: personio
+  identifier: blickfeld
+- name: planqc
+  url: https://www.planqc.eu/
+  ats: personio
+  identifier: planqc-gmbh
+- name: QuantumDiamonds
+  url: https://www.quantumdiamonds.de/
+  ats: personio
+  identifier: quantum-diamond
+- name: kiutra
+  url: https://kiutra.com/
+  ats: personio
+  identifier: kiutra
+- name: HQS Quantum Simulations
+  url: https://quantumsimulations.de/
+  ats: custom
+  identifier: null
+  careers_url: https://quantumsimulations.de/career
+  match_method: null
+  resolved_at: '2026-08-20T14:14:55.928015+00:00'
+- name: ARX Robotics
+  url: https://www.arx-robotics.com/
+  ats: greenhouse
+  identifier: arxroboticsgmbh
+- name: ATMOS Space Cargo
+  url: https://www.atmos-space-cargo.com/
+  ats: custom
+  identifier: null
+  careers_url: https://jobs.world.luccasoftware.com/atmos-space-cargo
+  match_method: null
+  resolved_at: '2026-08-20T14:15:09.727183+00:00'
+- name: Dcubed
+  url: https://dcubed.space/
+  ats: personio
+  identifier: dcubed
+- name: Vaeridion
+  url: https://vaeridion.com/
+  ats: ashby
+  identifier: vaeridion
+- name: ITM Isotope Technologies Munich
+  url: https://www.itm-radiopharma.com/
+  ats: onlyfy
+  identifier: itm
+  careers_url: https://www.itm-radiopharma.com/career/
+  match_method: page_scan
+  resolved_at: '2026-08-20T14:14:45.829898+00:00'
+- name: Formycon
+  url: https://www.formycon.com/
+  ats: custom
+  identifier: null
+  careers_url: https://www.formycon.com/karriere/warum-formycon/
+  match_method: null
+  resolved_at: '2026-08-20T14:15:05.116704+00:00'
+- name: Softing
+  url: https://company.softing.com/
+  ats: greenhouse
+  identifier: company
+- name: Hoffmann Group
+  url: https://www.hoffmann-group.com/
+  ats: custom
+  identifier: null
+  careers_url: https://www.hoffmann-group.com/GB/en/houk/hoffmann-group/careers/e/116222/
+  match_method: null
+  resolved_at: '2026-08-20T14:15:00.038902+00:00'
+- name: Aenova Group
+  url: https://www.aenova-group.com/
+  ats: custom
+  identifier: null
+  careers_url: https://www.aenova-group.com/en/career
+  match_method: null
+  resolved_at: '2026-08-20T14:15:32.385413+00:00'
+- name: Amgen Germany
+  url: https://www.amgen.de/
+  ats: custom
+  identifier: null
+  careers_url: https://www.amgen.de/bewerber/
+  match_method: null
+  resolved_at: '2026-08-20T14:15:16.763847+00:00'
+- name: Astellas Pharma Germany
+  url: https://www.astellas.com/de/
+  ats: custom
+  identifier: null
+  careers_url: https://www.astellas.com/en/careers
+  match_method: null
+  resolved_at: '2026-08-20T14:15:28.627801+00:00'
+- name: Bavarian Nordic
+  url: https://www.bavarian-nordic.com/
+  ats: workday
+  identifier:
+    tenant: bavariannordic
+    wd_host: wd103
+    site: en-US
+  careers_url: https://www.bavarian-nordic.com/careers/careers.aspx
+  match_method: page_scan
+  resolved_at: '2026-08-20T14:15:10.538998+00:00'
+- name: bene-Arzneimittel
+  url: https://www.bene-arzneimittel.de/
+  ats: null
+  identifier: null
+  careers_url: null
+  match_method: null
+  resolved_at: '2026-08-20T14:15:23.398820+00:00'
+- name: Biogen Germany
+  url: https://www.biogen.de/
+  ats: custom
+  identifier: null
+  careers_url: https://www.biogen.de/karriere.html
+  match_method: null
+  resolved_at: '2026-08-20T14:15:41.788845+00:00'
+- name: Bristol Myers Squibb Germany
+  url: https://www.bms.com/de/
+  ats: workday
+  identifier:
+    tenant: bristolmyerssquibb
+    wd_host: wd5
+    site: en-US
+  careers_url: https://careers.bms.com/de/
+  match_method: page_scan
+  resolved_at: '2026-08-20T14:15:25.423655+00:00'
+- name: GSK Germany
+  url: https://de.gsk.com/
+  ats: workday
+  identifier:
+    tenant: gsk
+    wd_host: wd5
+    site: GSKCareers
+  careers_url: https://de.gsk.com/de-de/
+  match_method: page_scan
+  resolved_at: '2026-08-20T14:15:26.043524+00:00'
+- name: Hexal
+  url: https://www.hexal.de/
+  ats: custom
+  identifier: null
+  careers_url: https://www.sandoz.com/de-de/karriere/
+  match_method: null
+  resolved_at: '2026-08-20T14:15:53.799807+00:00'
+- name: Moderna Germany
+  url: https://www.modernatx.com/
+  ats: workday
+  identifier:
+    tenant: modernatx
+    wd_host: wd1
+    site: M_tx
+  careers_url: https://www.modernatx.com/
+  match_method: page_scan
+  resolved_at: '2026-08-20T14:15:31.224115+00:00'
+- name: SciRhom
+  url: https://scirhom.com/
+  ats: null
+  identifier: null
+  careers_url: null
+  match_method: null
+  resolved_at: '2026-08-20T14:15:44.727826+00:00'
+- name: MSD Germany
+  url: https://www.msd.de/
+  ats: workday
+  identifier:
+    tenant: msd
+    wd_host: wd5
+    site: SearchJobs
+  careers_url: https://www.msd.de/
+  match_method: page_scan
+  resolved_at: '2026-08-20T14:15:32.644938+00:00'
+- name: Neovii Biotech
+  url: https://www.neovii.com/
+  ats: custom
+  identifier: null
+  careers_url: https://neovii.com/careers/
+  match_method: null
+  resolved_at: '2026-08-20T14:15:54.079798+00:00'
+- name: Novartis Germany
+  url: https://www.novartis.com/de-de/
+  ats: custom
+  identifier: null
+  careers_url: https://www.novartis.com/de-de/karriere
+  match_method: null
+  resolved_at: '2026-08-20T14:16:35.615843+00:00'
+- name: Daiichi Sankyo Europe
+  url: https://www.daiichi-sankyo.eu/
+  ats: custom
+  identifier: null
+  careers_url: https://www.daiichi-sankyo.eu/career/discover-daiichi-sankyo-europe/
+  match_method: null
+  resolved_at: '2026-08-20T14:16:06.572772+00:00'
+- name: Gilead Sciences Germany
+  url: https://www.gilead.com/
+  ats: workday
+  identifier:
+    tenant: gilead
+    wd_host: wd1
+    site: gileadcareers
+  careers_url: https://www.gilead.com/
+  match_method: page_scan
+  resolved_at: '2026-08-20T14:15:54.180594+00:00'
+- name: AstraZeneca Germany
+  url: https://www.astrazeneca.de/
+  ats: null
+  identifier: null
+  careers_url: null
+  match_method: null
+  resolved_at: '2026-08-20T14:16:10.689930+00:00'
+- name: Sandoz Germany
+  url: https://www.sandoz.de/
+  ats: custom
+  identifier: null
+  careers_url: https://www.sandoz.com/de-de/karriere/
+  match_method: null
+  resolved_at: '2026-08-20T14:16:14.308757+00:00'
+- name: Thermo Fisher Scientific
+  url: https://www.thermofisher.com/
+  ats: custom
+  identifier: null
+  careers_url: https://jobs.thermofisher.com/global/en
+  match_method: null
+  resolved_at: '2026-08-20T14:16:35.732725+00:00'
+- name: Eurofins Genomics
+  url: https://eurofinsgenomics.eu/
+  ats: custom
+  identifier: null
+  careers_url: https://eurofinsgenomics.eu/en/eurofins-genomics/corporate-information/careers/
+  match_method: null
+  resolved_at: '2026-08-20T14:16:33.379626+00:00'
+- name: QIAGEN
+  url: https://www.qiagen.com/
+  ats: workday
+  identifier:
+    tenant: qiagen
+    wd_host: wd502
+    site: QIAGEN
+  careers_url: https://www.qiagen.com/us
+  match_method: page_scan
+  resolved_at: '2026-08-20T14:16:15.624424+00:00'
+- name: Bio-Rad Laboratories
+  url: https://www.bio-rad.com/
+  ats: null
+  identifier: null
+  careers_url: null
+  match_method: null
+  resolved_at: '2026-08-20T14:16:32.254011+00:00'
+- name: Illumina
+  url: https://www.illumina.com/
+  ats: workday
+  identifier:
+    tenant: illumina
+    wd_host: wd1
+    site: illumina-careers
+  careers_url: https://www.illumina.com/
+  match_method: page_scan
+  resolved_at: '2026-08-20T14:16:32.685238+00:00'
+- name: Agilent Technologies
+  url: https://www.agilent.com/
+  ats: null
+  identifier: null
+  careers_url: null
+  match_method: null
+  resolved_at: '2026-08-20T14:16:48.072849+00:00'
+- name: BioNTech
+  url: https://www.biontech.com/
+  ats: custom
+  identifier: null
+  careers_url: https://www.biontech.com/de/de/home/careers.html
+  match_method: null
+  resolved_at: '2026-08-20T14:16:42.953766+00:00'
+- name: Medigene
+  url: https://www.medigene.com/
+  ats: null
+  identifier: null
+  careers_url: null
+  match_method: null
+  resolved_at: '2026-08-20T14:16:47.954548+00:00'
+- name: CatalYm
+  url: https://catalym.com/
+  ats: personio
+  identifier: catalym
+  careers_url: https://www.catalym.com/
+  match_method: page_scan
+  resolved_at: '2026-08-20T14:16:36.580465+00:00'
+- name: iOmx Therapeutics
+  url: https://www.iomx.com/
+  ats: personio
+  identifier: iomx
+  careers_url: https://www.iomx.com/relations/career/
+  match_method: page_scan
+  resolved_at: '2026-08-20T14:16:37.840426+00:00'
+- name: Immunic
+  url: https://imux.com/
+  ats: ashby
+  identifier: immunic-therapeutics
+  careers_url: https://imux.com/career/
+  match_method: page_scan
+  resolved_at: '2026-08-20T14:16:39.940412+00:00'
+- name: AMSilk
+  url: https://www.amsilk.com/
+  ats: personio
+  identifier: amsilk
+  careers_url: https://www.amsilk.com/career/
+  match_method: page_scan
+  resolved_at: '2026-08-20T14:16:40.866257+00:00'
+- name: Ethris
+  url: https://ethris.com/
+  ats: null
+  identifier: null
+  careers_url: null
+  match_method: null
+  resolved_at: '2026-08-20T14:16:48.103882+00:00'
+- name: Isar Bioscience
+  url: https://www.isar-bioscience.de/
+  ats: null
+  identifier: null
+  careers_url: null
+  match_method: null
+  resolved_at: '2026-08-20T14:16:56.494324+00:00'
+- name: Plectonic Biotech
+  url: https://www.plectonic.com/
+  ats: null
+  identifier: null
+  careers_url: null
+  match_method: null
+  resolved_at: '2026-08-20T14:17:15.441358+00:00'
+- name: Dynamic Biosensors
+  url: https://www.dynamic-biosensors.com/
+  ats: personio
+  identifier: dynamic-biosensors
+  careers_url: https://www.dynamic-biosensors.com/careers/
+  match_method: page_scan
+  resolved_at: '2026-08-20T14:16:52.799099+00:00'
+- name: NanoTemper Technologies
+  url: https://nanotempertech.com/
+  ats: personio
+  identifier: nanotemper
+  careers_url: https://nanotempertech.com/careers/
+  match_method: page_scan
+  resolved_at: '2026-08-20T14:16:49.724330+00:00'
+- name: ibidi
+  url: https://ibidi.com/
+  ats: custom
+  identifier: null
+  careers_url: https://ibidi.com/content/422-careers
+  match_method: null
+  resolved_at: '2026-08-20T14:17:08.077137+00:00'
+- name: Proteintech Germany
+  url: https://www.ptglab.com/
+  ats: custom
+  identifier: null
+  careers_url: https://www.ptglab.com/about-us/careers/
+  match_method: null
+  resolved_at: '2026-08-20T14:17:20.370020+00:00'
+- name: Biomax Informatics
+  url: https://www.biomax.com/
+  ats: custom
+  identifier: null
+  careers_url: https://biomax.tcgdigital.com/company/careers/
+  match_method: null
+  resolved_at: '2026-08-20T14:17:26.113978+00:00'
+- name: inveox
+  url: https://www.inveox.com/
+  ats: null
+  identifier: null
+  careers_url: null
+  match_method: null
+  resolved_at: '2026-08-20T14:17:20.303432+00:00'
+- name: Smart Reporting
+  url: https://www.smart-reporting.com/
+  ats: custom
+  identifier: null
+  careers_url: https://www.jacobian.com/careers
+  match_method: null
+  resolved_at: '2026-08-20T14:17:29.455963+00:00'
+- name: Avelios Medical
+  url: https://www.avelios.com/
+  ats: ashby
+  identifier: avelios-medical
+  careers_url: https://www.avelios.com/de
+  match_method: page_scan
+  resolved_at: '2026-08-20T14:17:20.607016+00:00'
+- name: Avi Medical
+  url: https://www.avimedical.com/
+  ats: greenhouse
+  identifier: avimedical
+  careers_url: https://www.avimedical.com/jobs/
+  match_method: page_scan
+  resolved_at: '2026-08-20T14:17:21.210228+00:00'
+- name: Temedica
+  url: https://temedica.com/
+  ats: personio
+  identifier: temedica
+  careers_url: https://temedica.com/temedica-careers
+  match_method: page_scan
+  resolved_at: '2026-08-20T14:17:21.324828+00:00'
+- name: Kaia Health
+  url: https://kaiahealth.com/
+  ats: smartrecruiters
+  identifier: kaiahealth
+  careers_url: null
+  match_method: api_probe
+  resolved_at: '2026-08-20T14:17:40.389192+00:00'
+- name: Climedo Health
+  url: https://climedo.de/
+  ats: personio
+  identifier: climedo
+  careers_url: https://climedo.de/karriere/
+  match_method: page_scan
+  resolved_at: '2026-08-20T14:17:23.040237+00:00'
+- name: Kranus Health
+  url: https://www.kranushealth.com/
+  ats: personio
+  identifier: kranus-health-gmbh
+  careers_url: https://www.kranushealth.com/en/about/careers
+  match_method: page_scan
+  resolved_at: '2026-08-20T14:17:24.265340+00:00'
+- name: XO Life
+  url: https://xo-life.com/
+  ats: personio
+  identifier: xolife
+  careers_url: https://xolife.jobs.personio.de/
+  match_method: page_scan
+  resolved_at: '2026-08-20T14:17:25.871158+00:00'
+- name: deepc
+  url: https://www.deepc.ai/
+  ats: custom
+  identifier: null
+  careers_url: https://deepc.ai/careers
+  match_method: null
+  resolved_at: '2026-08-20T14:17:38.886545+00:00'
+- name: Munevo
+  url: https://www.munevo.com/
+  ats: recruitee
+  identifier: munevo
+  careers_url: https://munevo.com/en
+  match_method: page_scan
+  resolved_at: '2026-08-20T14:17:30.179746+00:00'
+- name: HENSOLDT
+  url: https://www.hensoldt.net/
+  ats: custom
+  identifier: null
+  careers_url: https://www.hensoldt.net/news/hensoldt-plans-to-set-up-a-development-centre-in-the-stuttgart-region
+  match_method: null
+  resolved_at: '2026-08-20T14:17:38.986376+00:00'
+- name: ArianeGroup
+  url: https://www.ariane.group/
+  ats: workday
+  identifier:
+    tenant: arianegroup
+    wd_host: wd3
+    site: fr-FR
+  careers_url: https://www.ariane.group/
+  match_method: page_scan
+  resolved_at: '2026-08-20T14:17:30.509287+00:00'
+- name: Airbus Protect
+  url: https://www.protect.airbus.com/
+  ats: custom
+  identifier: null
+  careers_url: https://www.protect.airbus.com/careers/
+  match_method: null
+  resolved_at: '2026-08-20T14:17:49.423072+00:00'
+- name: AOA Apparatebau Gauting
+  url: https://www.aoa-gauting.de/
+  ats: null
+  identifier: null
+  careers_url: null
+  match_method: null
+  resolved_at: '2026-08-20T14:17:59.181030+00:00'
+- name: Beyond Gravity Germany
+  url: https://www.beyondgravity.com/
+  ats: custom
+  identifier: null
+  careers_url: https://www.beyondgravity.com/en/careers
+  match_method: null
+  resolved_at: '2026-08-20T14:17:59.406154+00:00'
+- name: Dornier Seawings
+  url: https://dornierseawings.com/
+  ats: null
+  identifier: null
+  careers_url: null
+  match_method: null
+  resolved_at: '2026-08-20T14:18:01.140188+00:00'
+- name: ESG Elektroniksystem- und Logistik-GmbH
+  url: https://www.esg.de/
+  ats: custom
+  identifier: null
+  careers_url: https://www.hensoldt.net/news/hensoldt-plans-to-set-up-a-development-centre-in-the-stuttgart-region
+  match_method: null
+  resolved_at: '2026-08-20T14:18:11.265013+00:00'
+- name: Assystem Germany
+  url: https://www.assystem.com/
+  ats: smartrecruiters
+  identifier: oneclick-ui
+  careers_url: https://www.assystem.com/en/career/
+  match_method: page_scan
+  resolved_at: '2026-08-20T14:18:02.647886+00:00'
+- name: Diehl Aviation
+  url: https://www.diehl.com/aviation/
+  ats: null
+  identifier: null
+  careers_url: null
+  match_method: null
+  resolved_at: '2026-08-20T14:18:18.829813+00:00'
+- name: Vectoflow
+  url: https://vectoflow.de/
+  ats: personio
+  identifier: vectoflow
+  careers_url: null
+  match_method: api_probe
+  resolved_at: '2026-08-20T14:18:12.092321+00:00'
+- name: General Atomics AeroTec Systems
+  url: https://www.ga-ats.com/
+  ats: custom
+  identifier: null
+  careers_url: https://www.ga-ats.com/de/karriere
+  match_method: null
+  resolved_at: '2026-08-20T14:18:20.225297+00:00'
+- name: Deutsche Aircraft
+  url: https://www.deutscheaircraft.com/
+  ats: custom
+  identifier: null
+  careers_url: https://www.deutscheaircraft.com/careers
+  match_method: null
+  resolved_at: '2026-08-20T14:18:27.174589+00:00'
+- name: Mubea Aerostructures
+  url: https://www.mubea.com/en/oberpfaffenhofen-location
+  ats: custom
+  identifier: null
+  careers_url: https://www.mubea.com/en/career
+  match_method: null
+  resolved_at: '2026-08-20T14:18:36.438702+00:00'
+- name: Safran Passenger Innovations
+  url: https://www.safran-group.com/companies/safran-passenger-innovations
+  ats: null
+  identifier: null
+  careers_url: null
+  match_method: null
+  resolved_at: '2026-08-20T14:18:32.289294+00:00'
+- name: Aeromaritime Systembau
+  url: https://aeromaritimegroup.com/
+  ats: null
+  identifier: null
+  careers_url: null
+  match_method: null
+  resolved_at: '2026-08-20T14:18:33.692255+00:00'
+- name: OHB System
+  url: https://www.ohb-system.de/
+  ats: custom
+  identifier: null
+  careers_url: https://www.ohb.de/karriere
+  match_method: null
+  resolved_at: '2026-08-20T14:18:37.790410+00:00'
+- name: Telespazio Germany
+  url: https://www.telespazio.de/
+  ats: workday
+  identifier:
+    tenant: leonardocompany
+    wd_host: wd3
+    site: LeonardoCareerSite
+  careers_url: https://www.telespazio.de/en/careers
+  match_method: page_scan
+  resolved_at: '2026-08-20T14:18:33.691927+00:00'
+- name: GMV Germany
+  url: https://www.gmv.com/
+  ats: custom
+  identifier: null
+  careers_url: https://www.gmv.com/de/karriere
+  match_method: null
+  resolved_at: '2026-08-20T14:18:53.331735+00:00'
+- name: LSE Space
+  url: https://www.lsespace.com/
+  ats: custom
+  identifier: null
+  careers_url: https://sscspace.com/services/spacecraft-op-eng-services/
+  match_method: null
+  resolved_at: '2026-08-20T14:18:57.557689+00:00'
+- name: HE Space Operations
+  url: https://www.hespace.com/
+  ats: smartrecruiters
+  identifier: oneclick-ui
+  careers_url: https://www.hespace.com/careers
+  match_method: page_scan
+  resolved_at: '2026-08-20T14:18:38.058425+00:00'
+- name: Spire Global
+  url: https://spire.com/
+  ats: greenhouse
+  identifier: spire
+  careers_url: null
+  match_method: api_probe
+  resolved_at: '2026-08-20T14:18:44.609599+00:00'
+- name: HyImpulse
+  url: https://www.hyimpulse.de/
+  ats: personio
+  identifier: hyimpulse-technologies-gmbh
+  careers_url: https://www.hyimpulse.de/career
+  match_method: page_scan
+  resolved_at: '2026-08-20T14:18:38.596316+00:00'
+- name: Reflex Aerospace
+  url: https://www.reflexaerospace.com/
+  ats: personio
+  identifier: reflex-aerospace-gmbh
+  careers_url: https://www.reflexaerospace.com/careers
+  match_method: page_scan
+  resolved_at: '2026-08-20T14:18:39.568981+00:00'
+- name: OrbitsIQ Global
+  url: https://oiqglobal.com/
+  ats: personio
+  identifier: orbitsiq
+  careers_url: https://oiqglobal.com/
+  match_method: page_scan
+  resolved_at: '2026-08-20T14:18:39.779889+00:00'
+- name: Apex.AI
+  url: https://www.apex.ai/
+  ats: lever
+  identifier: apex-ai
+  careers_url: https://www.apex.ai/careers
+  match_method: page_scan
+  resolved_at: '2026-08-20T14:18:41.969222+00:00'
+- name: Hades Mining
+  url: https://www.hadesmining.com/
+  ats: null
+  identifier: null
+  careers_url: null
+  match_method: null
+  resolved_at: '2026-08-20T14:19:02.116770+00:00'
+- name: Swarm Biotactics
+  url: https://swarm-biotactics.com/
+  ats: custom
+  identifier: null
+  careers_url: https://www.swarm-biotactics.com/career/
+  match_method: null
+  resolved_at: '2026-08-20T14:19:01.223330+00:00'
+- name: EFT Mobility
+  url: https://eft-mobility.com/
+  ats: null
+  identifier: null
+  careers_url: null
+  match_method: null
+  resolved_at: '2026-08-20T14:19:06.447275+00:00'
+- name: Texas Instruments Germany
+  url: https://www.ti.com/
+  ats: custom
+  identifier: null
+  careers_url: https://careers.ti.com/en/sites/CX
+  match_method: null
+  resolved_at: '2026-08-20T14:19:22.039730+00:00'
+- name: NXP Semiconductors Germany
+  url: https://www.nxp.com/
+  ats: null
+  identifier: null
+  careers_url: null
+  match_method: null
+  resolved_at: '2026-08-20T14:19:15.755116+00:00'
+- name: Renesas Electronics Europe
+  url: https://www.renesas.com/
+  ats: custom
+  identifier: null
+  careers_url: https://jobs.renesas.com/
+  match_method: null
+  resolved_at: '2026-08-20T14:19:22.516090+00:00'
+- name: Analog Devices Germany
+  url: https://www.analog.com/
+  ats: null
+  identifier: null
+  careers_url: null
+  match_method: null
+  resolved_at: '2026-08-20T14:20:15.465400+00:00'
+- name: Cadence Design Systems
+  url: https://www.cadence.com/
+  ats: null
+  identifier: null
+  careers_url: null
+  match_method: null
+  resolved_at: '2026-08-20T14:19:29.576410+00:00'
+- name: Synopsys
+  url: https://www.synopsys.com/
+  ats: custom
+  identifier: null
+  careers_url: https://careers.synopsys.com/
+  match_method: null
+  resolved_at: '2026-08-20T14:19:34.334068+00:00'
+- name: Samsung Semiconductor Europe
+  url: https://semiconductor.samsung.com/
+  ats: custom
+  identifier: null
+  careers_url: https://semiconductor.samsung.com/about-us/careers/
+  match_method: null
+  resolved_at: '2026-08-20T14:20:12.913808+00:00'
+- name: TDK Electronics
+  url: https://www.tdk-electronics.tdk.com/
+  ats: custom
+  identifier: null
+  careers_url: https://www.tdk-electronics.tdk.com/en/2302050/careers
+  match_method: null
+  resolved_at: '2026-08-20T14:19:46.853899+00:00'
+- name: Murata Electronics Europe
+  url: https://www.murata.com/
+  ats: custom
+  identifier: null
+  careers_url: https://corporate.murata.com/careers
+  match_method: null
+  resolved_at: '2026-08-20T14:20:00.820603+00:00'
+- name: Panasonic Industry Europe
+  url: https://industry.panasonic.eu/
+  ats: custom
+  identifier: null
+  careers_url: https://industry.panasonic.eu/careers
+  match_method: null
+  resolved_at: '2026-08-20T14:20:06.895762+00:00'
+- name: ROHM Semiconductor Europe
+  url: https://www.rohm.com/eu
+  ats: null
+  identifier: null
+  careers_url: null
+  match_method: null
+  resolved_at: '2026-08-20T14:20:15.356541+00:00'
+- name: Advantest Europe
+  url: https://www.advantest.com/
+  ats: custom
+  identifier: null
+  careers_url: https://www.advantest.com/en/about/career-na/
+  match_method: null
+  resolved_at: '2026-08-20T14:20:40.106223+00:00'
+- name: Applied Materials Germany
+  url: https://www.appliedmaterials.com/
+  ats: null
+  identifier: null
+  careers_url: null
+  match_method: null
+  resolved_at: '2026-08-20T14:20:28.394685+00:00'
+- name: Siltronic
+  url: https://www.siltronic.com/
+  ats: custom
+  identifier: null
+  careers_url: https://www.siltronic.com/en/career.html
+  match_method: null
+  resolved_at: '2026-08-20T14:20:26.886339+00:00'
+- name: Micron Technology Germany
+  url: https://www.micron.com/
+  ats: custom
+  identifier: null
+  careers_url: https://www.micron.com/about/careers
+  match_method: null
+  resolved_at: '2026-08-20T14:20:37.428476+00:00'
+- name: Keysight Technologies
+  url: https://www.keysight.com/
+  ats: null
+  identifier: null
+  careers_url: null
+  match_method: null
+  resolved_at: '2026-08-20T14:20:40.358666+00:00'
+- name: Huawei Technologies Germany
+  url: https://www.huawei.com/de/
+  ats: null
+  identifier: null
+  careers_url: null
+  match_method: null
+  resolved_at: '2026-08-20T14:20:52.567669+00:00'
+- name: Nokia Germany
+  url: https://www.nokia.com/
+  ats: custom
+  identifier: null
+  careers_url: https://www.nokia.com/careers/
+  match_method: null
+  resolved_at: '2026-08-20T14:20:57.689540+00:00'
+- name: Ericsson Germany
+  url: https://www.ericsson.com/de
+  ats: null
+  identifier: null
+  careers_url: null
+  match_method: null
+  resolved_at: '2026-08-20T14:20:53.712323+00:00'
+- name: Fujitsu Germany
+  url: https://www.fujitsu.com/de/
+  ats: null
+  identifier: null
+  careers_url: null
+  match_method: null
+  resolved_at: '2026-08-20T14:20:59.855025+00:00'
+- name: Sony Europe
+  url: https://www.sony.eu/
+  ats: null
+  identifier: null
+  careers_url: null
+  match_method: null
+  resolved_at: '2026-08-20T14:21:06.794563+00:00'
+- name: Dell Technologies Germany
+  url: https://www.dell.com/de-de
+  ats: null
+  identifier: null
+  careers_url: null
+  match_method: null
+  resolved_at: '2026-08-20T14:21:08.167692+00:00'
+- name: Hewlett Packard Enterprise Germany
+  url: https://www.hpe.com/de/de/home.html
+  ats: personio
+  identifier: hpe
+  careers_url: null
+  match_method: api_probe
+  resolved_at: '2026-08-20T14:22:04.273443+00:00'
+- name: Lenovo Germany
+  url: https://www.lenovo.com/de/de/
+  ats: null
+  identifier: null
+  careers_url: null
+  match_method: null
+  resolved_at: '2026-08-20T14:21:53.351597+00:00'
+- name: NetApp Germany
+  url: https://www.netapp.com/
+  ats: null
+  identifier: null
+  careers_url: null
+  match_method: null
+  resolved_at: '2026-08-20T14:21:20.536934+00:00'
+- name: Pure Storage Germany
+  url: https://www.purestorage.com/
+  ats: ashby
+  identifier: purestorage
+  careers_url: null
+  match_method: api_probe
+  resolved_at: '2026-08-20T14:21:20.628366+00:00'
+- name: Veeam Germany
+  url: https://www.veeam.com/
+  ats: custom
+  identifier: null
+  careers_url: https://careers.veeam.com/search-jobs?ad=menu-company-careers
+  match_method: null
+  resolved_at: '2026-08-20T14:21:40.640743+00:00'
+- name: OpenText Germany
+  url: https://www.opentext.com/
+  ats: null
+  identifier: null
+  careers_url: null
+  match_method: null
+  resolved_at: '2026-08-20T14:21:34.488089+00:00'
+- name: Elastic
+  url: https://www.elastic.co/
+  ats: greenhouse
+  identifier: elastic
+  careers_url: null
+  match_method: api_probe
+  resolved_at: '2026-08-20T14:21:43.348362+00:00'
+- name: MongoDB
+  url: https://www.mongodb.com/
+  ats: greenhouse
+  identifier: mongodb
+  careers_url: null
+  match_method: api_probe
+  resolved_at: '2026-08-20T14:21:47.423278+00:00'
+- name: Confluent
+  url: https://www.confluent.io/
+  ats: ashby
+  identifier: confluent
+  careers_url: null
+  match_method: api_probe
+  resolved_at: '2026-08-20T14:22:04.923491+00:00'
+- name: Nutanix
+  url: https://www.nutanix.com/
+  ats: ashby
+  identifier: nutanix
+  careers_url: null
+  match_method: api_probe
+  resolved_at: '2026-08-20T14:21:53.474690+00:00'
+- name: Rubrik
+  url: https://www.rubrik.com/
+  ats: greenhouse
+  identifier: rubrik
+  careers_url: null
+  match_method: api_probe
+  resolved_at: '2026-08-20T14:21:56.051036+00:00'
+- name: UiPath
+  url: https://www.uipath.com/
+  ats: ashby
+  identifier: uipath
+  careers_url: https://www.uipath.com/careers
+  match_method: page_scan
+  resolved_at: '2026-08-20T14:21:56.040317+00:00'
+- name: Pegasystems
+  url: https://www.pega.com/
+  ats: custom
+  identifier: null
+  careers_url: https://www.pega.com/about/careers
+  match_method: null
+  resolved_at: '2026-08-20T14:22:27.620440+00:00'
+- name: Appian
+  url: https://appian.com/
+  ats: greenhouse
+  identifier: appian
+  careers_url: null
+  match_method: api_probe
+  resolved_at: '2026-08-20T14:22:03.396863+00:00'
+- name: Versicherungskammer Bayern
+  url: https://www.vkb.de/
+  ats: custom
+  identifier: null
+  careers_url: https://www.vkb.de/ueber-uns/karriere.html
+  match_method: null
+  resolved_at: '2026-08-20T14:22:22.526829+00:00'
+- name: Generali Deutschland
+  url: https://www.generali.de/
+  ats: custom
+  identifier: null
+  careers_url: https://www.generali.de/karriere
+  match_method: null
+  resolved_at: '2026-08-20T14:22:21.751278+00:00'
+- name: Swiss Re Germany
+  url: https://www.swissre.com/
+  ats: custom
+  identifier: null
+  careers_url: https://www.swissre.com/careers.html
+  match_method: null
+  resolved_at: '2026-08-20T14:22:23.934094+00:00'
+- name: Allianz Technology
+  url: https://tech.allianz.com/
+  ats: null
+  identifier: null
+  careers_url: null
+  match_method: null
+  resolved_at: '2026-08-20T14:22:35.709419+00:00'
+- name: Allianz Partners
+  url: https://www.allianz-partners.com/
+  ats: null
+  identifier: null
+  careers_url: null
+  match_method: null
+  resolved_at: '2026-08-20T14:22:29.266012+00:00'
+- name: Allianz Global Investors
+  url: https://www.allianzgi.com/
+  ats: custom
+  identifier: null
+  careers_url: https://careers.allianz.com/global/en
+  match_method: null
+  resolved_at: '2026-08-20T14:23:07.560655+00:00'
+- name: Allianz Commercial
+  url: https://commercial.allianz.com/
+  ats: null
+  identifier: null
+  careers_url: null
+  match_method: null
+  resolved_at: '2026-08-20T14:22:41.295264+00:00'
+- name: MEAG
+  url: https://www.meag.com/
+  ats: custom
+  identifier: null
+  careers_url: https://careers.munichre.com/de/meag
+  match_method: null
+  resolved_at: '2026-08-20T14:22:38.430913+00:00'
+- name: ERGO Group
+  url: https://www.ergo.com/
+  ats: custom
+  identifier: null
+  careers_url: https://www.ergo.com/de/karriere
+  match_method: null
+  resolved_at: '2026-08-20T14:23:56.641198+00:00'
+- name: Baader Bank
+  url: https://www.baaderbank.de/
+  ats: custom
+  identifier: null
+  careers_url: https://www.baaderbank.de/karriere
+  match_method: null
+  resolved_at: '2026-08-20T14:24:45.950585+00:00'
+- name: Donner & Reuschel
+  url: https://www.donner-reuschel.de/
+  ats: softgarden
+  identifier: donner-reuschel
+  careers_url: https://www.donner-reuschel.de/karriere/
+  match_method: page_scan
+  resolved_at: '2026-08-20T14:22:43.149899+00:00'
+- name: Hauck Aufhäuser Lampe Privatbank
+  url: https://www.hal-privatbank.com/
+  ats: custom
+  identifier: null
+  careers_url: https://www.bethmann-hal.de/de/karriere/index.html
+  match_method: null
+  resolved_at: '2026-08-20T14:27:03.997393+00:00'
+- name: Stadtsparkasse München
+  url: https://www.sskm.de/
+  ats: custom
+  identifier: null
+  careers_url: https://www.sskm.de/de/home/karriere.html?n=true&stref=hnav
+  match_method: null
+  resolved_at: '2026-08-20T14:26:48.188601+00:00'
+- name: Deutsche Bank
+  url: https://www.db.com/
+  ats: custom
+  identifier: null
+  careers_url: https://careers.db.com/index?kid=careers.redirect-en.shortcut&language_id=1
+  match_method: null
+  resolved_at: '2026-08-20T14:26:53.913859+00:00'
+- name: BNP Paribas Germany
+  url: https://www.bnpparibas.de/
+  ats: custom
+  identifier: null
+  careers_url: https://www.bnpparibas.de/en/career/who-we-are/
+  match_method: null
+  resolved_at: '2026-08-20T14:27:05.502078+00:00'
+- name: Goldman Sachs Germany
+  url: https://www.goldmansachs.com/
+  ats: custom
+  identifier: null
+  careers_url: https://www.goldmansachs.com/careers
+  match_method: null
+  resolved_at: '2026-08-20T14:27:17.609255+00:00'
+- name: J.P. Morgan Germany
+  url: https://www.jpmorgan.com/DE/en/about-us
+  ats: custom
+  identifier: null
+  careers_url: https://www.jpmorganchase.com/careers
+  match_method: null
+  resolved_at: '2026-08-20T14:27:13.299856+00:00'
+- name: State Street Bank International
+  url: https://www.statestreet.com/
+  ats: workday
+  identifier:
+    tenant: statestreet
+    wd_host: wd1
+    site: en-US
+  careers_url: https://careers.statestreet.com/global/en
+  match_method: page_scan
+  resolved_at: '2026-08-20T14:27:06.249428+00:00'
+- name: UBS Europe
+  url: https://www.ubs.com/
+  ats: null
+  identifier: null
+  careers_url: null
+  match_method: null
+  resolved_at: '2026-08-20T14:27:19.148944+00:00'
+- name: Crédit Agricole CIB Germany
+  url: https://www.ca-cib.com/
+  ats: custom
+  identifier: null
+  careers_url: https://www.ca-cib.com/en/career
+  match_method: null
+  resolved_at: '2026-08-20T14:27:33.220963+00:00'
+- name: PATRIZIA
+  url: https://www.patrizia.ag/
+  ats: custom
+  identifier: null
+  careers_url: https://www.patrizia.ag/en/careers
+  match_method: null
+  resolved_at: '2026-08-20T14:27:48.071740+00:00'
+- name: Real I.S.
+  url: https://www.realisag.de/
+  ats: custom
+  identifier: null
+  careers_url: https://www.realisag.de/karriere/
+  match_method: null
+  resolved_at: '2026-08-20T14:27:43.706164+00:00'
+- name: KGAL
+  url: https://www.kgal.de/
+  ats: custom
+  identifier: null
+  careers_url: https://www.kgal.de/karriere/
+  match_method: null
+  resolved_at: '2026-08-20T14:27:44.408591+00:00'
+- name: Wealthcap
+  url: https://www.wealthcap.com/
+  ats: custom
+  identifier: null
+  careers_url: https://www.ucinvestalternatives.eu/ueber-uns/karriere/
+  match_method: null
+  resolved_at: '2026-08-20T14:27:58.087931+00:00'
+- name: Hannover Leasing
+  url: https://www.hannover-leasing.de/
+  ats: custom
+  identifier: null
+  careers_url: https://www.hannover-leasing.de/karriere/
+  match_method: null
+  resolved_at: '2026-08-20T14:27:59.415353+00:00'
+- name: Assenagon
+  url: https://www.assenagon.com/
+  ats: rexx
+  identifier: null
+  careers_url: https://www.assenagon.com/karriere/
+  match_method: page_scan
+  resolved_at: '2026-08-20T14:27:45.279181+00:00'
+- name: DJE Kapital
+  url: https://www.dje.de/
+  ats: personio
+  identifier: dje-kapital-ag
+  careers_url: https://www.dje.de/de/ueber-dje/karriere/
+  match_method: page_scan
+  resolved_at: '2026-08-20T14:28:00.753042+00:00'
+- name: Golding Capital Partners
+  url: https://www.goldingcapital.com/
+  ats: custom
+  identifier: null
+  careers_url: https://www.goldingcapital.com/de/karriere
+  match_method: null
+  resolved_at: '2026-08-20T14:28:04.762741+00:00'
+- name: YIELCO Investments
+  url: https://www.yielco.com/
+  ats: custom
+  identifier: null
+  careers_url: https://yielco.com/ueber-uns/#career
+  match_method: null
+  resolved_at: '2026-08-20T14:28:32.390161+00:00'
+- name: Telefónica Germany
+  url: https://www.telefonica.de/
+  ats: custom
+  identifier: null
+  careers_url: https://www.telefonica.de/karriere.html
+  match_method: null
+  resolved_at: '2026-08-20T14:28:15.562961+00:00'
+- name: M-net
+  url: https://www.m-net.de/
+  ats: custom
+  identifier: null
+  careers_url: https://www.m-net.de/ueber-m-net/karriere
+  match_method: null
+  resolved_at: '2026-08-20T14:28:12.799397+00:00'
+- name: Deutsche Telekom
+  url: https://www.telekom.com/
+  ats: custom
+  identifier: null
+  careers_url: https://www.telekom.com/en/careers
+  match_method: null
+  resolved_at: '2026-08-20T14:28:22.701731+00:00'
+- name: Sky Deutschland
+  url: https://www.sky.de/unternehmen
+  ats: null
+  identifier: null
+  careers_url: null
+  match_method: null
+  resolved_at: '2026-08-20T14:28:26.156442+00:00'
+- name: Joyn
+  url: https://www.joyn.de/
+  ats: custom
+  identifier: null
+  careers_url: https://jobs.prosiebensat1.com/
+  match_method: null
+  resolved_at: '2026-08-20T14:28:25.189836+00:00'
+- name: Süddeutsche Zeitung
+  url: https://www.sueddeutsche.de/
+  ats: custom
+  identifier: null
+  careers_url: https://stellenmarkt.sueddeutsche.de
+  match_method: null
+  resolved_at: '2026-08-20T14:34:06.339899+00:00'
+- name: Ippen.Media
+  url: https://www.ippen.media/
+  ats: custom
+  identifier: null
+  careers_url: https://www.ippen.media/karriere/
+  match_method: null
+  resolved_at: '2026-08-20T14:37:39.194482+00:00'
+- name: Constantin Film
+  url: https://www.constantin-film.de/
+  ats: null
+  identifier: null
+  careers_url: null
+  match_method: null
+  resolved_at: '2026-08-20T14:35:03.175775+00:00'
+- name: LEONINE Studios
+  url: https://www.leoninestudios.com/
+  ats: custom
+  identifier: null
+  careers_url: https://www.leoninestudios.com/karriere
+  match_method: null
+  resolved_at: '2026-08-20T14:37:45.845972+00:00'
+- name: Sport1
+  url: https://www.sport1.de/unternehmen
+  ats: custom
+  identifier: null
+  careers_url: https://www.sport1.de/karriere
+  match_method: null
+  resolved_at: '2026-08-20T14:37:47.624561+00:00'
+- name: RTLZWEI
+  url: https://unternehmen.rtl2.de/
+  ats: custom
+  identifier: null
+  careers_url: https://unternehmen.rtl2.de/
+  match_method: null
+  resolved_at: '2026-08-20T14:37:52.593743+00:00'
+- name: Disney Germany
+  url: https://www.disney.de/
+  ats: null
+  identifier: null
+  careers_url: null
+  match_method: null
+  resolved_at: '2026-08-20T14:37:52.593908+00:00'
+- name: Warner Bros. Discovery Germany
+  url: https://wbd.com/
+  ats: custom
+  identifier: null
+  careers_url: https://careers.wbd.com/global/en
+  match_method: null
+  resolved_at: '2026-08-20T14:38:12.031086+00:00'
+- name: Paramount Germany
+  url: https://www.paramount.com/
+  ats: personio
+  identifier: paramount
+  careers_url: null
+  match_method: api_probe
+  resolved_at: '2026-08-20T14:37:49.083039+00:00'
+- name: NBCUniversal Germany
+  url: https://www.nbcuniversal.com/
+  ats: custom
+  identifier: null
+  careers_url: https://www.nbcuniversal.com/careers
+  match_method: null
+  resolved_at: '2026-08-20T14:38:14.719975+00:00'
+- name: Red Bull Germany
+  url: https://www.redbull.com/de-de/
+  ats: smartrecruiters
+  identifier: redbull
+  careers_url: null
+  match_method: api_probe
+  resolved_at: '2026-08-20T14:37:59.459450+00:00'
+- name: Sony Pictures Entertainment Germany
+  url: https://www.sonypictures.de/
+  ats: null
+  identifier: null
+  careers_url: null
+  match_method: null
+  resolved_at: '2026-08-20T14:38:12.685073+00:00'
+- name: Bavaria Film
+  url: https://www.bavaria-film.de/
+  ats: custom
+  identifier: null
+  careers_url: https://www.bavaria-film.de/karriere
+  match_method: null
+  resolved_at: '2026-08-20T14:38:09.101861+00:00'
+- name: Antenne Bayern
+  url: https://www.antenne.group/
+  ats: custom
+  identifier: null
+  careers_url: https://www.antenne.group/jobs/
+  match_method: null
+  resolved_at: '2026-08-20T14:38:23.432781+00:00'
+- name: QAware
+  url: https://www.qaware.de/
+  ats: personio
+  identifier: qaware
+  careers_url: https://www.qaware.de/karriere
+  match_method: page_scan
+  resolved_at: '2026-08-20T14:38:14.718878+00:00'
+- name: ConSol
+  url: https://www.consol.de/
+  ats: custom
+  identifier: null
+  careers_url: https://www.consol.de/jobs
+  match_method: null
+  resolved_at: '2026-08-20T14:38:26.248977+00:00'
+- name: inovex
+  url: https://www.inovex.de/
+  ats: custom
+  identifier: null
+  careers_url: https://www.inovex.de/de/karriere/
+  match_method: null
+  resolved_at: '2026-08-20T14:38:41.704316+00:00'
+- name: codecentric
+  url: https://www.codecentric.de/
+  ats: personio
+  identifier: codecentric
+  careers_url: null
+  match_method: api_probe
+  resolved_at: '2026-08-20T14:38:21.008791+00:00'
+- name: Motius
+  url: https://www.motius.com/
+  ats: custom
+  identifier: null
+  careers_url: https://www.motius.com/career
+  match_method: null
+  resolved_at: '2026-08-20T14:38:31.568953+00:00'
+- name: CQSE
+  url: https://www.cqse.eu/
+  ats: softgarden
+  identifier: matomo
+  careers_url: https://jobs.cqse.eu/en/
+  match_method: page_scan
+  resolved_at: '2026-08-20T14:38:24.957524+00:00'
+- name: itestra
+  url: https://www.itestra.com/
+  ats: custom
+  identifier: null
+  careers_url: https://itestra.com/de/join/jobs
+  match_method: null
+  resolved_at: '2026-08-20T14:38:34.501606+00:00'
+- name: XITASO
+  url: https://xitaso.com/
+  ats: personio
+  identifier: xitaso
+  careers_url: null
+  match_method: api_probe
+  resolved_at: '2026-08-20T14:38:40.596749+00:00'
+- name: in-tech
+  url: https://www.in-tech.com/
+  ats: custom
+  identifier: null
+  careers_url: https://in-tech.com/
+  match_method: null
+  resolved_at: '2026-08-20T14:38:44.727181+00:00'
+- name: Vector Informatik
+  url: https://www.vector.com/
+  ats: ashby
+  identifier: vector
+  careers_url: null
+  match_method: api_probe
+  resolved_at: '2026-08-20T14:38:35.779816+00:00'
+- name: Elektrobit Automotive
+  url: https://www.elektrobit.com/
+  ats: custom
+  identifier: null
+  careers_url: https://www.elektrobit.com/
+  match_method: null
+  resolved_at: '2026-08-20T14:38:56.495842+00:00'
+- name: CARIAD
+  url: https://cariad.technology/
+  ats: custom
+  identifier: null
+  careers_url: https://cariad.technology/de/en/careers.html
+  match_method: null
+  resolved_at: '2026-08-20T14:38:50.629678+00:00'
+- name: Franka Robotics
+  url: https://franka.de/
+  ats: personio
+  identifier: franka-robotics
+  careers_url: https://franka.de/careers
+  match_method: page_scan
+  resolved_at: '2026-08-20T14:38:42.062830+00:00'
+- name: DyeMansion
+  url: https://dyemansion.com/
+  ats: personio
+  identifier: dyemansion-gmbh
+  careers_url: https://dyemansion.com/career/
+  match_method: page_scan
+  resolved_at: '2026-08-20T14:38:44.344365+00:00'
+- name: Reactive Robotics
+  url: https://reactive-robotics.com/
+  ats: null
+  identifier: null
+  careers_url: null
+  match_method: null
+  resolved_at: '2026-08-20T14:39:56.204026+00:00'
+- name: Soley
+  url: https://www.soley.io/
+  ats: personio
+  identifier: soley-gmbh
+  careers_url: https://www.soley.io/team
+  match_method: page_scan
+  resolved_at: '2026-08-20T14:38:45.019688+00:00'
+- name: Erium
+  url: https://erium.de/
+  ats: custom
+  identifier: null
+  careers_url: https://erium.de/karriere/
+  match_method: null
+  resolved_at: '2026-08-20T14:38:58.514260+00:00'
+- name: Noyes Technologies
+  url: https://noyes-tech.com/
+  ats: personio
+  identifier: noyes-robotics-gmbh
+  careers_url: https://noyes-tech.com/career/
+  match_method: page_scan
+  resolved_at: '2026-08-20T14:38:51.270240+00:00'
+- name: Peter Park
+  url: https://www.peter-park.de/
+  ats: personio
+  identifier: peter-park
+  careers_url: https://www.peter-park.de/
+  match_method: page_scan
+  resolved_at: '2026-08-20T14:38:51.424139+00:00'
+- name: Qwello
+  url: https://qwello.eu/
+  ats: personio
+  identifier: qwello
+  careers_url: null
+  match_method: api_probe
+  resolved_at: '2026-08-20T14:38:53.882047+00:00'
+- name: Wirelane
+  url: https://www.wirelane.com/
+  ats: personio
+  identifier: wirelane
+  careers_url: https://www.wirelane.com/de/ueber-uns#jobs
+  match_method: page_scan
+  resolved_at: '2026-08-20T14:38:54.346538+00:00'
+- name: STABL Energy
+  url: https://stabl.com/
+  ats: custom
+  identifier: null
+  careers_url: https://stabl.com/en/company/career/
+  match_method: null
+  resolved_at: '2026-08-20T14:39:13.951612+00:00'
+- name: tozero
+  url: https://www.tozero.solutions/
+  ats: personio
+  identifier: tozero
+  careers_url: https://www.tozero.solutions/
+  match_method: page_scan
+  resolved_at: '2026-08-20T14:38:56.949437+00:00'
+- name: Kyon Energy
+  url: https://www.kyon-energy.de/
+  ats: personio
+  identifier: kyon-energy-gmbh
+  careers_url: https://www.kyon-energy.de/karriere
+  match_method: page_scan
+  resolved_at: '2026-08-20T14:38:57.293367+00:00'
+- name: Tanso
+  url: https://www.tanso.de/
+  ats: personio
+  identifier: tanso
+  careers_url: https://www.tanso.de/karriere
+  match_method: page_scan
+  resolved_at: '2026-08-20T14:38:57.805195+00:00'
+- name: Tangany
+  url: https://tangany.com/
+  ats: join
+  identifier: tangany
+  careers_url: https://tangany.com/jobs
+  match_method: page_scan
+  resolved_at: '2026-08-20T14:38:58.773067+00:00'
+- name: Lanes & Planes
+  url: https://www.lanes-planes.de/
+  ats: null
+  identifier: null
+  careers_url: null
+  match_method: null
+  resolved_at: '2026-08-20T14:41:10.469749+00:00'
+- name: Finanzchef24
+  url: https://www.finanzchef24.de/
+  ats: custom
+  identifier: null
+  careers_url: https://www.finanzchef24.de/ueber-uns/jobs
+  match_method: null
+  resolved_at: '2026-08-20T14:39:08.433719+00:00'
+- name: Yoummday
+  url: https://yoummday.com/
+  ats: ashby
+  identifier: yoummday
+  careers_url: null
+  match_method: api_probe
+  resolved_at: '2026-08-20T14:39:22.507105+00:00'
+- name: Floy
+  url: https://www.floy.com/
+  ats: personio
+  identifier: floy
+  careers_url: https://www.floy.com/
+  match_method: page_scan
+  resolved_at: '2026-08-20T14:39:14.263449+00:00'
+- name: Scompler
+  url: https://www.scompler.com/
+  ats: null
+  identifier: null
+  careers_url: null
+  match_method: null
+  resolved_at: '2026-08-20T14:39:32.927854+00:00'
+- name: Ariadne Maps
+  url: https://ariadne.inc/
+  ats: personio
+  identifier: ariadne
+  careers_url: https://www.ariadne.inc/careers/
+  match_method: page_scan
+  resolved_at: '2026-08-20T14:39:23.815836+00:00'
+- name: Opscura
+  url: https://www.opscura.io/
+  ats: null
+  identifier: null
+  careers_url: null
+  match_method: null
+  resolved_at: '2026-08-20T14:39:35.621968+00:00'
+- name: Certivity
+  url: https://www.certivity.io/
+  ats: personio
+  identifier: certivity
+  careers_url: null
+  match_method: api_probe
+  resolved_at: '2026-08-20T14:39:40.778512+00:00'
+- name: Kertos
+  url: https://www.kertos.io/
+  ats: personio
+  identifier: kertos
+  careers_url: https://www.kertos.io/karriere
+  match_method: page_scan
+  resolved_at: '2026-08-20T14:39:36.237932+00:00'
+- name: Klima.Metrix
+  url: https://klima-metrix.de/
+  ats: null
+  identifier: null
+  careers_url: null
+  match_method: null
+  resolved_at: '2026-08-20T14:41:48.064267+00:00'
+- name: Vantis
+  url: https://www.vantis-health.com/
+  ats: personio
+  identifier: vantis
+  careers_url: https://www.vantis-health.com/karriere
+  match_method: page_scan
+  resolved_at: '2026-08-20T14:39:42.437686+00:00'
+- name: wellabe
+  url: https://wellabe.de/
+  ats: personio
+  identifier: mavie
+  careers_url: https://work.mavie.care/de-at
+  match_method: page_scan
+  resolved_at: '2026-08-20T14:39:42.809700+00:00'
+- name: AirLST
+  url: https://airlst.com/
+  ats: custom
+  identifier: null
+  careers_url: https://airlst.com/karriere
+  match_method: null
+  resolved_at: '2026-08-20T14:39:51.967662+00:00'

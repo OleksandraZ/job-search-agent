@@ -4,18 +4,11 @@ See `job_search_agent_plan.md` for the full build spec and phase plan.
 
 For the *why* behind any gotcha below, see:
 - `docs/lessons/adapters.md` — building/fixing a board adapter
+- `docs/lessons/ats_adapters.md` — building/fixing an ATS (company-direct) adapter
 - `docs/lessons/classification.md` — `pipeline/location.py` and `pipeline/classify_language.py`
 
 Each source's own quirks (fetch mechanism, selectors, search-param behavior) live in
 its `sources.yaml` `notes:` field, not here.
-
-## Status
-
-**Priority-1 board adapters: 12/12 built · Phases complete: 1-5 of 8.** This line is
-the one place to update when either number changes — don't restate progress as dated
-prose elsewhere in this file. Full adapter list: `sources.yaml`'s
-`meta.adapter_legend`. Phase definitions: `job_search_agent_plan.md` §13.
-Per-source build notes: `job_search_agent_phase5` memory (historical, not kept current).
 
 ## Code quality
 

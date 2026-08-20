@@ -1,0 +1,355 @@
+# ATS resolution report
+
+Total companies: 598
+
+## Bucket summary
+
+- Resolved (real vendor): 273 (45.7%)
+- Custom (careers page found, no recognized vendor): 241 (40.3%)
+- Unresolved (no careers page found): 84 (14.0%)
+
+## Resolved by vendor
+
+- personio: 115
+- greenhouse: 47
+- ashby: 45
+- workday: 21
+- smartrecruiters: 12
+- softgarden: 11
+- lever: 8
+- recruitee: 6
+- rexx: 4
+- onlyfy: 2
+- bamboohr: 1
+- join: 1
+
+## Unresolved companies
+
+- osapiens — https://osapiens.com
+- parcelLab — https://parcellab.com
+- Caresyntax — https://caresyntax.com
+- air up — https://www.air-up.com
+- Provinzial Konzern — https://www.provinzial.de/
+- Allianz in Deutschland — https://www.allianz.de/
+- AUDI AG — https://www.audi.de/
+- BMW Group — https://www.bmwgroup.com/
+- Bayernwerk — https://www.bayernwerk.de/
+- HanseWerk-Gruppe — https://www.hansewerk.com/
+- TenneT Deutschland — https://www.tennet.eu/de/
+- Westnetz GmbH — https://www.westnetz.de/
+- Syna GmbH — https://www.syna.de/
+- Swiss Life Deutschland — https://www.swisslife.de/
+- Deutsche Leasing Gruppe — https://www.deutsche-leasing.com/
+- Avacon AG — https://www.avacon.de/
+- Lufthansa Technik AG — https://www.lufthansa-technik.com/
+- Dräger — https://www.draeger.com/de_de/Home
+- GOLDBECK GmbH — https://www.goldbeck.de/
+- Bayer (Deutschland) — https://www.bayer.com/de/de/
+- Agentur für Haushaltshilfe GmbH — https://www.agentur-fuer-haushaltshilfe.de/
+- TÜV SÜD — https://www.tuvsud.com/de-de/
+- Aramark — https://www.aramark.de/
+- combyne — https://www.combyne.com/
+- FAZUA — https://fazua.com/
+- Adobe — https://www.adobe.com/
+- Cisco — https://www.cisco.com/
+- ProSiebenSat.1 Media — https://www.prosiebensat1.com/
+- Datarella — https://datarella.com/
+- aboalarm — https://www.aboalarm.de/
+- Interhyp — https://www.interhyp.de/
+- ysura — https://www.ysura.com/
+- ICAROS — https://www.icaros.com/
+- Capgemini Engineering — https://www.capgemini.com/de-de/about-us/who-we-are/our-brands/capgemini-engineering/
+- Autodesk — https://www.autodesk.com/
+- SAP — https://www.sap.com/germany/
+- Intel — https://www.intel.de/
+- McKinsey & Company — https://www.mckinsey.com/de/
+- Boston Consulting Group — https://www.bcg.com/
+- Toposens — https://toposens.com/
+- bene-Arzneimittel — https://www.bene-arzneimittel.de/
+- SciRhom — https://scirhom.com/
+- AstraZeneca Germany — https://www.astrazeneca.de/
+- Bio-Rad Laboratories — https://www.bio-rad.com/
+- Agilent Technologies — https://www.agilent.com/
+- Medigene — https://www.medigene.com/
+- Ethris — https://ethris.com/
+- Isar Bioscience — https://www.isar-bioscience.de/
+- Plectonic Biotech — https://www.plectonic.com/
+- inveox — https://www.inveox.com/
+- AOA Apparatebau Gauting — https://www.aoa-gauting.de/
+- Dornier Seawings — https://dornierseawings.com/
+- Diehl Aviation — https://www.diehl.com/aviation/
+- Safran Passenger Innovations — https://www.safran-group.com/companies/safran-passenger-innovations
+- Aeromaritime Systembau — https://aeromaritimegroup.com/
+- Hades Mining — https://www.hadesmining.com/
+- EFT Mobility — https://eft-mobility.com/
+- NXP Semiconductors Germany — https://www.nxp.com/
+- Analog Devices Germany — https://www.analog.com/
+- Cadence Design Systems — https://www.cadence.com/
+- ROHM Semiconductor Europe — https://www.rohm.com/eu
+- Applied Materials Germany — https://www.appliedmaterials.com/
+- Keysight Technologies — https://www.keysight.com/
+- Huawei Technologies Germany — https://www.huawei.com/de/
+- Ericsson Germany — https://www.ericsson.com/de
+- Fujitsu Germany — https://www.fujitsu.com/de/
+- Sony Europe — https://www.sony.eu/
+- Dell Technologies Germany — https://www.dell.com/de-de
+- Lenovo Germany — https://www.lenovo.com/de/de/
+- NetApp Germany — https://www.netapp.com/
+- OpenText Germany — https://www.opentext.com/
+- Allianz Technology — https://tech.allianz.com/
+- Allianz Partners — https://www.allianz-partners.com/
+- Allianz Commercial — https://commercial.allianz.com/
+- UBS Europe — https://www.ubs.com/
+- Sky Deutschland — https://www.sky.de/unternehmen
+- Constantin Film — https://www.constantin-film.de/
+- Disney Germany — https://www.disney.de/
+- Sony Pictures Entertainment Germany — https://www.sonypictures.de/
+- Reactive Robotics — https://reactive-robotics.com/
+- Lanes & Planes — https://www.lanes-planes.de/
+- Scompler — https://www.scompler.com/
+- Opscura — https://www.opscura.io/
+- Klima.Metrix — https://klima-metrix.de/
+
+## Custom (candidate for a future generic scraper)
+
+- Scalable Capital — https://de.scalable.capital/careers
+- Taxfix — https://taxfix.de/steuerklasse-6-zweitjob/
+- Solaris — https://www.solarisgroup.com/en/careers/
+- Mondu — https://www.mondu.ai/careers/
+- Productsup — https://www.productsup.com/careers/
+- Talon.One — https://www.talon.one/jobs
+- Plan A — https://plana.earth/careers
+- WorkMotion — https://workmotion.com/careers/
+- Patient21 — https://patient21.com/jobs
+- sennder — https://www.sennder.com/career
+- Sunfire — https://sunfire.de/en/career/
+- Atruvia AG — https://atruvia.de/karriere
+- AXA Konzern AG — https://www.axa.de/karriere
+- Zurich Gruppe Deutschland — https://www.zurich.de/careers
+- EnBW Energie Baden-Württemberg AG — https://www.enbw.com/karriere/
+- Commerzbank AG — https://www.commerzbank.de/konzern/karriere/
+- BITMARCK-Unternehmensgruppe — https://www.bitmarck.de/
+- Dataport AöR — https://www.dataport.de/karriere/arbeiten-bei-dataport/
+- Siemens AG — https://www.siemens.com/de-de/company/jobs/
+- BWI GmbH — https://www.bwi.de/karriere
+- Siemens Energy — https://jobs.siemens-energy.com/de_DE/jobs
+- Finanz Informatik GmbH & Co.KG — https://www.f-i.de/karriere
+- AEB SE — https://www.aeb.com/en/work-at-aeb/jobs.php
+- Vodafone GmbH — https://careers.vodafone.com/de/
+- BROCKHAUS AG — https://www.brockhaus-ag.de/#Karriere
+- Bosch Gruppe — https://www.bosch.de/karriere/
+- Bundesagentur für Arbeit — https://www.arbeitsagentur.de/karriere-und-weiterbildung
+- Hamburger Sparkasse AG (Haspa) — https://www.haspa.de/de/home/karriere.html?n=true&stref=hnav
+- Kassenärztliche Vereinigung Baden-Württemberg — https://www.kvbawue.de/ueber-uns/karriere
+- Landschaftsverband Rheinland — https://www.lvr.de/lvr/karriere/
+- enmore consulting ag — https://www.enmore.de/jobs/
+- R+V Versicherung — https://www.ruv.de/karriere
+- profine GmbH — https://jobs.profine-group.com
+- DZ BANK AG / Deutsche Zentral-Genossenschaftsbank — https://karriere.dzbank.de/
+- LVM Versicherung — https://karriere.lvm.de/
+- Techniker Krankenkasse — https://www.tk.de/service/app/2055100/stellenmarkt/suche.app
+- Sparkasse Vorpommern — https://www.spk-vorpommern.de/de/home/misc/stellen-und-ausbildung.html?n=true
+- SachsenEnergie AG — https://www.sachsenenergie.de/wps/portal/energie/cms/menu_main/karriere
+- AOK - Die Gesundheitskasse — https://www.aok.de/karriere/
+- GROB-WERKE GmbH & Co. KG — https://karriere.grobgroup.com/
+- VR Bank Augsburg-Ostallgäu eG — https://www.vrbank-augsburg-ostallgaeu.de/meine-bank/karriere.html
+- DEVK — https://jobs.devk.de/
+- Elektro Breitling GmbH — https://www.eb-karriere.de/
+- EVOMOTIV — https://www.evomotiv.com/career/
+- Maschinenfabrik Reinhausen GmbH — https://www.reinhausen.com/career
+- Sparkasse Pforzheim Calw — https://www.sparkasse-pforzheim-calw.de/de/home/karriere.html?n=true&stref=hnav
+- VerbundVolksbank OWL eG — https://www.verbundvolksbank-owl.de/karriere.html
+- PraeLux — https://praelux.de/karriere/
+- m&i-Klinikgruppe Enzensberg — https://www.enzensberg.de/jobs
+- LEONHARD WEISS GmbH & Co. KG — https://www.leonhard-weiss.de/karriere
+- STRABAG SE — https://karriere.strabag.com/at
+- XXXLutz Deutschland — https://www.xxxlutz.de/en/careers
+- ACTIEF Personalmanagement GmbH — https://www.actief-personal.de/interne-karriere/
+- Amadeus Fire AG — https://www.amadeus-fire.de/fuer-bewerber/jobvermittlung/zeitarbeit-jobs
+- AllDent Zahnzentrum — https://www.alldent-karriere.de/
+- POLYGON Deutschland GmbH — https://karriere.polygon-deutschland.de/
+- Pflegedienst Kremer — https://pflegedienst-kremer.de/karriere/
+- DIS AG — https://www.dis-ag.com/de-de/bewerber/zeitarbeit
+- Johanniter Seniorenhäuser GmbH — https://www.johanniter.de/johanniter-seniorenhaeuser/karriere/als-pflegefachkraft-arbeiten/
+- Adecco Personaldienstleistungen GmbH — https://jobs.de.adecco.com/
+- Neukirchener Erziehungsverein — https://www.neukirchener.de/beruf-karriere/wir-als-arbeitgeber/
+- Terminal for Kids gGmbH — https://www.terminalforkids.de/jobs
+- Rail Unit GmbH — https://rail-unit.de/jobs/
+- Office Events P & B GmbH — https://www.office-events.de/stellenangebote/
+- ep group — https://www.ep-group.de/job-application?tx_stellenboerse_createapplication%5Baction%5D=newPre&tx_stellenboerse_createapplication%5Bcontroller%5D=Application&tx_stellenboerse_createapplication%5Bstelle%5D=0&cHash=c7f9e1ffd4f98e280252eedb76365b67cab331dc38be86647a11f997f011321a
+- Fürst Gruppe — https://www.fuerst-gruppe.de/karriere/
+- Atemzug Intensivpflege Burkart GmbH — https://www.atemzug.online/intensivpflege-jobs.html
+- TEMPTON — https://www.tempton.de/bewerber
+- Maritim Hotels — https://karriere.maritim.de/de/
+- Leonardo Hotels — https://www.leonardo-hotels-cyprus.com/careers
+- Fitness First Germany GmbH — https://www.fitnessfirst.de/karriere
+- BurdaForward — https://www.burda-forward.de/career
+- MING Labs — https://www.minglabs.com/insights/articles/hire-dont-deploy
+- BetterTaxi — https://www.bettertaxi.com/jobs/
+- Google — https://www.google.com/about/careers/applications/?utm_source=about&utm_medium=referral&utm_campaign=footer-link
+- Hubert Burda Media — https://www.burda.com/de/karriere/
+- IBM — https://www.ibm.com/de-de/careers?lnk=hpii5de
+- mgm technology partners — https://jobs.mgm-tp.com/
+- Microsoft — https://careers.microsoft.com/v2/global/en/home.html
+- ams OSRAM — https://careers.ams-osram.com/en/ams-osram-career/
+- Rohde & Schwarz — https://www.rohde-schwarz.com/de/karriere/career-overview/career-overview_257552.html
+- Yahoo — https://www.yahooinc.com/careers/
+- Global Savings Group — https://atolls.com/insights/category/careers/
+- Mytheresa — https://www.mytheresa.com/careers
+- Gini — https://gini.net/ueber-gini/#jobs
+- PAYBACK — https://www.payback.group/de/karriere
+- MegaZebra — https://www.megazebra.com/careers/
+- Cosinuss — https://www.cosinuss.com/en/jobs/
+- Power Factors — https://www.powerfactors.com/careers
+- innosabi — https://www.innosabi.com/company/careers
+- Testbirds — https://www.testbirds.com/en/
+- censhare — https://www.censhare.com/en/careers
+- HolidayCheck Group — https://www.holidaycheckgroup.com/jobs-join-our-team/?lang=en
+- Regiondo — https://pro.regiondo.com/careers/
+- Munich Re — https://careers.munichre.com/en/munichre
+- Infineon Technologies — https://www.infineon.com/careers
+- MTU Aero Engines — https://www.mtu.de/careers/
+- MAN Truck & Bus — https://www.man.eu/de/de/ueber-uns/unternehmen/karriere-bei-man/grosses-bewegen-bei-man/grosses-bewegen-mit-man.html
+- Knorr-Bremse — https://careers.knorr-bremse.com/?locale=en_US
+- Wacker Chemie — https://jobs.wacker.com/?locale=en_US
+- Linde — https://www.lindecareers.com/en/
+- BayWa — https://www.baywa.com/jobs-karriere/auf-einen-blick
+- HypoVereinsbank / UniCredit Bank — https://www.hypovereinsbank.de/hvb/ueber-uns/jobs-karriere
+- BayernLB — https://www.bayernlb.de/internet/de/blb/resp/karriere_1/berufserfahrene/uebersicht_5/uebersicht_berufs.jsp
+- Flughafen München — https://www.munich-airport.com/careers-263141?hl=15404919
+- Stadtwerke München — https://www.swm.de/karriere
+- Deutsche Pfandbriefbank — https://www.pfandbriefbank.com/karriere/
+- BSH Hausgeräte — https://www.bsh-group.com/career/welcome-at-bsh/
+- Giesecke+Devrient — https://www.gi-de.com/en/careers
+- ARRI — https://www.arri.com/en/company/careers
+- KraussMaffei — https://www.kraussmaffei.com/en
+- Messe München — https://messe-muenchen.de/de/karriere/
+- IABG — https://www.iabg.de/karriere
+- IAV — https://www.iav.com/career/
+- Bertrandt — https://www.bertrandt.com/karriere
+- AVL Deutschland — https://www.avl.com/en/career
+- Akkodis — https://www.akkodis.com/en/careers
+- Dassault Systèmes — https://www.3ds.com/careers
+- Nemetschek Group — https://www.nemetschek.com/en/company/career
+- Dynatrace — https://www.dynatrace.com/careers/
+- Rapid7 — https://careers.rapid7.com/
+- Oracle — https://www.oracle.com/de/careers/
+- NVIDIA — https://nvidianews.nvidia.com/news/drive-hyperion-level-4
+- Qualcomm — https://www.qualcomm.com/company/careers
+- Apple — https://www.apple.com/careers/de/
+- Meta — https://www.metacareers.com/?utm_source=about.meta.com&utm_medium=redirect
+- Broadcom — https://www.broadcom.com/company/careers
+- Fortinet — https://www.fortinet.com/corporate/careers
+- Check Point Software Technologies — https://www.checkpoint.com/careers/
+- PwC Germany — https://jobs.pwc.de/de/de
+- EY Germany — https://www.ey.com/de_de/careers
+- Bain & Company — https://www.bain.com/careers/
+- Capgemini — https://www.capgemini.com/de-de/karriere/
+- NTT DATA — https://de.nttdata.com/karriere
+- CGI — https://www.cgi.com/de/de/karriere/blog
+- adesso — https://www.adesso.de/de/#level-2627948
+- msg systems — https://www.msg.group/de/karriere/
+- Publicis Sapient — https://careers.publicissapient.com/
+- Nagarro — https://www.nagarro.com/en/careers
+- Sopra Steria — https://www.soprasteria.de/
+- Arvato Systems — https://www.arvato-systems.de/karriere
+- BCG Platinion — https://www.bcgplatinion.com/careers
+- Exxeta — https://exxeta.com/karriere
+- UVC Partners — https://talent.uvcpartners.com/companies
+- Bayern Kapital — https://bayernkapital.de/bayern-kapital/karriere/
+- Ryte — https://en.ryte.com/jobs/
+- Usercentrics — https://usercentrics.com/career/
+- Shore — https://www.shore.com/de/ueber-uns
+- PIONIERKRAFT — https://pionierkraft.workwise.io
+- ChargeX — https://chargex.de/
+- KEWAZO — https://www.kewazo.com/company#career
+- HQS Quantum Simulations — https://quantumsimulations.de/career
+- ATMOS Space Cargo — https://jobs.world.luccasoftware.com/atmos-space-cargo
+- Formycon — https://www.formycon.com/karriere/warum-formycon/
+- Hoffmann Group — https://www.hoffmann-group.com/GB/en/houk/hoffmann-group/careers/e/116222/
+- Aenova Group — https://www.aenova-group.com/en/career
+- Amgen Germany — https://www.amgen.de/bewerber/
+- Astellas Pharma Germany — https://www.astellas.com/en/careers
+- Biogen Germany — https://www.biogen.de/karriere.html
+- Hexal — https://www.sandoz.com/de-de/karriere/
+- Neovii Biotech — https://neovii.com/careers/
+- Novartis Germany — https://www.novartis.com/de-de/karriere
+- Daiichi Sankyo Europe — https://www.daiichi-sankyo.eu/career/discover-daiichi-sankyo-europe/
+- Sandoz Germany — https://www.sandoz.com/de-de/karriere/
+- Thermo Fisher Scientific — https://jobs.thermofisher.com/global/en
+- Eurofins Genomics — https://eurofinsgenomics.eu/en/eurofins-genomics/corporate-information/careers/
+- BioNTech — https://www.biontech.com/de/de/home/careers.html
+- ibidi — https://ibidi.com/content/422-careers
+- Proteintech Germany — https://www.ptglab.com/about-us/careers/
+- Biomax Informatics — https://biomax.tcgdigital.com/company/careers/
+- Smart Reporting — https://www.jacobian.com/careers
+- deepc — https://deepc.ai/careers
+- HENSOLDT — https://www.hensoldt.net/news/hensoldt-plans-to-set-up-a-development-centre-in-the-stuttgart-region
+- Airbus Protect — https://www.protect.airbus.com/careers/
+- Beyond Gravity Germany — https://www.beyondgravity.com/en/careers
+- ESG Elektroniksystem- und Logistik-GmbH — https://www.hensoldt.net/news/hensoldt-plans-to-set-up-a-development-centre-in-the-stuttgart-region
+- General Atomics AeroTec Systems — https://www.ga-ats.com/de/karriere
+- Deutsche Aircraft — https://www.deutscheaircraft.com/careers
+- Mubea Aerostructures — https://www.mubea.com/en/career
+- OHB System — https://www.ohb.de/karriere
+- GMV Germany — https://www.gmv.com/de/karriere
+- LSE Space — https://sscspace.com/services/spacecraft-op-eng-services/
+- Swarm Biotactics — https://www.swarm-biotactics.com/career/
+- Texas Instruments Germany — https://careers.ti.com/en/sites/CX
+- Renesas Electronics Europe — https://jobs.renesas.com/
+- Synopsys — https://careers.synopsys.com/
+- Samsung Semiconductor Europe — https://semiconductor.samsung.com/about-us/careers/
+- TDK Electronics — https://www.tdk-electronics.tdk.com/en/2302050/careers
+- Murata Electronics Europe — https://corporate.murata.com/careers
+- Panasonic Industry Europe — https://industry.panasonic.eu/careers
+- Advantest Europe — https://www.advantest.com/en/about/career-na/
+- Siltronic — https://www.siltronic.com/en/career.html
+- Micron Technology Germany — https://www.micron.com/about/careers
+- Nokia Germany — https://www.nokia.com/careers/
+- Veeam Germany — https://careers.veeam.com/search-jobs?ad=menu-company-careers
+- Pegasystems — https://www.pega.com/about/careers
+- Versicherungskammer Bayern — https://www.vkb.de/ueber-uns/karriere.html
+- Generali Deutschland — https://www.generali.de/karriere
+- Swiss Re Germany — https://www.swissre.com/careers.html
+- Allianz Global Investors — https://careers.allianz.com/global/en
+- MEAG — https://careers.munichre.com/de/meag
+- ERGO Group — https://www.ergo.com/de/karriere
+- Baader Bank — https://www.baaderbank.de/karriere
+- Hauck Aufhäuser Lampe Privatbank — https://www.bethmann-hal.de/de/karriere/index.html
+- Stadtsparkasse München — https://www.sskm.de/de/home/karriere.html?n=true&stref=hnav
+- Deutsche Bank — https://careers.db.com/index?kid=careers.redirect-en.shortcut&language_id=1
+- BNP Paribas Germany — https://www.bnpparibas.de/en/career/who-we-are/
+- Goldman Sachs Germany — https://www.goldmansachs.com/careers
+- J.P. Morgan Germany — https://www.jpmorganchase.com/careers
+- Crédit Agricole CIB Germany — https://www.ca-cib.com/en/career
+- PATRIZIA — https://www.patrizia.ag/en/careers
+- Real I.S. — https://www.realisag.de/karriere/
+- KGAL — https://www.kgal.de/karriere/
+- Wealthcap — https://www.ucinvestalternatives.eu/ueber-uns/karriere/
+- Hannover Leasing — https://www.hannover-leasing.de/karriere/
+- Golding Capital Partners — https://www.goldingcapital.com/de/karriere
+- YIELCO Investments — https://yielco.com/ueber-uns/#career
+- Telefónica Germany — https://www.telefonica.de/karriere.html
+- M-net — https://www.m-net.de/ueber-m-net/karriere
+- Deutsche Telekom — https://www.telekom.com/en/careers
+- Joyn — https://jobs.prosiebensat1.com/
+- Süddeutsche Zeitung — https://stellenmarkt.sueddeutsche.de
+- Ippen.Media — https://www.ippen.media/karriere/
+- LEONINE Studios — https://www.leoninestudios.com/karriere
+- Sport1 — https://www.sport1.de/karriere
+- RTLZWEI — https://unternehmen.rtl2.de/
+- Warner Bros. Discovery Germany — https://careers.wbd.com/global/en
+- NBCUniversal Germany — https://www.nbcuniversal.com/careers
+- Bavaria Film — https://www.bavaria-film.de/karriere
+- Antenne Bayern — https://www.antenne.group/jobs/
+- ConSol — https://www.consol.de/jobs
+- inovex — https://www.inovex.de/de/karriere/
+- Motius — https://www.motius.com/career
+- itestra — https://itestra.com/de/join/jobs
+- in-tech — https://in-tech.com/
+- Elektrobit Automotive — https://www.elektrobit.com/
+- CARIAD — https://cariad.technology/de/en/careers.html
+- Erium — https://erium.de/karriere/
+- STABL Energy — https://stabl.com/en/company/career/
+- Finanzchef24 — https://www.finanzchef24.de/ueber-uns/jobs
+- AirLST — https://airlst.com/karriere

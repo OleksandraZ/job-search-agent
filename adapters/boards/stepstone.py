@@ -6,13 +6,16 @@ import urllib.parse
 from bs4 import BeautifulSoup
 
 from adapters.boards import NormalizedJob, title_matches
-from http_client import fetch_each, get_with_retry
+from http_client import fetch_each, fetch_each_concurrent, get_with_retry
 
 logger = logging.getLogger(__name__)
 
 BASE_URL = "https://www.stepstone.de"
 SEARCH_URL_TEMPLATE = BASE_URL + "/jobs/{slug}"
 REQUEST_DELAY_SECONDS = 1.0
+# See http_client.fetch_each_concurrent's docstring - kept modest since every
+# description request here hits the same host (www.stepstone.de).
+DESCRIPTION_FETCH_WORKERS = 4
 
 
 def fetch_jobs(source_config: dict) -> list[NormalizedJob]:
@@ -81,10 +84,10 @@ def _fill_descriptions(jobs_by_url: dict[str, NormalizedJob], search_terms: list
         len(jobs_by_url),
     )
 
-    for job, description in fetch_each(
+    for job, description in fetch_each_concurrent(
         candidates,
         lambda j: _fetch_description(j.url),
-        delay_seconds=REQUEST_DELAY_SECONDS,
+        max_workers=DESCRIPTION_FETCH_WORKERS,
         logger=logger,
         log_context="stepstone description fetch",
     ):
