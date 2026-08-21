@@ -15,4 +15,7 @@ SOURCE_IDS = [
     "get_in_it",
     "instaffo_qa_engineer",
     "bundesagentur_für_arbeit_jobsuche",
+    "ferchau_jobs",
+    "munich_startup_jobs",
+    "stellenanzeigende",
 ]

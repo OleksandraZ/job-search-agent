@@ -295,12 +295,23 @@ sources:
   notes: Established German board for specialists and professionals, including IT and test engineering.
 - id: stellenanzeigende
   name: stellenanzeigen.de
-  url: https://www.stellenanzeigen.de/
+  url: https://www.stellenanzeigen.de/suche/
   priority: 2
   category: general
   enabled: true
-  adapter: html_scrape_todo
-  notes: Broad German board with good coverage of SMEs and employers outside the largest technology hubs.
+  adapter: stellenanzeigende
+  notes: >-
+    Broad German board with good coverage of SMEs and employers outside the
+    largest technology hubs. url corrected from the bare homepage (no job
+    links at all) to the real search page. Server-rendered Next.js
+    (App Router/RSC, no __NEXT_DATA__ blob) - real search via ?fulltext=
+    (verified live: "Tester" -> 13 on-topic results), no working pagination
+    found. Listing cards give title/company/city; job detail pages carry a
+    real schema.org JobPosting JSON-LD block with the full HTML description
+    and a structured jobLocation.address.addressCountry, used to drop any
+    non-DE job in the title-matched subset. The JSON-LD description field
+    has a stray literal "html\n<title>...</title>" prefix duplicating the
+    job title - stripped in the adapter, not real content.
 - id: meinestadtde_jobs
   name: meinestadt.de Jobs
   url: https://jobs.meinestadt.de/
@@ -340,9 +351,16 @@ sources:
   priority: 2
   category: startup
   enabled: true
-  adapter: html_scrape_todo
-  notes: High-quality source for English-speaking startup and scale-up roles, including remote jobs available
-    elsewhere in Germany.
+  adapter: anti_bot_avoid
+  notes: >-
+    High-quality source for English-speaking startup and scale-up roles,
+    including remote jobs available elsewhere in Germany. Re-verified
+    2026-08-21: Cloudflare-protected - homepage, pagination, RSS feed, and
+    the ?s= search param all 403 with a Cloudflare challenge page after the
+    first request or two from the same client, even though a single
+    isolated fetch can succeed. Not reliably scrapeable without solving a
+    bot challenge; treat like linkedin_jobs (Tier 3 alternate channel) per
+    the add-board-source skill.
 - id: startupjobs_qa_engineer
   name: Startup.jobs – QA Engineer
   url: https://startup.jobs/roles/qa-engineer
@@ -353,12 +371,21 @@ sources:
   notes: International startup aggregator with dedicated QA search and remote/hybrid filters.
 - id: munich_startup_jobs
   name: Munich Startup Jobs
-  url: https://www.munich-startup.de/jobs/
+  url: https://www.munich-startup.de/jobs/stellenangebote
   priority: 2
   category: startup
   enabled: true
-  adapter: html_scrape_todo
-  notes: Official Munich startup ecosystem job board; QA roles are irregular but locally relevant.
+  adapter: munich_startup_jobs
+  notes: >-
+    Official Munich startup ecosystem job board; QA roles are irregular but
+    locally relevant. url corrected from /jobs/ (a category hub page) to
+    /jobs/stellenangebote (the real listing). Server-rendered React/Next.js
+    site - no JS needed, but its ?q= search is client-side only and silently
+    ignored server-side (verified live: identical results with/without it);
+    the single listing page holds the whole catalog, no pagination found.
+    No structured location field exists anywhere, even on detail pages -
+    location defaults to the generic "Germany" placeholder so
+    pipeline/location.py falls back to scanning description text.
 - id: remote_rocketship_qa_europe
   name: Remote Rocketship – QA Europe
   url: https://www.remoterocketship.com/country/europe/jobs/qa-engineer/
@@ -431,17 +458,36 @@ sources:
   category: tech
   enabled: true
   adapter: ambiguous_todo
-  notes: Salary-transparent European technology board; filter for Germany or Germany-compatible remote
-    roles.
+  notes: >-
+    Salary-transparent European technology board; filter for Germany or
+    Germany-compatible remote roles. Re-verified 2026-08-21: predominantly a
+    Poland/CEE board in practice, not a real Germany source - 0/28 homepage
+    job cards mention any German city or country, salaries shown are
+    PLN/HUF, and there's no working Germany-specific filter ("/de" 200s but
+    just matches an unrelated tag on unrelated PL/HU listings, not a country
+    - same fake-search trap as the checklist warns about). Server-rendered
+    with real content (442K chars visible text), so technically buildable,
+    but not worth it for the volume of true Germany matches it would
+    actually produce. Not building against it.
 - id: remote_ok
   name: Remote OK
   url: https://remoteok.com/
   priority: 2
   category: remote
   enabled: true
-  adapter: html_scrape_todo
-  notes: Large global remote board with software testing roles; eligibility for German residents must
-    be verified.
+  adapter: anti_bot_avoid
+  notes: >-
+    Large global remote board with software testing roles; eligibility for
+    German residents must be verified. Re-verified 2026-08-21: robots.txt
+    has an explicit "AI / LLM crawlers" section naming ClaudeBot/
+    anthropic-ai/Claude-Web with "Allow: /" for job-listing pages - but that
+    policy isn't honored in practice. Both a bare "ClaudeBot" UA and this
+    codebase's working Claude-User/1.0 string get 403 on the homepage AND
+    /api, while a generic browser UA gets 200 on both. Same pattern as
+    hays_germany_jobs: the stated robots.txt policy and the live WAF
+    enforcement disagree, and using the browser UA to get past that would
+    be circumventing an active block, not relying on an absence of one.
+    Not building against it.
 - id: we_work_remotely
   name: We Work Remotely
   url: https://weworkremotely.com/
@@ -457,7 +503,17 @@ sources:
   category: remote
   enabled: true
   adapter: html_scrape_todo
-  notes: Curated remote vacancies with QA and engineering filters; check employment geography carefully.
+  notes: >-
+    Curated remote vacancies with QA and engineering filters; check
+    employment geography carefully. Re-verified 2026-08-21: has a real
+    documented public API (remotive.com/api/remote-jobs) with clean HTML
+    descriptions inline, but its search and category params are both
+    completely ignored - verified live, ?search=Tester and
+    ?category=software-dev both return the exact same 17 job IDs in the
+    same order as no params at all. The free tier only ever returns a tiny
+    ~17-job recent sample regardless of query; the API's own legal notice
+    upsells a $5k/mo paid tier for real access. Not worth building against
+    for this volume.
 - id: eu_remote_jobs
   name: EU Remote Jobs
   url: https://euremotejobs.com/
@@ -480,8 +536,19 @@ sources:
   priority: 2
   category: recruiter
   enabled: true
-  adapter: html_scrape_todo
-  notes: Major recruiter with permanent and contract IT testing roles, including enterprise environments.
+  adapter: anti_bot_avoid
+  notes: >-
+    Major recruiter with permanent and contract IT testing roles, including
+    enterprise environments. Re-verified 2026-08-21: robots.txt has a clean
+    "ClaudeBot: Allow: /", but that's not honored in practice - a request
+    with either a bare "ClaudeBot" UA or this codebase's own working
+    Claude-User/1.0 string (used successfully by xing_jobs.py) gets a 403
+    with the literal body "Your request was blocked." Only a spoofed Chrome
+    UA gets through (200). Unlike ferchau_jobs/munich_startup_jobs (nothing
+    was actively blocking those), Hays' bot-management layer is actively
+    gating non-browser traffic - using the browser UA to get past that would
+    be circumventing a real block, not just an absence of one. Not building
+    against it.
 - id: computer_futures_germany
   name: Computer Futures Germany
   url: https://www.computerfutures.com/de-de/stellensuche
@@ -504,17 +571,37 @@ sources:
   priority: 2
   category: recruiter
   enabled: true
-  adapter: js_rendered_todo
-  notes: Large German engineering and IT services employer with many software-test and validation roles.
+  adapter: ferchau_jobs
+  notes: >-
+    Not actually JS-rendered - the listing page is server-rendered and embeds
+    the full result set as a plain JS object literal (App.Data = {...}) in an
+    inline script tag, no browser needed. Real search via searchTerm param
+    (verified live, 7397 -> 149 results for "Tester") and pagination via
+    offset param (25/page). Multi-word terms match as OR-of-words, not an
+    exact phrase - deliberately over-broad, narrowed downstream by
+    title_matches like arbeitnow. Full HTML description sections
+    (intro/tasks/requirements/benefits) are embedded on the listing page
+    itself, no per-job detail-page fetch needed. robots.txt allows all user
+    agents for this path. Structured locationCountryCode field used to
+    filter to Germany - the de/de URL isn't Germany-only by construction (AT
+    postings verified appearing in the same feed).
 - id: brunel_germany_jobs
   name: Brunel Germany Jobs
   url: https://www.brunel.net/de-de/jobs
   priority: 2
   category: recruiter
   enabled: true
-  adapter: html_scrape_todo
-  notes: Engineering and technology recruiter with test engineering, embedded and industrial software
-    roles.
+  adapter: anti_bot_avoid
+  notes: >-
+    Engineering and technology recruiter with test engineering, embedded and
+    industrial software roles. Re-verified 2026-08-21: robots.txt has a clean,
+    unambiguous "User-agent: ClaudeBot / Disallow: /de-de/ /de-at/ /de-ch/"
+    group (alongside the same disallow for GPTBot, Google-Extended,
+    Meta-ExternalAgent, Bytespider, CCBot, Diffbot, AppleBot-Extended) - the
+    configured URL falls squarely under /de-de/. Unlike remote_ok's
+    conflicting groups, there's no later, more specific override here to make
+    this ambiguous - Brunel plainly doesn't want AI crawlers on this path.
+    Not building against it with a spoofed UA.
 - id: jooble_germany
   name: Jooble Germany
   url: https://de.jooble.org/

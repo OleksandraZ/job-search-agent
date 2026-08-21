@@ -33,6 +33,34 @@ deliberate site-level policy for exactly this use case (see
 (AskUserQuestion) rather than picking silently — it's a real policy decision, not
 just an implementation detail.
 
+The add-board-source skill's `scripts/investigate_sources.py` runs this check (plus
+JSON-LD/`__NEXT_DATA__`/RSS discovery) for a batch of sources in one pass, so it
+doesn't need re-deriving by hand per source — but its own docstring documents two
+real `urllib.robotparser` limitations (a site with two separate groups for the same
+agent name resolves to whichever comes first in the file, not a later more-specific
+override; a group that mixes `*` with a named agent gets swallowed into the wildcard
+entry and the named mention goes undetected) — verified live on `remote_ok`'s
+robots.txt, which has exactly the first case. Treat its output as a lead to verify,
+not a final verdict.
+
+## <a name="burst-block"></a>A single successful fetch doesn't mean the source is safe to build against
+
+`berlin_startup_jobs`' homepage returned 200 on a first, isolated fetch during a
+batch classification pass — but a few requests later (robots.txt, then a search
+query, then the homepage again), every one of them started returning a Cloudflare
+"Attention Required" challenge page instead, including the RSS feed and plain
+pagination. This wasn't a one-off: the site's WAF was rate-limiting/burst-detecting
+per client, not blocking specific paths — the very first request just happened to
+land before the challenge kicked in.
+
+**Re-fetch a source at least once more, spaced a little apart, before trusting a
+clean first-pass result** — a single 200 during an automated classification sweep or
+`investigate_sources.py` run isn't proof the source tolerates the repeated requests a
+real recurring adapter will make every run. If a second/third fetch starts
+challenging, treat it the same as an `anti_bot_avoid` source (don't try to solve the
+challenge or spoof around it) rather than building an adapter that will work in
+testing and then fail unpredictably in production.
+
 ## <a name="country-check"></a>A source covering "Germany" isn't always Germany-only
 
 **Verify the country field if a source isn't Germany-only by construction.**

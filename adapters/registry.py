@@ -22,9 +22,12 @@ from adapters.boards import (
     bundesagentur,
     devjobs,
     englishjobsde,
+    ferchau_jobs,
     get_in_it,
     html_scrape,
     instaffo,
+    munich_startup_jobs,
+    stellenanzeigende,
     stepstone,
     testdevjobs,
     wearedevelopers,
@@ -46,6 +49,9 @@ ADAPTERS = {
     "get_in_it": get_in_it.fetch_jobs,
     "instaffo": instaffo.fetch_jobs,
     "bundesagentur": bundesagentur.fetch_jobs,
+    "ferchau_jobs": ferchau_jobs.fetch_jobs,
+    "munich_startup_jobs": munich_startup_jobs.fetch_jobs,
+    "stellenanzeigende": stellenanzeigende.fetch_jobs,
 }
 
 # Keyed by config/companies.yaml's `ats:` value (set by tools/resolve_ats.py),

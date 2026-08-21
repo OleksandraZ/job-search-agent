@@ -21,17 +21,52 @@ Current adapter-build status (count, phase, which sources are done) is tracked i
 
 ## 1. Find out what the source's URL actually serves
 
-Fetch it yourself with a real browser user-agent and read the raw HTML:
+Run the shared first-pass battery instead of writing inline fetch/parse code for
+this — `scripts/investigate_sources.py <source_id> [<source_id> ...]` (run from the
+repo root; reads each id's `url` straight from `config/sources.yaml`). For a batch of
+sources, pass them all in one call — it fetches concurrently. It reports, per source:
+HTTP status, JSON-LD presence and whether any block is a real `JobPosting` (not just
+`Organization`/`WebSite` boilerplate), `__NEXT_DATA__` presence, discovered RSS/Atom
+`<link>`s, a visible-body-text length (SPA-shell heuristic), and a robots.txt read
+(wildcard-disallowed-for-this-URL, plus per-identity allow/deny for every current and
+legacy Claude/Anthropic crawler name named in its own group).
 
-```bash
-curl -sL -A "Mozilla/5.0" "<source url>" -o /tmp/page.html
-```
+Read its own module docstring before trusting the output — it documents two real
+`urllib.robotparser` limitations the robots.txt fields inherit (a site that declares
+two separate groups for the same agent name resolves to whichever comes FIRST in the
+file, not a later more-specific one it may clearly intend to override — verified live
+on `remote_ok`'s conflicting `ClaudeBot` groups; and a *mixed* group like
+`User-agent: *` + `User-agent: ClaudeBot` together gets swallowed whole into the
+wildcard entry, so an explicit Claude mention there won't show up as `mentioned`).
+Treat every `robots_claude_*` field as a lead to verify, not a final verdict — read
+the raw `robots.txt` by hand (fetched to `/tmp/robots_<id>.txt` alongside the page
+fetch isn't automatic; `curl -s <domain>/robots.txt`) on anything the script flags as
+ambiguous, and especially before deciding a source is safe to build against. If a
+source does have a genuine, unambiguous Claude allowance (like `remote_ok`), build
+the adapter to identify honestly with that specific UA rather than the script's
+spoofed Chrome one — the check is informational for the build decision, not something
+the fetch itself is honoring.
 
-- **Server-rendered HTML** — job data is actually in the response; a normal
-  `requests`/`BeautifulSoup` scrape works.
-- **Client-rendered SPA** — a near-empty shell (`<div id="root">`, a `main.*.js`
-  bundle, a placeholder like `window.__detailedJob="JOB_PLACEHOLDER"`). Don't write a
-  selector parser against this and assume it'll work later — see step 5.
+From the script's signals:
+- **Server-rendered HTML** (substantial visible-text length, `has_ldjson`/
+  `has_next_data` often true) — job data is actually in the response; a normal
+  `requests`/`BeautifulSoup` scrape works, or the embedded JSON can be parsed
+  directly (cheaper and more robust than CSS selectors when available).
+- **Client-rendered SPA** (near-empty visible-text length) — don't write a selector
+  parser against this and assume it'll work later — see step 5.
+- **`robots_wildcard_disallowed=True` or an unambiguous named Claude disallow** —
+  don't build against it; reclassify the source's `adapter:` to `anti_bot_avoid` in
+  `config/sources.yaml` with a `notes:` explaining what was found, same treatment as
+  `linkedin_jobs`.
+
+The script doesn't test search params, pagination, or find description-container
+selectors — those still need a per-source follow-up once a source clears this first
+pass (steps 2–7 below), and a passing signal here doesn't mean the site won't
+rate-limit/challenge on a second or third request — see
+`docs/lessons/adapters.md#burst-block` (the `berlin_startup_jobs` case: a single
+fetch succeeded, then homepage, RSS, and search all started 403ing with a Cloudflare
+challenge page on the very next request). Re-fetch once more, a little later, before
+fully trusting a first pass that looked clean.
 
 Also check for a clean Markdown version built for machine consumption before writing
 any HTML selectors — look for `<link rel="alternate" type="text/markdown">` in the
@@ -39,11 +74,11 @@ page head, or try appending `.md` to the URL (`wearedevelopers_jobs` has this at
 `/jobs.md?country=DE&q=<term>`, documented at `/agents.md`). Cheaper to build and
 maintain than a scraper when it exists.
 
-**Check `robots.txt` before deciding what User-Agent to send** — some sites carve out
-an explicit exception for named AI-agent bots. See `docs/lessons/adapters.md#robots-txt-ai-bots`
-for why, and `adapters/boards/xing_jobs.py`'s `HEADERS` for the working example.
-Surface the choice to the user (AskUserQuestion) rather than picking silently — it's a
-real policy decision, not just an implementation detail.
+Surface the robots.txt/User-Agent choice to the user (AskUserQuestion) rather than
+picking silently when it's genuinely ambiguous — it's a real policy decision, not
+just an implementation detail. See `docs/lessons/adapters.md#robots-txt-ai-bots` for
+the full reasoning, and `adapters/boards/xing_jobs.py`'s `HEADERS` for a working
+named-bot-UA example.
 
 ## 2. If it's server-rendered: verify field-by-field against a live fetch
 
