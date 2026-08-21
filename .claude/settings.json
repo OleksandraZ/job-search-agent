@@ -1,9 +1,63 @@
 {
   "permissions": {
     "allow": [
-      "Bash(.venv/bin/python -c ' *)",
-      "Bash(.venv/bin/python -m pytest tests/test_resolve_ats.py -q)",
-      "Bash(.venv/bin/python -m tools.resolve_ats)"
-    ]
+      // File edits: auto-approved, but scoped to the project folder only
+      "Read",
+      "Write",
+      "Edit",
+
+      // Running/testing the bot
+      "Bash(python:*)",
+      "Bash(python3:*)",
+      "Bash(pip install:*)",
+      "Bash(pip3 install:*)",
+
+      // Read-only git — safe to automate, no state change
+      "Bash(git status)",
+      "Bash(git diff:*)",
+      "Bash(git log:*)",
+      "Bash(git branch:*)",
+
+      // Let it call the Telegram API directly (both via Python requests
+      // and if it ever shells out to curl for a quick check)
+      "WebFetch(domain:api.telegram.org)"
+    ],
+    "ask": [
+      // Anything that changes git state or touches remotes: confirm first
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)",
+      "Bash(git checkout:*)",
+      "Bash(git reset:*)",
+
+      // Installing/removing packages outside pip (system-level) — confirm
+      "Bash(apt:*)",
+      "Bash(apt-get:*)"
+    ],
+    "deny": [
+      // Never let Claude read your secrets into context
+      "Read(**/.env)",
+      "Read(**/.env.*)",
+      "Read(**/*.pem)",
+      "Read(**/*_key)",
+      "Read(**/id_rsa*)",
+
+      // No destructive or privilege-escalating shell commands
+      "Bash(rm -rf:*)",
+      "Bash(sudo:*)",
+      "Bash(su:*)",
+
+      // Don't let it push to any remote, ever, even if "ask" above is
+      // later loosened by mistake — belt and suspenders
+      "Bash(git push --force:*)"
+
+      // Note: I'm intentionally NOT adding a blanket "WebFetch" deny here.
+      // Deny rules match before allow rules regardless of specificity, so a
+      // bare "WebFetch" deny would also block the api.telegram.org allow
+      // above. Since only api.telegram.org is allowed and nothing else is
+      // listed as allowed, other domains fall through to defaultMode
+      // ("ask") on their own — no extra deny needed.
+    ],
+    "defaultMode": "default"
   }
 }
