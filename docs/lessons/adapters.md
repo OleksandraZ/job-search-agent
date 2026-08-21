@@ -181,10 +181,11 @@ timeout budget (e.g. GitHub Actions scheduling in Phase 7), not this historical 
 Both agents currently draw from the same source list, so calling `run()` on each
 would double the request volume against every rate-limited board.
 
-`main.py` fetches once via `agents._common.fetch_from_sources()` with the union of
-both agents' `SOURCE_IDS`, then calls each agent's `filter_jobs()` on the shared raw
-list. If a future agent gets a distinct source list, this can revert to independent
-`run()` calls for that agent without changing the others.
+`main.py` fetches once via `adapters.registry.fetch_from_sources()` with the union of
+both agents' `SOURCE_IDS` (a single shared list in `agents/_common.py`, not defined
+per-agent), then calls each agent's `filter_jobs()` on the shared raw list. If a
+future agent gets a distinct source list, this can revert to independent `run()`
+calls for that agent without changing the others.
 
 ## <a name="dedupe-merge"></a>`munich_jobs + remote_jobs` needs deduping before use
 
@@ -197,3 +198,56 @@ available)") once a source finally produced a dual-classifiable job. `main.py`
 dedupes by `url` (`{job.url: job for job in munich_jobs + remote_jobs}`) before
 `filter_by_title`/`dedupe.filter_unseen` run. Keep this in mind if another merge
 point is ever added upstream of the language classifier or the Telegram send.
+
+## <a name="title-word-boundary"></a>Title matching needs word boundaries, not a bare substring check
+
+**`title_matches()` (`adapters/boards/__init__.py`) must match `title_match_terms`
+as whole words/phrases, not `term in title`.** A bare substring check lets a short
+term match inside a completely unrelated word once the pool of title text is broad
+enough.
+
+Found live via `stellenanzeigende`: the keyword `SDET` (Software Development
+Engineer in Test) is a literal substring of "Emsdetten", a real German city — a
+tax-clerk job posted in Emsdetten matched, got classified as German-required, and
+was sent to Telegram as a "QA job". Every earlier source's title text pool just
+never happened to contain "sdet" as a substring, so the bug was invisible until a
+broader general-purpose board (rather than the earlier QA-focused ones) was added.
+
+Fixed with `re.search(rf"\b{re.escape(term)}\b", title, re.IGNORECASE)` instead of
+a plain `in` check — this is the same `filter_by_title()` used by *every* source
+(the final gate before `build_report()` sends anything), so the fix is global, not
+per-adapter. Accepted tradeoff: a term won't match a title that appends a German
+inflectional suffix with no separating space/slash (e.g. a literal
+"Softwaretesterin" title against the `Softwaretester` term) — judged less likely in
+practice than another short/acronym term colliding mid-word, and no regression
+observed against the existing test suite or a real fetch. If a term ever needs to
+match a suffixed variant like that, special-case that specific term rather than
+loosening the boundary rule generally.
+
+## <a name="robots-vs-waf"></a>`robots.txt`'s stated policy and a site's actual enforcement can disagree
+
+**A `robots.txt` allowance for a named AI crawler isn't proof a request identifying
+as that crawler will actually get through — verify with a real fetch before
+committing to a UA.** The file states policy; a separate WAF/bot-management layer
+(Akamai, Cloudflare, PerimeterX, etc.) does the actual enforcement, and the two can
+be maintained independently and drift apart.
+
+Verified live on two sources during the same investigation pass:
+- `hays_germany_jobs`: `robots.txt` has a clean `ClaudeBot: Allow: /`, but a request
+  with either a bare `ClaudeBot` UA or this codebase's own working
+  `Claude-User/1.0 (+https://www.anthropic.com/claude-user)` string (the one
+  `adapters/boards/xing_jobs.py` uses successfully) gets a 403 with the literal body
+  "Your request was blocked." Only a generic browser UA gets through.
+- `remote_ok`: `robots.txt` has an explicit "AI / LLM crawlers" section naming
+  `ClaudeBot`/`anthropic-ai`/`Claude-Web` with `Allow: /` and a comment stating
+  they're "Permitted to crawl and cite public job listings" — same result, both
+  identities 403 on the homepage *and* `/api`, generic browser UA gets 200 on both.
+
+In both cases, using the browser UA to get past the block would be circumventing an
+*active* technical control aimed specifically at non-browser traffic, not just
+proceeding in the absence of one (contrast with `ferchau_jobs`/`munich_startup_jobs`,
+where nothing was blocking a normal fetch at all) — treated the same as any other
+`anti_bot_avoid` source and not built against. The
+`add-board-source/scripts/investigate_sources.py` battery's `robots_claude_status`
+field only reports what the file *says*; it can't detect this divergence, since it
+never makes a request identifying as the bot it's asking about.

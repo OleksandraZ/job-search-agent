@@ -28,13 +28,19 @@ see `CLAUDE.md`) - any entry with `ats: null` or no `ats` key at all is unproces
 
 ## 2. Check for duplicates before resolving
 
-Compare each new `name`/`url` against the existing ~600 entries — case-insensitive
+Compare each new `name`/`url` against the existing entries in **both**
+`config/companies.yaml` **and** `config/unresolved_companies.yaml` — case-insensitive
 name match, and the same domain-label-stripping `resolve_ats.py`'s
 `_slug_candidates`/`_normalize_name` use (drop `www`/`de`/`en`/etc., compare the
-remaining label). A duplicate wastes a resolution request, and if it resolves to a
-different `identifier` than an existing entry for the same real company, double-fetches
-the same jobs. Not a correctness bug downstream — `storage/jobs.db` dedupes by job
-`url`, not by company — but still worth flagging rather than silently absorbing.
+remaining label). `unresolved_companies.yaml` holds every company a past resolution
+attempt found no careers page/vendor for (`ats: unresolved`) — it's excluded from
+`companies.yaml` specifically so it doesn't take a fetch slot, but a name/url match
+there still means "already tried, skip re-adding" just as much as a match in
+`companies.yaml` does. A duplicate wastes a resolution request, and if it resolves to
+a different `identifier` than an existing entry for the same real company,
+double-fetches the same jobs. Not a correctness bug downstream — `storage/jobs.db`
+dedupes by job `url`, not by company — but still worth flagging rather than silently
+absorbing.
 
 ## 3. Run resolve_ats.py — no `--force`
 
@@ -67,7 +73,11 @@ hand-maintained count here): `greenhouse`, `lever`, `ashby`, `smartrecruiters`,
   fingerprint. Leave as-is unless you're deliberately building a generic scraper.
 - **`ats: "unresolved"`** — no careers page found at all. Worth one manual look
   (wrong homepage URL? a Cloudflare challenge, like GetYourGuide/AnyDesk — see the
-  module docstring) before accepting it as genuinely unresolvable.
+  module docstring) before accepting it as genuinely unresolvable. `resolve_ats.py`
+  leaves these in `config/companies.yaml` — moving them into
+  `config/unresolved_companies.yaml` (matching that file's existing entries'
+  structure) is a manual cleanup step, done by request, not automatic; do it if
+  asked, otherwise leave them be.
 
 ## 5. Spot-check the resolved matches against a live fetch
 

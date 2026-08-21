@@ -14,10 +14,12 @@ unauthenticated GET with no pagination/search-flow/login-wall check — see
 produced one real miscall, and don't skip step 1 below just because a classification
 already exists.
 
-Current adapter-build status (count, phase, which sources are done) is tracked in
-`CLAUDE.md`'s Status section, not here. Next candidates: sources still carrying a
-`_todo`/`anti_bot_avoid` classification in `config/sources.yaml` (see
-`job_search_agent_source_classification` memory for the full pass).
+There's no separate build-status tracker to keep in sync — `config/sources.yaml`
+itself is authoritative for what's done vs. still pending: `scripts/investigate_sources.py`
+run with no arguments defaults to every source still carrying a `_todo`/
+`anti_bot_avoid`/`ambiguous_todo`/`broken_todo` classification, so "what's left" is
+always derived fresh from the file rather than a hand-maintained count anywhere
+(see `job_search_agent_source_classification` memory for the original full pass).
 
 ## 1. Find out what the source's URL actually serves
 
@@ -41,11 +43,16 @@ wildcard entry, so an explicit Claude mention there won't show up as `mentioned`
 Treat every `robots_claude_*` field as a lead to verify, not a final verdict — read
 the raw `robots.txt` by hand (fetched to `/tmp/robots_<id>.txt` alongside the page
 fetch isn't automatic; `curl -s <domain>/robots.txt`) on anything the script flags as
-ambiguous, and especially before deciding a source is safe to build against. If a
-source does have a genuine, unambiguous Claude allowance (like `remote_ok`), build
-the adapter to identify honestly with that specific UA rather than the script's
-spoofed Chrome one — the check is informational for the build decision, not something
-the fetch itself is honoring.
+ambiguous, and especially before deciding a source is safe to build against. Even a
+clean, unambiguous allowance in the file isn't proof by itself — `remote_ok` has an
+explicit `ClaudeBot`/`anthropic-ai`/`Claude-Web` `Allow: /` block with a comment
+stating it's intentional, but a request actually identifying as any of those UAs
+gets a 403 in practice (a separate WAF layer, not the file, does the real
+enforcement) — see `docs/lessons/adapters.md#robots-vs-waf`. **Test the specific UA
+with a real fetch before trusting the file, every time**, even when it looks
+unambiguous. If a source's real enforcement does honor a Claude allowance, build the
+adapter to identify honestly with that specific UA rather than the script's spoofed
+Chrome one — the robots.txt check alone is never sufficient to decide this.
 
 From the script's signals:
 - **Server-rendered HTML** (substantial visible-text length, `has_ldjson`/
@@ -162,7 +169,8 @@ Points that matter in practice:
 
 - If the source needs search queries (like Arbeitnow), read
   `source_config["search_terms"]` — don't hardcode terms. It's injected by
-  `agents/_common.py` from `keywords.yaml`'s `title_match_terms`.
+  `adapters/registry.py:fetch_from_sources()` from `keywords.yaml`'s
+  `title_match_terms`.
 - Use `http_client.py`'s `get_with_retry()`/`post_with_retry()` for every HTTP call,
   don't hand-roll a new retry loop — see `CLAUDE.md`'s adapter-contract section for
   why there are two layers (per-request retry vs. per-source isolation). You still
@@ -237,8 +245,9 @@ too before assuming a gap is source-specific.
 
 ## 8. Register the adapter
 
-Add it to the `ADAPTERS` dict in `agents/_common.py`, keyed by the adapter name
-string that will go in `sources.yaml`:
+Add it to the `ADAPTERS` dict in `adapters/registry.py` (not `agents/_common.py` —
+that file only holds the shared `SOURCE_IDS` list now, see step 10), keyed by the
+adapter name string that will go in `sources.yaml`:
 
 ```python
 ADAPTERS = {
@@ -252,7 +261,7 @@ ADAPTERS = {
 
 - Change the source's `adapter:` field from its `_todo`/`anti_bot_avoid`
   classification to the real adapter name (the one now registered in
-  `agents/_common.py`'s `ADAPTERS`).
+  `adapters/registry.py`'s `ADAPTERS`).
 - Add any adapter-specific fields it needs (e.g. `rss_url:`, `api_url:`).
 - Update `notes:` to explain what fetch mechanism is actually used and why, in
   enough detail that the next person doesn't have to re-derive it (see the
@@ -260,10 +269,11 @@ ADAPTERS = {
 
 ## 10. Wire it into the agent(s) that should use it
 
-Add the source's `id` to `SOURCE_IDS` in `agents/munich_local.py` and/or
-`agents/germany_remote.py` (or a new agent module, same shape). If a new dependency
-was needed (e.g. `beautifulsoup4`), add it to `requirements.txt` and
-`.venv/bin/pip install` it locally before testing.
+Add the source's `id` to `SOURCE_IDS` in `agents/_common.py` — a single list shared
+by both `munich_local.py` and `germany_remote.py` (neither module defines its own;
+each is just a one-line `filter_jobs()`). If a new dependency was needed (e.g.
+`beautifulsoup4`), add it to `requirements.txt` and `.venv/bin/pip install` it
+locally before testing.
 
 ## 11. Test before sending anything real
 

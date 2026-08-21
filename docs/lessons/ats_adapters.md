@@ -327,3 +327,49 @@ unreachable. Where it genuinely is (onlyfy), `description=""` is accepted as a k
 documented limitation - same precedent as Arbeitnow (see
 `docs/lessons/classification.md`) - not worth a Playwright dependency for two
 companies.
+
+## `resolve_ats.py`'s page-scan can swap a Workday tenant's `site`/locale, not just get the identifier wrong
+
+**A `workday` identifier's `site` field can end up holding the URL's locale segment
+instead of the real career-site name, since both can appear adjacent in the same
+path.** `wohnungshelden GmbH` resolved to
+`{"tenant": "aareon", "wd_host": "wd103", "site": "de-DE"}` - `ats: workday` with a
+plausible-looking identifier, but the constructed search URL 404s, because the real
+public URL is `.../de-DE/Aareon` (locale segment *then* site name) and the page-scan
+heuristic grabbed the wrong one of the two. Confirmed by fetching the company's
+homepage directly and finding the full `myworkdayjobs.com` URL in a script tag -
+`site: "Aareon"` (capitalized, the tenant's actual career-site name - `wohnungshelden`
+is apparently a brand under the Aareon group, which explains the shared tenant) works
+and returns 26 real postings. A workday identifier that 404s on a real fetch is worth
+checking this specific way before assuming the company just isn't reachable.
+
+## Two more shapes of "the automated match is technically non-null but wrong" beyond the shared-tracking-subdomain case
+
+The tracking-subdomain false positive documented above (Softgarden's
+`matomo.softgarden.io`, Recruitee's `careers-analytics.recruitee.com`) isn't the only
+way a resolved `ats`/`identifier` can look plausible and still be wrong. Two more,
+both found re-verifying a batch of newly-resolved companies against a live fetch:
+
+- **A company can migrate off the vendor its page still references.** `simpleclub
+  GmbH` resolved to `ats: greenhouse, identifier: simpleclub` - a real slug, but the
+  live API 404s. Its careers page still has a `` `https://boards.greenhouse.io/simpleclub/jobs/${job.id}` `` template string in inline JS, but the actual "Apply" links on
+  the page point to `simpleclub.pinpointhq.com` - Pinpoint, a vendor not in
+  `ATS_PATTERNS` at all. The Greenhouse reference is dead code left over from before
+  the migration, not a live integration. Reclassified to `custom`.
+- **Recruitee has a second, white-labeled product** - a "Career Site" hosted on the
+  company's own custom domain, keyed by a numeric `companyId` embedded in a JS config
+  object (`window.recruitee.customIntegrationsApi = {"companyId": 69972, ...}`), with
+  *no* `<slug>.recruitee.com` reference anywhere on the page at all. `smartpatient
+  GmbH` and `Limehome GmbH` both resolved to `identifier: careers-analytics` (the
+  tracking subdomain, the only recruitee.com reference present) because there was no
+  real company slug on the page for the existing fuzzy-name-preference logic to
+  prefer instead. The `companyId`-keyed API requires authentication
+  (`api.recruitee.com/c/<id>/offers` returns 401 unauthenticated) - no public fetch
+  path exists for this product shape at all. Reclassified to `custom`.
+
+Neither is fixable by tightening the existing tracking-subdomain preference logic -
+in both cases the *only* candidate found was the wrong one. Worth a live spot-check
+of the resolved identifier specifically when a company's real careers page is a
+subdomain of its own domain rather than `<slug>.<vendor>.<tld>` - that shape doesn't
+match either of `_slug_candidates()`'s two guesses (domain label, or a
+name-derived slug) reliably.

@@ -75,7 +75,7 @@ def fetch_jobs(source_config: dict) -> list[NormalizedJob]:
 `source_config` is the source's entry from `config/sources.yaml` (a plain dict — `id`,
 `adapter`, `url`, plus whatever adapter-specific fields it needs), with one key always
 injected on top: `search_terms` — `keywords.yaml`'s `title_match_terms`, added by
-`agents/_common.py:fetch_from_sources()` before calling the adapter. An adapter only
+`adapters/registry.py:fetch_from_sources()` before calling the adapter. An adapter only
 needs to read `search_terms` if it actually sends queries to the source.
 
 Every HTTP call goes through `http_client.py`'s `get_with_retry()`/`post_with_retry()`
@@ -86,7 +86,7 @@ itself retried; an adapter making many requests per call should still catch
 per-request `httpx.HTTPError` internally so one bad request doesn't discard everything
 else already fetched. See `docs/lessons/adapters.md` for the full reasoning.
 
-**Registration:** adapters are looked up by name in `agents/_common.py`'s `ADAPTERS`
+**Registration:** adapters are looked up by name in `adapters/registry.py`'s `ADAPTERS`
 dict, keyed by the string used in `sources.yaml`'s `adapter:` field. An unregistered
 `adapter:` value isn't an error — `fetch_from_sources()` logs a warning and skips it,
 so it's safe for `sources.yaml` to carry `adapter:` values with no corresponding
@@ -155,19 +155,19 @@ recurring gotchas in `resolve_ats.py`'s own discovery/identifier-extraction logi
 `agents/munich_local.py` and `agents/germany_remote.py` both follow the same shape:
 
 ```python
-SOURCE_IDS = [...]                                   # sources.yaml ids this agent draws from
 def filter_jobs(jobs: list[NormalizedJob]) -> list[NormalizedJob]: ...   # pure scope filter
-def run(sources_config, keywords_config) -> list[NormalizedJob]: ...     # fetch + filter_jobs, standalone use
 ```
 
-`filter_jobs()` narrows a raw job list to the agent's scope, using
-`pipeline/location.py` (`filter_munich`/`filter_remote`) — pure, no I/O, reusable
-without re-fetching. `main.py` fetches once via `fetch_from_sources()` with the union
-of both agents' `SOURCE_IDS` rather than calling each agent's `run()` (which would
-double the request volume, since both agents currently share one source list), then
-calls each agent's `filter_jobs()` on the shared raw list, then dedupes the two
-results by `url` before anything downstream runs. See `docs/lessons/adapters.md` for
-why both of those choices matter in practice.
+Each is a single function — no `SOURCE_IDS`, no `run()`, no I/O — narrowing a raw job
+list to the agent's scope via `pipeline/location.py` (`filter_munich`/`filter_remote`
+respectively). `SOURCE_IDS` (the board sources both agents draw from) lives as one
+shared list in `agents/_common.py`, not per-agent — `main.py` imports it directly and
+fetches once via `fetch_from_sources(sources_config, keywords_config, sorted(SOURCE_IDS))`
+rather than each agent fetching its own (which would double the request volume, since
+both agents currently share that one source list), then calls each agent's
+`filter_jobs()` on the shared raw list, then dedupes the two results by `url` before
+anything downstream runs. See `docs/lessons/adapters.md` for why both of those choices
+matter in practice.
 
 ## Gotchas not covered by a checklist above
 
@@ -176,3 +176,5 @@ them here would just be the same fact twice. This section is only for gotchas th
 *aren't* a checklist item anywhere in this file:
 
 - Per-run wall time grows with every source added (each adapter's rate-limit spacing is additive across the whole run) — a long-running `main.py` isn't necessarily stuck. Full story: `docs/lessons/adapters.md`.
+- `adapters/boards/__init__.py`'s `title_matches()` (used by every source via `pipeline/filters.py:filter_by_title()`, the final gate before anything gets sent) requires a word-boundary match, not a bare substring — a short/acronym `title_match_terms` entry (e.g. `SDET`) can otherwise match inside an unrelated word in a title (verified live: matched inside "Emsdetten", a German city name). If you add new matching logic anywhere else against free-text titles, apply the same word-boundary rule rather than a plain `in` check. Full story: `docs/lessons/adapters.md`.
+- `robots.txt` can state one crawling policy while the site's actual WAF/bot-management layer enforces a different one in practice — a source explicitly allowing `ClaudeBot` in `robots.txt` doesn't guarantee a request identifying as that UA will actually get through. Verify with a real fetch before trusting the file alone. Full story: `docs/lessons/adapters.md`.
