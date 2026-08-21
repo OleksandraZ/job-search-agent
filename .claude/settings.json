@@ -46,17 +46,7 @@
       "Bash(rm -rf:*)",
       "Bash(sudo:*)",
       "Bash(su:*)",
-
-      // Don't let it push to any remote, ever, even if "ask" above is
-      // later loosened by mistake — belt and suspenders
       "Bash(git push --force:*)"
-
-      // Note: I'm intentionally NOT adding a blanket "WebFetch" deny here.
-      // Deny rules match before allow rules regardless of specificity, so a
-      // bare "WebFetch" deny would also block the api.telegram.org allow
-      // above. Since only api.telegram.org is allowed and nothing else is
-      // listed as allowed, other domains fall through to defaultMode
-      // ("ask") on their own — no extra deny needed.
     ],
     "defaultMode": "default"
   }

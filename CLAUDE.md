@@ -28,13 +28,11 @@ ignores unless the ignore itself is the correct fix.
 
 ## Before touching location/language classification
 
-- [ ] [Require an unambiguous phrase](docs/lessons/classification.md#unambiguous-phrases), not a bare word, for anything free-text
-- [ ] [Bound word-gaps to one clause](docs/lessons/classification.md#clause-bounded-gaps) — stop at `.`/`;`/`<`, don't bleed across bullet points
-- [ ] [Check for negation](docs/lessons/classification.md#negation-check) immediately before a phrase match, not just the match itself
-- [ ] [Trust a real structured `location` exclusively](docs/lessons/classification.md#is-munich-fallback) once one exists — don't also scan free text
-- [ ] [Re-validate every pattern against the new source's real fetched text](docs/lessons/classification.md#phrase-generalization) — a phrase "unambiguous" on one source isn't guaranteed to stay that way
-- [ ] [Check for the requirement phrased in English too](docs/lessons/classification.md#english-german-signals), not just German prose
-- [ ] [Check whether the posting is predominantly German with no explicit statement](docs/lessons/classification.md#whole-description-german) at all
+Use the `edit-classification` skill — it walks the full checklist (unambiguous
+phrases, clause-bounded gaps, negation checks, structured-location trust,
+cross-source re-validation, English-phrased German requirements, whole-description
+German with no explicit statement) as enforced steps, each grounded in a real
+past false positive/negative from `docs/lessons/classification.md`.
 
 ## NormalizedJob and the adapter contract
 
