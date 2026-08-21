@@ -100,6 +100,56 @@ single-page-fetch heuristic pass — see `docs/lessons/adapters.md` for when/how
 run and the one real misclassification it produced. Re-verify per-source before
 building against a `_todo` classification — see the `add-board-source` skill.
 
+## Company-direct sourcing (ATS adapters)
+
+`config/companies.yaml` entries need to resolve to a real ATS vendor, via
+`tools/resolve_ats.py`, before `adapters/registry.py`'s `fetch_from_companies()` can
+fetch anything from them. Each entry's `ats` field has four possible states:
+
+- `null` — never been through resolution at all (a bare `name`+`url` entry).
+- `"unresolved"` — resolution ran and found no careers page/vendor anywhere.
+- `"custom"` — resolution found a real careers page, but no recognized vendor.
+- `<vendor>` (e.g. `"greenhouse"`) — resolved to a known ATS platform.
+
+`null` is reserved **exclusively** for "never attempted" — a real attempt always
+leaves `ats` set to a vendor, `"custom"`, or the literal string `"unresolved"`, never
+back to `null`. This distinction is why `tools/resolve_ats.py`'s `is_new_entry()` can
+be a plain `ats is None` check, and it's what `main.py` relies on: it calls
+`resolve_pending()` before every run, which resolves only genuinely new (`ats: null`)
+companies automatically — so a freshly-added `companies.yaml` entry doesn't need a
+manual `resolve_ats.py` run first. It does **not** retry `"unresolved"`/`"custom"`
+entries on every run — re-fetching an already-attempted dead/vendor-less careers page
+on every single run would add real latency for an outcome that essentially never
+changes. Run `python -m tools.resolve_ats` (optionally `--force`) by hand to retry
+those deliberately — see `tools/resolve_ats.py`'s `needs_resolution()` for exactly
+what that targets, and the `process-new-companies` skill for the full workflow.
+
+**Adapter interface:** `adapters/ats/<name>.py` exposes
+
+```python
+def fetch_jobs(company_config: dict) -> list[NormalizedJob]:
+```
+
+`company_config` is the company's entry from `config/companies.yaml` (`name`, `url`,
+`ats`, `identifier`, plus whatever `resolve_ats.py` filled in), with `search_terms`
+injected the same way board adapters get it (see above). Same `NormalizedJob`
+contract, same `http_client.py` retry rule, same per-request `httpx.HTTPError`
+isolation, same title-matched-subset bound on detail-page fetches for description —
+everything in the board-adapter contract section above applies here too except where
+noted below.
+
+**Registration:** ATS adapters are looked up by the company's `ats:` value in
+`adapters/registry.py`'s `ATS_ADAPTERS` dict — unlike board `ADAPTERS`, there's no
+per-company opt-in list; every resolved company is automatically in scope. A vendor
+with no adapter built (e.g. `rexx`, `teamtailor`, `dvinci`, `jazzhr`) is inert, same
+as a board `_todo` entry, and not an error — `fetch_from_companies()` just returns `[]`
+for it.
+
+See `docs/lessons/ats_adapters.md` for the fetch-mechanism specifics of each built
+vendor (which have a structured country field vs. which need `is_germany_relevant`/
+`looks_like_a_german_location`, which need a second detail-page fetch, etc.) and the
+recurring gotchas in `resolve_ats.py`'s own discovery/identifier-extraction logic.
+
 ## Agent shape
 
 `agents/munich_local.py` and `agents/germany_remote.py` both follow the same shape:

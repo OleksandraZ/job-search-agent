@@ -1,29 +1,30 @@
 # ATS resolution report
 
-Total companies: 598
+Total companies: 1945
 
 ## Bucket summary
 
-- Resolved (real vendor): 305 (51.0%)
-- Custom (careers page found, no recognized vendor): 209 (34.9%)
-- Unresolved (attempted, no careers page found): 84 (14.0%)
+- Resolved (real vendor): 506 (26.0%)
+- Custom (careers page found, no recognized vendor): 648 (33.3%)
+- Unresolved (attempted, no careers page found): 791 (40.7%)
 - New (never attempted): 0 (0.0%)
 
 ## Resolved by vendor
 
-- personio: 118
-- greenhouse: 48
-- ashby: 46
-- workday: 27
-- smartrecruiters: 16
-- softgarden: 16
+- personio: 246
+- greenhouse: 60
+- ashby: 59
+- workday: 31
+- join: 23
+- softgarden: 21
+- smartrecruiters: 19
+- recruitee: 12
+- lever: 10
 - rexx: 10
-- lever: 8
-- recruitee: 7
-- workable: 4
-- bamboohr: 2
+- workable: 6
+- bamboohr: 4
+- teamtailor: 3
 - onlyfy: 2
-- join: 1
 
 ## Unresolved companies (attempted, found nothing)
 
@@ -43,7 +44,6 @@ Total companies: 598
 - Swiss Life Deutschland — https://www.swisslife.de/
 - Deutsche Leasing Gruppe — https://www.deutsche-leasing.com/
 - Avacon AG — https://www.avacon.de/
-- GROB-WERKE GmbH & Co. KG — https://www.grobgroup.com/
 - Lufthansa Technik AG — https://www.lufthansa-technik.com/
 - Dräger — https://www.draeger.com/de_de/Home
 - GOLDBECK GmbH — https://www.goldbeck.de/
@@ -71,7 +71,6 @@ Total companies: 598
 - Toposens — https://toposens.com/
 - bene-Arzneimittel — https://www.bene-arzneimittel.de/
 - SciRhom — https://scirhom.com/
-- Daiichi Sankyo Europe — https://www.daiichi-sankyo.eu/
 - AstraZeneca Germany — https://www.astrazeneca.de/
 - Bio-Rad Laboratories — https://www.bio-rad.com/
 - Agilent Technologies — https://www.agilent.com/
@@ -91,7 +90,6 @@ Total companies: 598
 - Applied Materials Germany — https://www.appliedmaterials.com/
 - Keysight Technologies — https://www.keysight.com/
 - Huawei Technologies Germany — https://www.huawei.com/de/
-- Ericsson Germany — https://www.ericsson.com/de
 - Fujitsu Germany — https://www.fujitsu.com/de/
 - Sony Europe — https://www.sony.eu/
 - Dell Technologies Germany — https://www.dell.com/de-de
@@ -111,6 +109,716 @@ Total companies: 598
 - Scompler — https://www.scompler.com/
 - Opscura — https://www.opscura.io/
 - Klima.Metrix — https://klima-metrix.de/
+- Simplora — http://www.simplora.de
+- Curefab Technologies GmbH — http://www.curefab.com
+- Blogbox UG — http://contentcaptain.de/
+- FinTecSystems GmbH — https://www.fintecsystems.com
+- webZunder — https://www.webzunder.com
+- Spectrum ARC GmbH — http://www.spectrum-aerospace.com/
+- Bonavendi — http://www.bonavendi.de
+- ROCKCITI ENERGY GmbH — http://www.rockciti.com
+- AppSCREEN® GmbH — http://www.appscreen.de
+- SHÄRE GmbH — https://shaere.me/
+- Hip Trips GmbH — http://www.hip-trips.com
+- shoemates GmbH — http://www.shoemates.de
+- DBike — http://dbike.com/
+- eCozy GmbH — http://ecozy.de/
+- Mein Arbeits(t)raum — http://www.mein-arbeitstraum.de
+- UNFALLHELDEN — http://www.unfallhelden.de
+- innovation.labs — http://labs.innovationpunks.com
+- Altruja GmbH — http://www.altruja.de
+- Make Germany GmbH — http://www.make-germany.de
+- ComfyLight — http://www.ComfyLight.com
+- All3DP GmbH — https://www.all3dp.com/
+- Voycer AG — https://www.voycer.com
+- Actyx AG — http://www.actyx.io
+- casetur mechanism GmbH — http://www.casetur.com
+- Delightex GmbH — http://www.delightex.com/
+- ALS Automatic Logistic Solutions GmbH — https://www.automatic-logistic-solutions.com/
+- eucurio — http://www.eucurio.eu
+- Tripodo GmbH — http://www.tripodo.de
+- VETIZIN — http://www.vetizin.de
+- kinoheld GmbH — https://www.kinoheld.de/
+- SIGRA Technologies GmbH — http://www.sigratech.de
+- 52masterworks GmbH — http://www.52masterworks.com
+- ComCode GmbH — http://comcode.de
+- clubago GmbH — http://www.clubago.de
+- Magistral.IO — http://www.magistral.io
+- Zyncd — http://www.zyncd.com
+- Evo-Connect — http://www.evo-connect.com
+- Oekostrom.com — http://www.Oekostrom.com
+- RENTONDO GmbH — http://www.rentondo.de
+- Clipperz — https://clipperz.is
+- ONYX GmbH — http://www.onyx-europe.com
+- Kaia Health Software GmbH — http://www.kaia-health.com
+- sueco UG (haftungsbeschränkt) — http://www.sueco.de
+- Thermosome GmbH — http://www.thermosome.com/
+- sjn AG — https://www.sjn.de/
+- DigiSigner — http://www.digisigner.com
+- mymovingpartner GmbH — http://www.mymovingpartner.com/
+- JodelCam UG (haftungsbeschränkt) — http://www.jodelcam.com
+- commumee UG (haftungsbeschränkt) & Co KG — http://www.commumee.de
+- Eageron® GmbH — http://eageron.com
+- Antidote GmbH — https://antidote.bio
+- PLIDS UG — https://plids.com
+- Futora Marketing GmbH — http://www.futora-marketing.com
+- Parce GmbH — http://www.parce.de
+- myWay Marine GmbH — http://www.mywaymarine.com
+- Kimodu GmbH — https://www.kimodu.com
+- interfacewerk GmbH — http://www.interfacewerk.de
+- EYEGLASS24 GmbH — https://www.eyeglass24.de/
+- terraplasma medical GmbH — http://www.terraplasma-medical.com
+- Lendstar GmbH — https://www.lendstar.io/
+- RipCue Music GmbH — http://www.ripcue.com
+- Fineway GmbH — https://www.fineway.ai/
+- Curetics — http://www.curetin.de/
+- toddgo — http://www.toddgo.com
+- BASE Co-Working — https://base-coworking.com/
+- Dynamify GmbH — https://dynamify.de/
+- Hirschgartenloft — http://www.hirschgartenloft.de
+- piqd GmbH — https://www.piqd.de/
+- Bayerische Telemedallianz UG ( haftungsbeschränkt ) — http://www.telemedallianz.de
+- Tech Fontein GmbH — http://www.techfontein.com
+- Simplias Vertriebs GmbH — https://www.mfr-software.de/
+- enubo GmbH — http://www.enubo.com
+- draglet GmbH — http://www.draglet.com
+- HolodeckVR — http://www.holodeckvr.co
+- My Dear Instruments GmbH — http://www.mydearinstruments.com
+- leaf republic GmbH — http://www.leaf-republic.com
+- AINOHA — http://www.ainoha.com
+- eluminocity — http://www.eluminocity.com/
+- Hoelzl und Schuster GbR — http://www.coworking-holzschuh.com
+- everskill GmbH — https://everskill.de/
+- CATCHYS GmbH — http://www.catchys.de
+- Grillido GmbH — http://www.grillido.de
+- Prelovee GmbH — http://www.prelovee.de
+- 5 Euro StartUp — http://www.5-euro-startup.de
+- Cargentur GmbH — http://www.cargentur.de
+- Augmentaio GmbH — https://www.augmentaio.com/
+- mayze GmbH — http://www.mayzetheapp.com
+- TeleClinic GmbH — https://www.teleclinic.com
+- Edukatico — http://www.edukatico.org
+- Smoovr — http://www.smoovr.de
+- Inflight VR Software GmbH — http://www.inflight-vr.com
+- StackImpact GmbH — https://stackimpact.com
+- tradico GmbH — http://www.tradi.co
+- Spotninja — http://www.spotninja.co/
+- myfolie — https://www.myfolie.com/
+- Pinboards — http://www.the-pinboards.de
+- swop — http://www.swop-team.de
+- Snack Me GmbH — http://www.snack-me.bio
+- HELLSICHT GmbH — http://www.hellsicht.ai/
+- teamstr GmbH — http://www.teamstr.de
+- Kids all around — http://kids-all-around.de
+- Vi-Tools UG — https://www.vi-tools.com/
+- Babo Beverages UG (haftungsbeschränkt) — https://www.baboblue.com/
+- Board & Bed — http://www.boardandbed.com/
+- Payworks — http://www.payworks.com
+- D OPENER — http://www.dopener.com
+- Isarkindl — http://www.isarkindl-bier.com
+- halloDeutsch — https://hallodeutsch.de
+- MPWR — https://www.mpwr.me/
+- The Bakery Snowboards GbR — https://www.thebakerysnowboards.com/
+- bankscore — https://bankscore.de/
+- LegalFlex GmbH — https://www.legalflex.de/
+- VeggiePur GmbH — http://www.veggiepur.de/
+- CommneX GmbH — http://www.commnex.de/
+- BioDataAnalysis GmbH — https://www.biodataanalysis.de/
+- Fairway1 GmbH — http://www.fairway1.de
+- MotorMiles Technologies GmbH — http://www.motormiles-technologies.com/
+- MUSYNC — http://www.musync.de
+- WickedCricket — https://www.wickedcricket.de/
+- arranja GmbH — https://www.arranja.de
+- STAFFCHUM / allchum GmbH — https://staffchum.com/home.html
+- HRForecast – a peopleForecast company — http://www.hrforecast.de
+- Abracar — http://www.abracar.de
+- Elternnachricht.de — http://www.elternnachricht.de
+- Summfit GmbH — http://www.summfit.com
+- CrowdProtect — http://www.crowdprotect.de
+- LOUFT UG (Haftungsbeschränkt) — http://www.louft.com
+- RiverWaveProject — http://www.riverwaveproject.com/
+- maiot GmbH — http://www.maiot.io
+- StartinFOOD — http://startinfood.de/
+- TargetVideo GmbH — http://www.target-video.com/de/home-de/
+- NU EMOTIONS GmbH — http://www.nuemotions.com/
+- Munich Composites GmbH — http://www.munich-composites.de/
+- Aquahara Technology GmbH — http://www.aquahara.com
+- Vemcon GmbH — https://www.vemcon.com/
+- Li.plus GmbH — https://li.plus/wp/
+- Rigontec GmbH — http://rigontec.com/
+- eeMobility GmbH — https://www.ee-mobility.com/
+- Loyalty Prime Germany GmbH — https://www.loyaltyprime.com/de/
+- Genesis CryoTech GmbH — http://www.genesis-cryotech.com/
+- tracdelight GmbH — https://www.tracdelight.com/
+- SkillFellows UG — https://www.skillfellows.de
+- Paylobby GmbH — https://paylobby.com/
+- BlitzMinds — http://www.blitzminds.com
+- GNA Biosolutions GmbH — http://www.gna.bio
+- LiveCycle GmbH — https://www.live-cycle.de/
+- kontextR — https://www.kontextr.com/
+- Charry GmbH — http://www.charry.com
+- Minxli — http://www.minxli.com
+- Miniwim — http://www.miniwim.de
+- SPLT — https://www.splt.io
+- LoadFox GmbH — https://www.loadfox.eu
+- knooing GmbH — https://knooing.de/
+- PublicBI UG (haftungsbeschränkt) — https://www.publicbi.com/
+- reFit Systems — https://www.refit-systems.com/de/
+- CastConnectPro — http://www.castconnectpro.de
+- Stil-Tex GmbH — http://www.stil-tex.de/
+- CIRRANTiC GmbH — http://www.cirrantic.com/
+- Zeitbote AG — https://www.zeitbote.com/
+- easyleaving GmbH — https://www.easyleaving.com
+- keysurance — http://keysurance.de/
+- Matmatch — https://matmatch.com/
+- Quises GmbH — http://www.quises.com
+- Start Ups & Downs — http://www.startupsanddowns.de
+- FILM SHIFT — http://www.filmshift.de
+- OT Medizintechnik GmbH — http://www.OTMedtec.de
+- ThreeDee GmbH — http://www.threedee.de
+- ORDA — https://www.orda-app.com/
+- minnt GmbH — http://www.minnt.com
+- Taskiy GmbH — https://www.taskiy.net/
+- innovator space e.V. — https://innovatorspace.de
+- LChoice — https://portal.lchoice.de/
+- meine-weltkarte.de — http://www.meine-weltkarte.de
+- ReportExpress Hoyos Kleemann Rafael und Brass Gabriel GbR — http://www.reportexpress.de
+- Talentcube GmbH — http://www.talentcube.de
+- BANKSapi GmbH — https://banksapi.de/
+- Unisphere GmbH — http://www.unisphere.de
+- Hyperganic Technologies AG — https://www.hyperganic.com/
+- creaidAI — https://www.creaidAI.com
+- Erledigt App GmbH — http://www.erledigt-app.de
+- hicrypto — http://www.hicrypto.io
+- convert GmbH — http://www.convert.bike
+- Mamistravelguide — http://www.mamistravelguide.com
+- chango — http://chango.tech/
+- onetwokey — https://www.onetwokey.de
+- VOXELGRID GmbH — http://www.voxelgrid.com
+- Keyp GmbH — http://www.keyp.io
+- Brandriders UG (haftungsbeschränkt) — http://www.brandriders.de/
+- jobify — https://jobify.net
+- HipSquare/SquareTrip — https://squaretrip.net/
+- Retailtech Hub — http://www.retailtechhub.com
+- Softwarepunks GmbH — http://www.softwarepunks.com
+- Rebike1 GmbH — http://www.rebike1.de
+- vr-on GmbH — http://www.vr-on.com
+- DBI Analytics GmbH — https://www.abis-cloud.de/
+- mytabak GmbH — http://www.mytabak.de
+- Eyecandylab GmbH — https://augmen.tv
+- Defensito GmbH — http://www.defensito.com
+- edibox GmbH & Co. KG — http://www.edibox.com
+- Deep Data Analytics UG (haftungsbeschränkt) — https://deep-data-analytics.com
+- Muclyn — http://www.muclyn.com
+- Gut Feeling — http://www.gut-feeling.de
+- golane UG (haftungsbeschränkt) — http://www.golane.de
+- WerkerApp — http://www.werkerapp.com
+- Pyoneer GmbH — http://www.pyoneer.io
+- Stecnius UG (haftungsbeschränkt) — https://solosmirrors.com/
+- SensuSport UG (haftungsbeschränkt) — http://sensusport.com/
+- chatchamp — http://www.chatchamp.io
+- AIM Advanced Identification Methods GmbH — https://www.metabarcoding.com/
+- Beewedded GmbH — http://www.beewedded.de
+- Jobpushy — https://www.jobpushy.de/
+- ConsciousCoders — https://www.consciouscoders.io
+- Styque GmbH — https://styque.com
+- Cryptowerk — https://cryptowerk.com
+- Capmatcher.com — http://www.capmatcher.com
+- Smart Access Solutions UG (haftungsbeschränkt) — http://www.smart-access-solutions.com/
+- Alpinchen — http://www.alpinchen.de
+- DatenBerg GmbH — https://datenberg.eu/
+- SPACENEO — http://www.spaceneo.com
+- YouPlant — https://www.youplant.com/
+- Ariana Digital Health Solutions GmbH — https://www.hiariana.com/
+- two-ride UG — http://www.b2ride.org
+- Empident GmbH — http://www.empident.de
+- ECOFARIO GmbH — http://www.ecofario.eco
+- Mindshine GmbH — http://www.mindshine.app
+- Sidepreneur.de – BHL Projects UG (haftungsbeschränkt) — https://www.sidepreneur.de/
+- sira Kinderbetreuung gGmbH — http://www.sira-kinderbetreuung.de
+- myStationary.de — http://www.mystationary.de
+- Ordercube GmbH — http://www.ordercube.de
+- ajuma — http://www.ajuma.eu
+- presize.ai — http://www.presize.ai
+- AVANTGARDRESS — http://www.avantgardress.com
+- rfrnz — http://www.rfrnz.com
+- franck.AI — http://www.franck.ai
+- Teratrace GmbH — http://www.teratrace.com
+- Social Event GmbH — http://www.miitya.com
+- Spotwatch GmbH — https://www.spotwatch.io/tools-technik/tv-spotter/
+- Third of Life GmbH — https://www.third-of-life.com/
+- Pedilay Care GmbH — https://www.pedilay.care
+- XAD spoteffects GmbH — https://xadspoteffects.com/
+- Softplant GmbH — http://www.softplant.de
+- Hinterher.com munich bike trailers — http://www.hinterher.com
+- TrainYourTeam — https://www.trainyour.team
+- 18points UG (haftungsbeschränkt) — https://www.18points.de/
+- microDimensions GmbH — http://www.micro-dimensions.com
+- NameRobot GmbH — http://www.namerobot.de
+- travelloc GmbH — https://www.travelloc.com
+- OmegaLambdaTec GmbH — http://www.omegalambdatec.com
+- Crunchtaste — https://www.crunchtaste.de/
+- FitSeat — https://fitseat.de/
+- qbound — https://qbound.io
+- ParkandFly.de — https://www.parkandfly.de/
+- HEAVN GmbH — https://www.heavn-lights.com
+- AquaTelligent — http://www.aquatelligent.com
+- Buttonwise GmbH — https://www.buttonwise.de/
+- AIVENTA — http://www.aiventa.de
+- Palitree GmbH — http://www.palitree.com
+- What2Work — http://www.what2work.de
+- GraphicSprings — https://www.graphicsprings.com/de
+- Cognition Factory GmbH — https://cognitionfactory.com
+- PLANTY-OF-MEAT — https://planty-of-meat.de
+- GoBunion — https://www.gobunion.com/
+- company42 GmbH — https://company42.net
+- localstoring.com — http://www.localstoring.com
+- Gerotor GmbH — http://www.gerotor.tech
+- Corona Helfer — https://corona-helfer.com/
+- My Blossom GbR — https://my-blossom.com
+- Neuphony — http://www.neuphony.com
+- INNOSPOT — https://www.innospot.de/
+- Freeform4U GmbH — https://www.freeform4u.de
+- m3d products UG — http://www.nomo-mosquito.de
+- ArtMasters — http://www.artmasters.co
+- Einfach E-Auto Mobility Solutions GmbH — https://einfacheauto.de/
+- Munich Network — https://www.munichnetwork.com/
+- HiveNet GmbH — https://www.hivenet.cloud/
+- peachmobility Elektroroller — http://www.drivepeach.com
+- LEMI CarSharing — http://www.lemi-app.de
+- EdelSalz — http://www.edel-salz.com
+- Vitokrates UG (haftungsbeschränkt) — http://www.vitokrates.de
+- Ridetronic — https://www.ridetronic.de
+- First Order GmbH — https://filemaps.io
+- LastiBike GmbH — http://www.lastibike.de
+- shyopa — https://shyopa.com
+- Cesonia GmbH — http://www.cesonia.io
+- Black Tea Motorbikes — http://www.blackteamotorbikes.com
+- Wahtari GmbH — http://www.wahtari.io
+- CX LABS GmbH — http://www.cxpartner.de
+- manaomea GmbH — http://www.manaomea.com
+- LarsLabs GmbH — https://larslabs.io
+- Funcoo UG — http://www.funcoo.de
+- ALALJOJO — https://www.alaljojo.com/
+- 360 Grad Aufnahmen — http://www.360-grad-aufnahmen.de
+- Sports Athletic — http://www.sports-athletic.com
+- zapptales GmbH — http://www.zapptales.com
+- LAQA GmbH — https://www.laqa.de/
+- 42DBS GmbH — http://www.shakespeare-software.com
+- pleyces GmbH — https://www.pleyces.com
+- meetastic — https://my-meetastic.de/
+- Pylot GmbH — https://www.pylot.tech/
+- Visevi Robotics GmbH — https://www.visevi.com
+- XaaSfarm GmbH — http://www.xaas.farm
+- iComplai UG — http://www.icomplai.com
+- navel robotics GmbH — http://www.navelrobotics.com
+- Repure Life GmbH — http://www.repure.life
+- Navemos — http://www.navemos.com
+- Irasun GmbH — http://www.irasun.de
+- alexandrya.ai — http://www.alexandrya.ai
+- Trustloop e.V. — http://www.trustloop.org
+- FirstVet — http://www.firstvet.de
+- Testifi — https://testifi.io/
+- TraceFunnels — https://tracefunnels.com/
+- yourbrandedbeer.de — https://www.yourbrandedbeer.de
+- Hubviser — http://www.hubviser.com
+- Cometum — https://www.cometum.com/
+- HearOn — https://hearon.de
+- VisCheck GmbH — https://www.opdra.de
+- advilo GbR — http://www.advilo.de
+- Granny Vision — http://www.granny-vision.com
+- FindPenguins — https://findpenguins.com
+- LESS AND ME — https://lessandme.de/
+- Zesavi — https://zesavi.com/
+- Neocom (Neo Commerce GmbH) — https://neocom.ai
+- Manvelyan Enterprises — https://manvelyan-ent.de/
+- VisionHealth GmbH — http://www.visionhealth.gmbh
+- Beta2Shape — http://www.beta2shape.de
+- akjumii — https://www.akjumii.com/
+- Dr. Michel GmbH — https://www.babywelle.de
+- Helberg, Lange, Schütz & Steiner GbR (4Walls Escape) — https://www.4walls-escape.de/
+- HyLevio — https://www.hylevio.com/
+- e-bot7 — http://www.e-bot7.com
+- Kubuni UG (haftungsbeschränkt) — https://kubuni.de/
+- VRdirect — https://www.vrdirect.com/
+- WorkNow — https://worknow.de/
+- my SCHOKO WORLD — http://www.my-schoko-world.com
+- Zeitpulver UG — http://www.zeitpulver.de
+- gipfelpuls — http://www.gipfelpuls.de
+- les loops — https://lesloops.de
+- CI Cloud Item GmbH — http://www.clouditem.co
+- GoodIP GmbH — http://www.goodip.de
+- Pigtie — http://www.pigtie.de
+- MONACO DUCKS — http://www.monacoducks.com
+- Design AI GmbH — https://www.design-ai.de/
+- AlterMobili GmbH — http://www.altermobili.com
+- ScandiPaws — https://www.scandipaws.com/
+- CM1 GmbH — https://cm-one.de/
+- LODGEA GmbH — http://www.lodgea.com
+- BraveYourself VR — http://www.braveyourself.io
+- Curiosity GmbH — http://www.curiosity.ai
+- loopingo GmbH — http://www.loopingo.com
+- FamilyPunk — http://www.familypunk.com
+- perceptos GmbH — https://www.ideaclouds.net/
+- chocolate³ — https://chocolate3.de
+- Optiwiser A.I. Solutions UG — https://www.optiwiser.de/
+- Smart4Diagnostics GmbH — http://www.smart4diagnostics.com
+- LinkFive — https://www.linkfive.io/
+- Business Pendel Bus — https://www.business-pendel-bus.de/
+- WINECOM GmbH — https://www.winecom.de
+- Deepli GmbH — https://a-labinsider.com/
+- Terano Food UG (haftungsbeschränkt) — https://terano.de/
+- Financial Software Architects GmbH (FISA) — http://www.fisa.one
+- vennwerk — https://vennwerk.com
+- WxFUSION GmbH — https://www.wxfusion.com/
+- MASTLI – Magical Story Listening — http://www.mastli.de
+- LION Smart GmbH — http://www.lionsmart.com/
+- Tasktrails UG (haftungsbeschränkt) — https://www.tasktrails.de
+- Detailify GmbH — https://www.detailify.de/
+- ShareYourSpace GmbH — https://shareyourspace.com
+- Azena — http://www.azena.com
+- Couper.Club — https://couper.club/
+- terraplasma GmbH — https://www.terraplasma.com
+- neurotrim Systems GmbH — http://www.neurotrim-systems.de
+- Scansation GmbH — http://www.scansation.de
+- AMAZD GmbH — https://www.amazd.co/
+- eco.mio — https://ecomio.com
+- Miniglotte UG — https://www.miniglotte.com/
+- ProDuck — https://www.produck.de/
+- Varia — https://www.varia.media/
+- Synsor.ai — http://www.synsor.ai
+- Marasia GmbH — http://www.marasia.de
+- sparkle gifts — http://www.sparkle.gifts/
+- CoffeeCup GmbH — https://www.coffeecup.app
+- CounselMe GmbH — http://www.counselme.de
+- felix forward GmbH — https://felixforward.com
+- The Green Gaia — https://thegreengaia.eu/
+- Magment GmbH — http://www.magment.co
+- Ivvi Company GmbH — https://ivvicompany.com/
+- BlindMate — https://blindmate.de/
+- Keepoala — https://www.keepoala.com
+- zentor GmbH — https://zentor.de
+- Zeitsilber — https://zeitsilber.de
+- Bayerisches Staatsministerium für Wirtschaft, Landesentwicklung und Energie — http://www.gruenderland.bayern/
+- Open as App — http://www.openasapp.com
+- Digital2School — https://www.digital-to-school.org/
+- Vinlivt GmbH — https://vinlivt.de/
+- shiftee — https://shiftee.eu/
+- HOSCOM – Hospitality Communication GmbH — https://hoscom.tech/
+- InformMe — https://www.informme.info/
+- GerneOhne — https://gerneohne.de/
+- cirqus — https://www.cirqus.de/
+- Kontentwerk GmbH — https://kontentwerk.de/
+- ProperBird — https://www.properbird.de/
+- Health+ — https://www.healthplus-bgm.de/
+- JARMINO — http://www.jarmino.de
+- Formularo — https://formularo.de/
+- Justt — https://justt.me/de/
+- heyroom — http://www.heyroom.app
+- BIOspire — https://www.biospire.ai/
+- Zkin Lab — https://zkin-lab.de/
+- Equal Time — http://www.equaltime.io
+- swey GmbH — https://www.swey.app/
+- SPREE Interactive GmbH — https://www.jointhespree.com/
+- Rocket Tutor — https://rockettutor.de/
+- snect — http://www.snect.app
+- Across Property — https://www.acrossproperty.com/
+- TRYUP! — https://www.tryup.de
+- BugSense — https://www.bugsensedx.com/
+- Traindoo — https://www.traindoo.io/
+- nearBees GmbH — https://www.nearbees.de
+- Certyfact UG (haftungsbeschränkt) — https://www.certyfact.com/
+- Pertuniti GmbH — https://www.pertuniti.de
+- Versatile Biology Lab — https://versatilebiologylab.com
+- KOSTENEX GmbH — http://www.kostenex.de
+- Primelite GmbH — https://www.primelite.com
+- Zählerfreunde — https://www.zaehlerfreunde.com/
+- Spreadly — https://spreadly.app/
+- bumpee — https://www.bumpee.co/
+- LikeLouis GmbH — https://likelouis.com
+- Grundriss in Lebensgröße GmbH — https://in-lebensgroesse.de/
+- Wellbeing Group UG — https://www.wellbeing-at.work/
+- Engity GmbH — https://engity.com
+- Sneakprint GmbH — https://www.sneakprint.me
+- 1Pitch — https://1pitch.de
+- Collego GmbH — https://collego-app.com/
+- Local Companion GmbH — https://locco.app/
+- The Plant Magic Co. — https://www.theplantmagic.co/
+- HELDINNEN. — https://heldinnen.red/
+- Rekrutados — https://rekrutados.com
+- FERTILA GmbH — https://www.fertila.de
+- Snapticket — https://www.snapticket.de/
+- Duplid GmbH — https://www.duplid.de/
+- femfeel — https://www.femfeel.de/
+- uptea GmbH — http://www.uptea.de
+- vystem — https://www.vystem.io/
+- MinQi — https://www.minqi.io/
+- ARCWARE GmbH — https://arcware.com/
+- RE-SHIRT — http://www.re-shirt.com
+- AQAL Capital GmbH — https://aqalgroup.com/
+- Responsive Fashion Institute — https://www.responsivefashion.institute/
+- Moonblock — https://moonblock.io/
+- GOZUBI — https://www.gozubi.de/
+- Medal Monday GmbH — https://www.medalmonday.de
+- SnC Solution — https://www.snc-solution.com/
+- Roundpeg Technologies GmbH — https://roundpeg.tech/
+- buildeazy GmbH — https://www.buildeazy.de/
+- OOMAY Home — https://oomayhome.de/
+- GarantieHeld — https://www.garantieheld.de
+- Welcomy GmbH — https://www.welcomy.co/
+- Schneckenhouse GmbH — https://www.schneckenhouse.de/
+- beatvest — https://www.beatvest.com/
+- Paper Pass — https://www.paperpass.io/
+- popularc GmbH — http://www.popularc.com
+- Ägile Ässets — https://agile-assets.ai
+- Lyntics GmbH — https://www.lyntics.com/
+- Synertics GmbH — http://www.synertics.io
+- tinus — https://www.tinus.one/
+- Teilzeitbörse — https://www.teilzeitboerse.com/
+- SunPlower Propeller GmbH — http://www.sunplower.de
+- Sedivention GmbH — https://www.sedivention.com/
+- KOSA — https://www.kosadelivery.com/
+- RNATICS GmbH — https://www.rnatics.com/
+- MingaGreens GmbH — https://www.minga-greens.de/
+- Oczko Stereo — https://oczkostereo.eu
+- Atopia — https://atopia.space/
+- NextFab IIoT — https://www.nextfab.io/
+- SHQUARED — http://www.shquared.de
+- exaas — https://exaas.co
+- Testimo — https://testimo.dev
+- Print4Taste GmbH — http://www.mycusini.com
+- Puray — https://www.puray.de/
+- Community Kitchen Food GmbH — https://www.community-kitchen.com/
+- buchpicker — https://www.buchpicker.de/
+- AppDevelz — https://www.appdevelz.com/
+- MATES — http://mates.network
+- FirmParking — https://firmparking.de
+- Twinu — https://twinu.com/
+- edjufy Software GmbH — https://www.edjufy.com
+- Leverage Robotics GmbH — https://leverage-robotics.com/
+- gutfeel — https://gutfeel.de/
+- Treesense GmbH — http://www.treesense.net
+- IDEE GmbH — http://www.getidee.com
+- Digisale — https://digisale.org/
+- LOREMO — http://www.loremo.de
+- CONFDNT GmbH — https://www.confdnt.com
+- haeppie Solutions GmbH — https://www.haeppie.io/
+- Friendly Cloud — https://www.friendly.cloud/
+- Limonara — https://www.limonara.de
+- Cockpit-IT GmbH — https://cockpit-it.com/
+- FLOW eye — https://www.flow-eye.com/
+- Insaas.ai — https://insaas.ai/
+- savrr — https://business.savrr.de/
+- Modiblast Pharma — https://www.modiblast.com
+- WhatzLearn GmbH — https://whatzlearn.com/
+- Blabigo — https://ai.blabigo.com
+- Hello Chef GmbH — https://hellochef.kitchen/
+- Synaesthetica — https://www.synaesthetica.space/
+- Sentiguard Datenschutz GmbH & Co. KG — https://www.sentiguard.eu
+- Franky & Friends — https://franky-friends.de/
+- ASBUS GmbH — http://asbus-app.com
+- BRAKEABLE — https://www.brakeable.com/
+- droov — https://www.droov.io
+- ecomates — https://eco-mates.de/
+- Gastimate Technologies GmbH — https://gasvisor.eu/
+- Mermaid Bio — https://www.mermaid.bio/
+- HopfON — https://hopfon.com
+- Olivaw GmbH — https://olivaw.ai/
+- Smart Industry Solutions GmbH — https://www.smindso.com/
+- innflux — https://innflux.io/
+- Summarize.One — https://summarize.one
+- NovaLingua — https://novalingua.org/
+- Grocera — https://grocera.de
+- Vocalisto — https://vocalisto.com
+- Agents Connected GmbH — https://agents-connected.de/
+- Mission Monument — https://www.mission-monument.de
+- Golfstrom — https://golfstrom.solar/
+- vorteils.app — https://vorteils.app
+- Art-Glove — https://art-glove.com/
+- Aivery — https://aivery.tech/
+- TAWNY GmbH — http://www.tawny.ai
+- ByeByeToe GmbH — https://byebyetoe.de/
+- STUUL — https://www.stuul.com
+- azuma healthtech GmbH — http://www.azuma.health
+- Best Foodies — https://best-foodies.de/
+- momo hört zu e.V. — https://www.momohoertzu.de/
+- GEMARAhealth GmbH — https://gemara-health.com
+- Neutron Star Systems — https://www.neutronstar.systems/
+- LEADBEAT.io — https://leadbeat.io
+- Yalite GmbH — http://yalite.de
+- MediOwl — https://www.medi-owl.com/
+- E1NS — https://www.e1nfach.de/
+- WORKREPUBLIC München Marienplatz — http://www.workrepublic.de
+- TerraLoupe GmbH — http://www.terraloupe.com/
+- COLORIMETRIX GmbH — http://www.colorimetrix.com/index.html
+- Lilium GmbH — https://lilium.com/
+- ReiseGenie AI — https://www.reisegenie.com
+- XtremeCheck — https://xtremecheck.com/
+- ESG-X — https://www.esg-x.com/
+- Layana Life GmbH — https://www.layanalife.de/
+- SBLC Cosmetics — https://sblcomp.com/
+- Arana AI — https://arana-ai.com
+- Ausstellung Leihen — http://www.ausstellung-leihen.de
+- Tildi (Prowd GmbH) — https://www.tildi.com/
+- exfinity — https://exfinity.io
+- GreenTech Talents GmbH — https://greentechtalents.de/
+- Doctos — https://www.doctos.de/
+- Rethink Ventures — https://rethinkventures.com
+- Auta Health — https://auta.health
+- nebty — https://nebty-id.com
+- Solation GmbH — https://www.solation.eu/
+- Flyby — https://flyby.global/
+- Elixion Medical — https://elixionmedical.com
+- LoopID — https://www.loopid.com/
+- Plan4Better GmbH — https://plan4better.de/
+- BlueBottle GmbH — https://bluebottle.gg/
+- WhatsLegal.ai — https://www.whatslegal.ai/
+- oles Kaffee — https://oleskaffee.de/
+- GR1T Motorcycles GmbH — https://www.gritmotors.com
+- CedarDB — https://cedardb.com
+- Talentlake.io — https://talentlake.io
+- muziqme — https://muziqme.de/
+- Nexwork — https://nexwork.news
+- driveit GmbH — https://www.driveit-abo.com/
+- ciao coffee GmbH — https://www.ciaocoffee.eu/
+- Meaningful — https://www.meaningful.app/
+- Skillfire — https://skillfire.io/
+- Chilishot — https://chilishot.de/
+- Summit Experience UG — https://summitexperience.store/
+- Oberon Systems — https://www.oberon-systems.de/
+- Tenum AI — https://www.tenum.ai/
+- supernutural GmbH — https://supernutural.com/
+- VAROLIS GmbH — http://www.varolis-apimed.de
+- Insecta — https://insectx.de/
+- Hyphe — https://www.hyphe.eco/
+- FRATCH.IO — https://fratch.io/de/?utm_source=munich_startups&utm_medium=referral&utm_campaign=company_page
+- Kireap Technologies GmbH — https://kireap.com
+- Sub Capitals — https://subcapitals.com
+- Assemblixx — https://assemblixx.io/
+- familymind AI — https://familymind.ai/
+- COLEXO — https://www.colexo.de/
+- UnicornPitch — http://www.unicornpitch.com
+- AlphaPrompt — https://alphaprompt.de/
+- Audavis GmbH — https://www.audavis.ai/
+- baind AG — https://www.baind.de/
+- SoreAlert — https://www.sorealert.com/
+- insiemeki — https://www.insiemeki.de/
+- Juucy Software GmbH — https://www.juucy.io/
+- Munaco GmbH — https://www.munaco.de/
+- poolinq — https://www.poolinq.com
+- Loyalift — https://loyalift.com/de
+- QuantumScale Munich — https://quantumscalemunich.de
+- Cloudginny GmbH — https://cloudginny.com
+- möhrengrün — https://moehrengruen.de/
+- muunai — https://muunai.com/de
+- trail GmbH — https://www.trail-ml.com/
+- Firepanda.ai — https://www.firepanda.ai/
+- Seppy — https://gentle-usability-594804.framer.app/
+- causara UG — https://www.causara.com/
+- MarketVista — https://www.market-vista.com
+- LetsVibe — https://www.lets-vibe.app/
+- SmartAIs — https://www.smartais.de/
+- Project Pepita — https://www.project-pepita.com/
+- ecoro GmbH — https://ecoro-road.com/
+- ChipTwin — https://www.chiptwin.io/
+- branchly GmbH — https://branchly.io/
+- Klipspringer UG — https://www.klipspringer.eu
+- Pluto SecureLock — https://pluto-secure.com/
+- Grizzlar UG — https://www.grizzlar.de/
+- ProxDeal — https://proxdeal.com
+- moverloop GmbH — https://moverloop.com/
+- Frienton GmbH — https://www.frienton.com/
+- Fioro — https://www.fioro.ai/
+- DeinFlaschendesign — https://deinflaschendesign.de/
+- FLASH Tissue Diagnostics GmbH — https://www.flashtd.com/
+- LYFE.ads — https://lyfe-ads.de/
+- Lynkt GmbH — https://lynkt.de/
+- Smartventory — https://www.smartventory.io/
+- IT Dynamic Systems GmbH — https://digitalwaiter.interactionfqm.com/
+- Jessy Works GmbH — https://www.jessyworks.com
+- KeypMe — http://keypme.com
+- TapGig — http://www.tapgig.live
+- SUSTAYNR GmbH — https://esg-score.org/
+- Physical Software Solutions GmbH — https://www.physsolutions.com
+- AITHEA — https://www.ai-thea.com/
+- Law me. — http://www.law-me.io
+- Flavizz — https://www.flavizz.com
+- Nexus Politics — https://www.nexuspolitics.org/
+- De Bike — http://debike.app/
+- Nuno — https://nuno-labs.de/
+- Sohnus — https://sohnus.de/
+- Scelion GmbH — https://www.scelion.com/de/
+- Passcreator GmbH — http://www.passcreator.com
+- Litigo Solutions — https://litigo-solutions.de/
+- NewSense Engineering GmbH — http://www.newsense-engineering.de
+- Checkademia GmbH — https://www.checkademia.de/
+- VoluLink — https://volulink.de
+- WeDaVinci GmbH — https://www.wedavinci.com
+- Fund The Planet — https://fundtheplanet.net
+- Truly — https://www.truly-facts.eu/
+- ConciergeBeauty — https://info.conciergebeauty.de/
+- Simpleprax GmbH — https://simpleprax.com/
+- boutiq ai GmbH — https://www.boutiqai.com/
+- ProviGenAI — https://provigen.ai/
+- Neuroblends — https://neuroblends.eu/
+- Airgonomics GmbH — https://airgonomics.ai/
+- NeoSoma — https://www.neosoma.eu/
+- curly — https://curly.de/de/
+- Tender Republic GmbH — https://www.tenderrepublic.de/
+- DATFID — https://datfid.com/
+- kursmap GmbH — https://kursmap.de
+- Planerio — https://www.planerio.de
+- CarbonInsights — https://carbon-insights.de/
+- LG Fashion Labs — https://lgfashionlabs.com/
+- ARTICLY — http://www.articly.de
+- Stepflow — https://www.joinstepflow.app/
+- SUMM AI GmbH — https://summ-ai.com/
+- Kalender-Sync — https://kalender-sync.de/
+- OMEGA Space Technology GmbH — http://www.omega-space.eu
+- showcase — https://getshowcase.ai/
+- Nearfaces UG — https://www.nearfaces.com/
+- Veriva Travel GmbH — https://veriva.travel/
+- Cambrion — https://www.cambrion.ai/
+- Octoscreen — https://www.octoscreen.de/
+- Clapilot — https://clapilot.com/
+- DHS Africa — https://dhs.africa/
+- MietTiger — http://www.miettiger.de/
+- BLITZbee — https://blitznaturalpower.de/
+- Sovaro — https://getsovaro.com/de
+- LAY7 cloud — https://www.lay7.cloud
+- Knowmanity UG — https://www.knowmanity.ai/
+- MediPulse — https://www.medipulse.de
+- Kuno Intelligence — https://heykuno.com
+- The Consumer AI — https://www.theconsumer.ai/
+- 2n8life GmbH — https://www.duwillsteswissen.de
+- BlockBuilder UG (haftungsbeschränkt) — https://block-builder.de
+- Remediate.AI — https://getremediate.de/
+- Sortie — https://www.sortie.work/
+- Linkvolt Operations UG — https://www.linkvolt.de/
+- Nowtown UG (haftungsbeschränkt) — https://nowtown.co/de
+- Vertical Minds GmbH — https://www.eilin.de/
+- MyAutoData (MAUD) — https://myautodata.com
+- KontorStack — https://www.kontorstack.com
+- respio — https://respio.de/
+- sur.plus — http://surpluspurpose.com
+- cocoduro — https://cocoduro.de
+- ClubGefühle — https://clubgefuehle.de/
+- Revvy — http://revvy-ai.com
+- wavebird — https://wavebird.ai
+- WEKTRON — https://www.wektron.de/
+- QLero GmbH — https://qlero.de
+- xleep — https://xleep.de/
+- rnhale — https://rnhale.com/
+- Air2Growth — https://air2growth.com/
+- Syn2core — https://syn2core.com/
+- Frankly — https://speakfrankly.app
+- LADS TV — https://ladstv.app
+- B2B Community — https://b2bcommunity.net/
+- Hyperize — https://hyperize.ai
+- Zura Health — https://www.zurahealthos.com/
+- LBP Digital — https://lbp.digital/
+- Craftpool — https://craft-pool.com
+- Settlio — https://www.settlio.de/
 
 ## Custom (candidate for a future generic scraper)
 
@@ -145,6 +853,7 @@ Total companies: 598
 - Sparkasse Vorpommern — https://www.spk-vorpommern.de/de/home/misc/stellen-und-ausbildung.html?n=true
 - SachsenEnergie AG — https://www.sachsenenergie.de/wps/portal/energie/cms/menu_main/karriere
 - AOK - Die Gesundheitskasse — https://www.aok.de/karriere/
+- GROB-WERKE GmbH & Co. KG — https://karriere.grobgroup.com/
 - VR Bank Augsburg-Ostallgäu eG — https://www.vrbank-augsburg-ostallgaeu.de/meine-bank/karriere.html
 - DEVK — https://jobs.devk.de/
 - Elektro Breitling GmbH — https://www.eb-karriere.de/
@@ -252,6 +961,7 @@ Total companies: 598
 - Astellas Pharma Germany — https://www.astellas.com/en/careers
 - Hexal — https://www.sandoz.com/de-de/karriere/
 - Neovii Biotech — https://neovii.com/careers/
+- Daiichi Sankyo Europe — https://www.daiichi-sankyo.eu/career/discover-daiichi-sankyo-europe/
 - Sandoz Germany — https://www.sandoz.com/de-de/karriere/
 - Thermo Fisher Scientific — https://jobs.thermofisher.com/global/en
 - Eurofins Genomics — https://eurofinsgenomics.eu/en/eurofins-genomics/corporate-information/careers/
@@ -280,6 +990,7 @@ Total companies: 598
 - Panasonic Industry Europe — https://industry.panasonic.eu/careers
 - Advantest Europe — https://www.advantest.com/en/about/career-na/
 - Nokia Germany — https://www.nokia.com/careers/
+- Ericsson Germany — https://jobs.ericsson.com/careers
 - Veeam Germany — https://careers.veeam.com/search-jobs?ad=menu-company-careers
 - Pegasystems — https://www.pega.com/about/careers
 - Versicherungskammer Bayern — https://www.vkb.de/ueber-uns/karriere.html
@@ -323,6 +1034,442 @@ Total companies: 598
 - STABL Energy — https://stabl.com/en/company/career/
 - Finanzchef24 — https://www.finanzchef24.de/ueber-uns/jobs
 - AirLST — https://airlst.com/karriere
+- Münchner Gewerbehöfe (MGH) — https://www.mgh-muc.de/mietparteien/stellenangebote
+- Socialwave — https://www.social-wave.com/karriere
+- KontextMaps — https://www.kontextmaps.com/unternehmen/jobs/
+- flissade GmbH — http://www.flissade.com/jobs/
+- Expertiger — https://www.expertiger.de/ueber-uns/jobs/experte-werden
+- adnymics GmbH — https://adnymics.com/karriere/
+- Yamdu — https://yamdu.com/en/career/
+- pliXos GmbH — https://www.plixos.com/career/
+- AZUBIYO GmbH — https://www.funkeworks.de/
+- HRinstruments GmbH — https://www.hr-instruments.com/career/
+- myChipsBox GmbH — https://www.domainprofi.com/de/karriere/
+- parkpocket — https://pixelsbd.com/
+- Friendsfactory AG — https://www.friendsfactory.de/
+- Schneider Geo GmbH — https://www.schneidergeo.com/jobs
+- YOODOC – finde deine Behandlung — http://www.yoodoc.com/careers
+- Lockit Network GmbH — https://www.lockitnetwork.com/
+- bikesale.de — https://bikesale.heavenhr.com/jobs
+- CRX Markets AG — https://www.crxmarkets.com/de/career
+- femory GmbH & Co KG — https://www.clixxie.de/
+- DataLion GmbH — https://datalion.com/karriere/
+- Immobase GmbH — http://www.immobase.de/careers
+- happitz GmbH — https://www.hugedomains.com/domain_profile.cfm?d=happitz.com
+- FreshDetect GmbH — https://freshdetect.com/404
+- CupoNation GmbH — https://atolls.com/careers/
+- treefin GmbH — https://www.ww-ag.com/de/karriere
+- Propertybase GmbH — https://propertybase.lwolf.com
+- Myobis Booking Systems GmbH — https://myobis.com
+- myLike UG (haftungsbeschränkt) — https://www.mylike-app.com/careers
+- Advanced Navigation Solutions GmbH — https://anavs.com/company/careers/
+- three10 GmbH — https://three10.eu
+- Nuclino GmbH — https://www.nuclino.com/jobs
+- PAYMILL GmbH — https://www.paymill.de/
+- Salmi GmbH — https://www.facebook.com/SalmiGames
+- FLSK Products GmbH — https://flsk.de/pages/jobs
+- Impact Hub Munich — https://munich.impacthub.net/event/karrieregestaltung-fuer-sinnsucher/
+- useley GmbH — http://www.useley.com/careers
+- Time in the Box GmbH — https://vr-dynamix.com/virtual-reality-karriere/
+- Imixs Software Solutions GmbH — https://www.imixs.com/karriere/
+- Mime GmbH — https://www.cora.org/
+- Labs64 GmbH — https://www.labs64.com/career/
+- Show it 360 — https://showit360.geo.io
+- IRUBIS GmbH — https://irubis.com/career/
+- Scharfkopf UG (haftungsbeschränkt) — https://www.scharfkopf.de/careers
+- Cunesoft GmbH — https://careers.cencora.com/us/en
+- SponsorMio — http://www.sponsormio.com/careers
+- Welmoa GmbH — https://www.curawel.de
+- BetterTaxi (BetterTec GmbH) — https://www.bettertaxi.de/jobs/
+- Startup Creator — https://startup-creator.com/referenzen/ihatemyjob/
+- weekli — https://yack.rocks/karriere
+- KigaClick GmbH — https://ts.domainname.de/kigaclick.de
+- INVENOX GmbH — https://www.invenox.de/de/karriere/arbeiten-bei-invenox/
+- Open Publishing GmbH — https://openpublishing.com/de/jobs/
+- MotoSana GmbH — http://www.mobisit.de/careers
+- Digitales Erbe Fimberger — https://digitaleserbe.net/karriere-und-job
+- Cleverciti Systems GmbH — https://www.cleverciti.com/en/careers
+- Recherchescout — https://www.recherchescout.com/dieter-moeller/
+- meHealthX — https://www.hugedomains.com/domain_profile.cfm?d=mehealthx.com
+- FairFleet — https://fairfleet.com/careers
+- Landpack GmbH — https://landpack.de/ueber-uns/karriere/
+- Alpenventures UG (haftungsbeschränkt) — https://www.alpenventuresunguided.com/jobs/
+- additive elements GmbH — https://www.additive-elements.com/de
+- Firebot — http://www.firebot.io/careers
+- Sportiply GmbH — https://www.profi-sport.de/?redirect=www.sportiply.de
+- forStory GmbH — https://forstory.de/agentur/#jobs%20
+- WMD Capital GmbH — https://www.wmd-capital.com/careers
+- Talentry GmbH — https://www.cleverconnect.com/our-dna
+- utransto GmbH — https://www.utransto.com/careers
+- accu:rate GmbH — https://www.accu-rate.de/ueber-uns/stellenangebote/
+- IDEA KITCHEN Coworking Space — https://www.studentjob.de/
+- nello — https://www.nello.io/
+- Demoskopia UG (haftungsbeschränkt) — https://ts.domainname.de/demoskopia.de
+- Unverblümt — https://www.lovvid.com/careers
+- Dirndltopia — https://www.trachten-fashion.de
+- Safety Tax Free GmbH — https://www.safetytaxfree.com/careers
+- SHOPEUR GmbH — https://www.brandbucket.com/careers
+- Qurdo GmbH — http://www.qurdo.com/jobs/
+- WeWash GmbH — https://we-wash.com/karriere/
+- RAUMBILD GmbH — http://www.raumbild.xyz/careers
+- Uniki GmbH — https://www.uniki.de/jobs
+- baristina — https://www.baristina.com/home.html
+- Noventi Digital GmbH — https://www.noventi.de/karriere/
+- Join Alpha — https://join-alpha.com
+- DIE FRISCHEMANUFAKTUR — https://diefrischemanufaktur.de/
+- Boheme Digital GmbH — http://www.boheme.io/careers
+- Locixx® GmbH — https://www.connectedthinks.com/
+- fos4X GmbH — https://www.polytech.com/career/
+- Turtlebox GmbH — https://turtlebox.de
+- Vendl / Desio Gmbh — http://vendl.de/careers
+- Neokami GmbH — https://www.hugedomains.com/domain_profile.cfm?d=neokami.com
+- Trillr — https://sedo.com/search/details/?domain=trillr.de
+- ifena GmbH — https://www.officium.gmbh/karriere/
+- TopGlas GmbH — https://www.topglas.de/pages/topglas-karriere
+- Mindpax GmbH — https://www.mindpax.me/en/404-page-not-found/
+- MyDriver by Sixt — https://www.sixt.jobs/uk
+- timeBro GmbH — https://www.careers-page.com/memtime
+- rapitag GmbH — http://rapitag.com/careers
+- ArtfulBits software company GmbH — https://artfulbits.eu/careers
+- TIVITY GmbH — https://www.productplan.com/glossary/product-manager
+- Made in Germany GmbH — http://www.madeingermany.online/careers
+- mymary GmbH — https://www.mymary.com/careers
+- easyalley GmbH — http://www.easyalley.com/careers
+- Chemistree GmbH — https://www.chemistree.gmbh/45-000-neue-chancen-chemistree-foerdert-weibliche-karrieren/
+- gasido GmbH — https://www.gasido.de/jobs
+- Orbix GmbH — https://orbix.de
+- Combinat 56 – Coworking München — https://www.combinat56.de/
+- PreciPoint GmbH — https://precipoint.com/en/career
+- goodgrade GmbH & Co. KG — https://www.goodgrade.de
+- Skimio GmbH — https://skimio.com/careers
+- smartwork solutions GmbH — https://www.smashdocs.net/en/jobs
+- Promayro Food GmbH — https://www.protein-riegel-test.de/?redirect=www.protami.de
+- innoXchain GmbH — https://onlinecasinomongolia.com
+- BARRIO — http://www.barrio-app.com/careers
+- FASTTRACK – The Family Business Accelerator — https://www.fasttrack.team/careers
+- Squarrel GmbH — http://www.squarrel.com/careers
+- MindZip.net GmbH — https://mindzip.net/fl/@tomrebl/quotes/if-you-want-to-make-an-easy-job-seem-mighty-hard-just-keep-putting-off-doing-it-3d417a9e-654f-4fa7-ba85-8ba99371c109
+- Unetiq GmbH — https://www.unetiq.com/career
+- Picsure GmbH — https://picsure.ai/careers/
+- Succevo GmbH — https://www.meetingbox.com/en/careers/
+- Freework GmbH — https://app.freework.com/
+- Intefra — http://project-simav.com/careers
+- drais.bike — https://www.drais.de/jobs/
+- KWERQUS — https://kwerqus.geo.io
+- wisefood GmbH — https://www.wisefood.eu/pages/jobs
+- Kumovis GmbH — https://www.3dsystems.com/careers
+- RideBee — https://ridebee.com/de/careers
+- Cluno — https://www.cluno.com/careers
+- Webmag — https://de.webmag.io/jobs/start
+- RetailQuant GmbH — http://www.retailquant.com/careers
+- Twostay.work — https://www.twostay.work/careers
+- Epiqmax GmbH — https://www.epiqmax.com/career
+- Serenize UG (haftungsbeschränkt) — https://serenize.com/careers
+- HCM4all GmbH — https://hcm4all.com/karriereseite/
+- Exaring AG – waipu.tv — https://www.exaring.de/#karriere
+- Plan-Vision GmbH — https://plan-vision.com/unternehmen/stellenangebote/
+- Braufässchen — https://www.braufaesschen.com/pages/karriere
+- MessengerPeople — https://www.group.sinch.com/careers/
+- Mecuris GmbH — http://www.mecuris.com/careers
+- devicebase GmbH — https://devicebase.net/careers
+- Brabbler Secure Message and Data Exchange Aktiengesellschaft — https://www.ginlo.net
+- Unplanned Moments GmbH — https://www.meinedeals.de/?ref=unplanned.de
+- agrilution GmbH — https://www.miele.com/en/com/agrilution-7269.htm
+- FT Fitness Technology GmbH — https://www.pullup-dip.de/pages/jobs
+- FLUICS GmbH — https://fluics.com/jobs/
+- alphaX Digital Services — http://www.alphax-ds.de/careers
+- Hos`t – Hospitality Trade — http://www.hospitalitytrade.de/careers
+- Creative Dock GmbH — https://www.creativedock.com/careers
+- IND.ACADEMY — https://expireddomains.com/domain/ind.academy?utm_source=redi
+- United Regulations UG (haftungsbeschränkt) — https://www.unitedregulations.org
+- Foodignity Labs GmbH — https://www.circly.eu/pages/karriere-1
+- authorized.by GmbH — https://www.authorized.by/karriere/
+- Bernstein Technologies GmbH — https://www.bernstein.io/about
+- jesango — https://www.jesango.de
+- SHAPE ME — http://www.shapeme.com/careers
+- Listenchampion — https://www.listenchampion.de/karriere/
+- robominds GmbH — https://www.robominds.de/robominds/karriere
+- PLANETICS — https://planetics.freshteam.com/jobs
+- INCYTON GmbH — https://www.incyton.com/career/
+- reINVENT innovation GmbH — https://showroomplus.de
+- Sandhelden GmbH & Co. KG — https://www.sandhelden.de/jobs
+- Clonck UG (haftungsbeschränkt) — https://home.clonck.com/job-openings/
+- ENALISS GmbH — https://loesvandersluijs.nl
+- cogniBIT GmbH — https://www.cognibit.ai/careers
+- Kombuco GmbH — https://kombuco-fizz.de/pages/karriere
+- retroplace.com — https://www.retroplace.com/en
+- B42 — https://www.b-42.com/about-play-it-real
+- Das Lauftraining – ehem. evalu — https://www.daslauftraining.com/careers
+- Clouberry GmbH — https://clouberry.com/karriere
+- Agenturmatching — https://www.agenturmatching.de/
+- Huntrees — https://huntrees.com/de/career-coaching
+- famzy — https://famzy.de/
+- Bleenco — https://bleenco.com/careers
+- Guestia DE GmbH — https://keyone.at/jobs/
+- Serlo — https://de.serlo.org/serlo/19871/diese-seite-wird-gerade-ueberarbeitet
+- Freudify — https://freudify.com/careers
+- bao solutions — https://bao.ai/careers
+- Sportscurator — https://dgmp-dgms-2014.de/
+- BWS Networking APP — http://bws-networking.com/jobs/
+- Sause GmbH — https://www.seifenbrause.de/password
+- Utry.me GmbH — https://www.utry.me/careers
+- phelas — https://www.phelas.com/en/careers
+- Ideascanner — https://ideascanner.com/
+- KRAFTVOLL — https://kraftvoll-superfoods.de/careers
+- Hotellistat GmbH — https://www.hotellistat.com/en/events
+- DEXPERIO GmbH — https://dexperio.digital/careers/
+- Glanos GmbH — https://www.glanos.de/careers/
+- itsmydata GmbH — https://itsmydata.de
+- ViTeach GmbH — https://viteach.de
+- Memoratio GmbH — https://www.hugedomains.com/domain_profile.cfm?d=memoratio.com
+- Signify GmbH — https://www.signifydata.com/careers
+- Logabit GmbH — https://pipeforce.io
+- Alphabots GmbH — https://www.alphabots.de/career
+- ENYORE GmbH — https://enyore.com/career.html
+- Curing Shot — https://curingshot.de/
+- Jolt Energy GmbH — https://jolt.energy/de-de/karriere/
+- SkyFive AG — https://skyfive.world/en/careers
+- QPlaner – Quintessence Optimization GmbH — https://www.qplaner.de/jobs/
+- Neozoon / Heintschel Marken GmbH — https://lukasheintschel.shop/pages/jobs
+- Skoobe GmbH — https://www.skoobe.de/books/eva-lucia-bolsani/traumjob-to-go
+- Manyfolds GmbH — https://manyfolds.de/jobs
+- Divizend GmbH — https://divizend.com/en/careers
+- LOEWI GmbH — https://loewi.com/careers
+- Werk24 — https://werk24.io/use-cases/supplier-matching
+- Oh Circle UG — http://www.oh-circle.de/careers
+- AR-Experts GmbH — https://ar-giri.notion.site/Job-Board-484ab5f6f5714568b40c70301f0c4fe0
+- PhantomStack — https://www.hugedomains.com/domain_profile.cfm?d=phantomstack.com
+- Mentessa — https://www.mentessa.com/jobs/
+- Hotelbird GmbH — https://hotelbird.com/unternehmen/karriere/
+- 3D Druck München — https://3ddruckmuenchen.com/karriere/
+- Eimy GmbH — https://www.immanuelmepo.org/about/
+- link-o-mat UG (haftungsbeschränkt) — https://www.link-o-mat.com/jobs/
+- naklar.io GmbH & Co. KG — https://naklario.notion.site
+- Mindpalace — https://mind-palace.io/careers
+- Completeorganics GmbH — https://www.completeorganics.de/pages/karriere
+- NOVA Products — https://icebachsound.com
+- Starhunter GmbH — https://www.starhunter.de/karriere
+- justairtech GmbH — https://www.justairtech.de
+- 4tiitoo GmbH — https://www.4tiitoo.com/de/startseite
+- ottobahn GmbH — https://ottobahn.de/karriere/
+- Teamwire — https://teamwire.eu/en/why-teamwire/about-us/
+- functionHR GmbH — https://www.functionhr.de/uber-uns/karriere/
+- REALCUBE GmbH — https://realcube.com/about/#jobs
+- ingenovo GmbH — http://www.ingenovo.com/careers
+- brainboost GmbH — https://brainboost.de/
+- Wryte — https://wryte.io/careers
+- drivolino GmbH — https://app.bookandpay.de/careers
+- XPAY Solutions GmbH — https://xpay.de/careers
+- Sym GmbH — https://sym.eco/karriere/
+- Flixtrain — https://flix.careers
+- Flixbus — https://flix.careers
+- Tape Technologies GmbH — https://get.tapeapp.com/de/careers/
+- Terra Elements GmbH — https://www.terraelements.de/jobs/
+- sqanit GmbH — https://www.sqanit.com/
+- baybies GmbH — https://www.baybies.de/pages/jobs
+- Knister Grill — https://knister-grill.com/pages/jobs-karriere
+- Xolvis GmbH — https://www.xolvis.com/careers
+- HOALY Foods GmbH — https://hoaly-foods.com/careers
+- codestryke GmbH — https://codestryke.com/karriere/
+- Cryptocurrency Consulting Munich — https://www.cryptocurrencyconsulting.de/karriere.php
+- Lesido GmbH — https://www.lesido.de/careers
+- Spyra GmbH — https://spyra.com/pages/jobs
+- Spark To Go GmbH — http://www.sparktogo.com/careers
+- newworkation.com | wlt GmbH — https://newworkation.com
+- FORREST & LOVE GmbH — https://forrestandlove.de/en/
+- embedded ocean GmbH — https://xentara.io/career/
+- Alaiko — https://zenfulfillment.com/careers
+- MYTERIAL GmbH — https://myterial.workwise.io/job/63777-tech-lead-for-our-software-architecture-m-f-d
+- Denpaflux GmbH — https://www.denpaflux.com/jobs
+- Limedix GmbH — https://neolexon.de/unternehmen/jobs/
+- Arthur Bus GmbH — https://arthurbus.com/company/#career
+- Cinema Calc — https://cinemacalc.com/de/jobs
+- Appdafuer GmbH — https://www.appdafuer.com/karriere
+- ContainerGrid GmbH — https://containergrid.de/careers
+- Gürtler & Roach Cybersecurity — https://gr-sec.com/career/
+- SUSHI BIKES — https://sushi-bikes.com/pages/jobs
+- Investoom — https://de.linkedin.com/company/investoom
+- The Ocean Package — https://theoceanpackage.com/join-us/
+- SkillCamp VR — https://www.skillcampvr.com/de/about#careers
+- ShopVibes GmbH — https://www.shop-vibes.de/about
+- quitt Deutschland GmbH — https://go-quitt.de/minijob
+- oculai GmbH — https://www.oculai.de/jobs
+- Tentary UG (haftungsbeschränkt) — https://tentary.com/de/about/#jobs
+- Studio 177 — https://studio177.com/careers
+- KEOZ GmbH — https://www.keoz.com/karriere
+- innopark24 GmbH & Co. KG — https://innopark24.com/karriere/
+- Virtonomy GmbH — https://www.virtonomy.io/careers/
+- SIGN8 GmbH — https://sign8.eu/karriere/
+- oqio GmbH — https://www.oqio.de/about#stellen
+- Inecosys GmbH — https://www.inecosys.de/career/
+- ver.de — https://ver.de/jobs/
+- Brainamics GmbH — https://brainamics.de/career
+- LYMB.iO GmbH — https://lymb.io/pages/career
+- LabV Intelligent Solutions GmbH — https://www.labv.io/de/karriere
+- Hangbird — https://hangbird.net/jobs/
+- Buffle — https://buffle.eu/jobs/
+- HeyCharge GmbH — https://www.heycharge.com/careers/
+- Codelos.io GmbH — https://www.codelos.io/careers
+- Soundsuit — https://soundsuit.fm/career/
+- Xplain Data GmbH — https://xplain-data.de/career/
+- myposter GmbH — https://inside.myposter.de/jobs/
+- Joint Generations — https://www.jointgenerations.com/join-us/
+- Lendorse — https://lendorse.com/careers
+- Lini’s Bites — https://linisbites.com/pages/karriere
+- REQBEE — https://reqbee.com/career/
+- Nesoma Health — https://nesoma.notion.site/Jobs-Nesoma-Health-78955f858b3d4d218d553a31dd53171e
+- hey circle GmbH — https://www.heycircle.com/pages/karriere
+- PHIO scientific GmbH — https://phio-scientific.com/careers/
+- steptics — https://www.steptics.com/karriere/
+- Footprint Intelligence GmbH — https://www.footprint-intelligence.com/careers
+- Knowron GmbH — https://www.knowron.com/careers
+- VK Energie GmbH — https://www.vk-energie.de/karriere/
+- Kickbase GmbH — https://kickbase.factorialhr.de/
+- motum by RepairFix — https://www.carsync.de/karriere
+- NumberSquare GmbH — https://numbersquare.de/karriere/
+- evhcle — https://evhcle.com/jobs
+- MyAdScore — https://myadscore.com/careers
+- coneva GmbH — https://coneva.com/jobs/
+- DigitalCheckIn — https://digitalcheckin.de/karriere/
+- initics GmbH — https://initics.de/career/
+- nextnano GmbH — https://www.nextnano.com/about_us/career.php
+- staffboard GmbH — https://staffboard.com/karriere/
+- Point Twelve Energy GmbH — https://www.atmen.co/careers
+- ONCARE GmbH — https://www.myoncare.com/de/karriere
+- Noah Mobility GmbH — https://www.noah-mobility.de/
+- VePa Vertical Parking — https://vepa.space/jobs/
+- Siqens GmbH — https://www.sfc.com/de/karriere/deutschland/
+- Teamfit GmbH — https://www.teamfit.eu/de/career
+- Greyd GmbH — https://greydsuite.com/careers/
+- Joy and Meal — https://joyandmeal.com/jobs/
+- Invest in Bavaria — https://www.invest-in-bavaria.com/unsere-services/ueber-uns#c2712
+- guud GmbH — https://guud-benefits.com/ueber-guud/jobs-karriere
+- Luma Vision GmbH — https://lumavision.com/open-careers/
+- everdrop GmbH — https://www.everdrop.de/about-us/jobs
+- ScannedReality GmbH — https://scanned-reality.com/
+- Primary Target GmbH — https://primary-target.com/careers
+- Condens Insights GmbH — https://condens.io/careers/
+- Dromni — https://www.dromni.eu/en/careers
+- NetZero GmbH — https://www.netzeroacademy.de/careers
+- done.by GmbH — https://job-bildung-und-soziales.referenzen.com/index.cfm?e=branches.List
+- CatX Service GmbH — https://www.catx.services/karriere
+- MESASIGHT GmbH — https://www.mesasight.com/careers
+- Corbado — https://www.corbado.com/about#job-section
+- AtWize Business Services GmbH — https://www.atwize.com/de/jobs
+- koorvi — https://www.koorvi.com/jobs
+- Pepper — https://peppermove.com/career/
+- Simpact GmbH — https://www.simpact.tech/careers
+- Venta — https://www.getventa.ai/de/job-posts
+- Energyminer GmbH — https://energyminer.eu/karriere/
+- Die Mathleten (Mathe in schön GmbH) — https://diemathleten.de/jobs-stellenangebote/
+- WECARRY GmbH — https://we-carry.com/careers
+- Suitcase — https://www.suitcase.legal/careers
+- Omega Space GmbH — https://omega-space.org/careers
+- Qualiwise — https://www.qualiwise.io/careers
+- Klimahelden GmbH — https://envalor.com/de/download/case-study-iflow/
+- Radkurier24 — https://kurierjobs.com
+- FIRST8 Kombucha — https://www.first8kombucha.de/pages/jobs
+- 2NA FISH — https://2nafish.bio/careers
+- Bonescreen GmbH — https://www.bonescreen.de/de/karriere
+- ZeKju GmbH — https://www.zekju.com/transport-details
+- Rebike Mobility GmbH — https://career.rebike.com/de
+- one3 — https://one3.de/career
+- DeepImmo — https://deepimmo.com/careers
+- mellow — https://www.my-mellow.com/karriere
+- inSyca IT Solutions GmbH — https://insyca.com/de/jobs/
+- HEBIO — https://heb-io.de/en/careers
+- Homenergy GmbH — https://homenergy.de/karriere/
+- inGemeinschaft — https://ingemeinschaft.org/jobs
+- Ark Software GmbH — https://www.ark-climate.de/jobs
+- Xound — https://xound.io/careers
+- Coastal Biotech — https://coastalbiotech.co.tz/careers/
+- Beetroute — https://www.beetroute.de/careers
+- Coachpool — https://coachpool.com/careers
+- Fintalo GmbH — https://www.fintalo.com/careers
+- Pluno — https://pluno.ai/join
+- The Colorful Company — https://thecoco.life/login
+- Hula Earth — https://hulaearth.notion.site/Join-Hula-e12dc425b5e94fc2948b83f2258527fd
+- GalleryTalk.io — https://gallerytalk.io/careers
+- cureVision GmbH — https://curevision.de/en/jobs
+- Einbliq.io — https://einbliq.io/ibc-2026/
+- StellDirVor GmbH — https://www.stelldirvor-xr.de/karriere/
+- Differential Bio — https://www.differential.bio/about
+- Sinpex — https://sinpexcareers.kenjo.io/GrowthAssociate
+- idgard / uniscon GmbH — https://www.idgard.com/career/
+- DropATask — https://dropatask.com/careers
+- Futurail — https://futurail.factorialhr.com/
+- sprhava — https://www.sprhava.com/careers
+- djoon foods GmbH — https://djoon.de/pages/karriere
+- aicx. GmbH — https://www.aicx.de/karriere
+- PULSETRAIN GmbH — https://pulsetrain.com/jobs/
+- basebox GmbH — https://basebox.ai/jobs
+- OONIQUE GmbH — https://oonique.com/
+- Senior Connect GmbH — https://www.senior-connect.de/en-ch/jobs/graphic-designer-5
+- SeeSaw Sight GmbH — https://seesawadventures.com
+- 12companions GmbH — https://www.cssigniter.com/demos/convert/careers/
+- Sitegeist Robotics — https://sitegeist-robotics.com/career/
+- VELOGYM — https://www.velogym.de/infos
+- RoboTUM — https://www.robotum.info/careers
+- Orange Simulation — https://orange-simulation.com/careers
+- Privadsy UG (haftungsbeschränkt) — https://privadsy.com/
+- Peak Quantum GmbH — https://peakquantum.de/careers/
+- proband15 GmbH — https://proband15.de/careers.html
+- SmartFoodie GmbH — https://smartfoodiegmbh.eu/careers
+- OVRLAY GmbH — https://www.obsphera.ai/about/careers
+- EASE — https://ease-systems.de/index.html#careers-section
+- Webmetic GmbH — https://webmetic.de/careers
+- COBY — https://coby.care/careers
+- NETME — https://www.netme.eu/careers
+- OpusM projects GmbH — https://opus-m.de/careers
+- KYMATI GmbH — https://jobs.kymati.com/de
+- Rethinking Job GmbH — https://www.linkedin.com/company/rethinkingjob
+- Zekamed — https://www.zekamed.de/careers
+- PyleHound — https://www.pylehound.com/ueber-uns/karriere
+- Mily Technologies — https://www.milytech.com/careers
+- cleverwatt — https://www.cleverwatt.energy/careers
+- New Era Food — https://www.newerafood.de/karriere
+- XPert Connect — https://www.xpert-connect.de/careers
+- SimuCoreX GmbH — https://www.simucorex.de/en/careers
+- Moonscale — https://www.moonscale.com/career
+- Bai Soft GmbH — https://bai-soft.de/careers
+- BauPay UG — https://baupay.eu/careers
+- NutriSync GmbH — https://nutrisync.de/careers
+- LexDial — https://lexdial.de/career
+- demi — https://godemi.com/careers
+- socialbee gGmbH — https://jobs.socialbee.org/login
+- Marginos — https://marginos.de/careers
+- Smart Solutions UG — https://www.suruf.com/en/careers
+- maiasa — https://maiasa.io/careers
+- Furtherium — https://www.furtherium.com/join-us/
+- Beevvy — https://beevvy.com/careers
+- Helmit GmbH — https://www.helmit.org/de/careers
+- Ontoworks — https://ontoworks.ai/login?callbackUrl=%2Fcareers
+- ImmoCortex — https://immocortex.de/careers
+- BeWithly UG — https://bewithly.com/careers
+- PowerIn Space UG — https://powerin.space/careers
+- Playfolio — https://playfolio.de/karriere.html
+- DYGITIZED — https://inside.dygitized.io/jobs/Careers
+- ARCIS — https://onyven.com/careers
+- Plassio — https://plassio.ai/careers/
+- Hefex Labs — https://hefex-labs.com/careers/
+- Smart Lab Architects — https://smartlabarchitects.com/careers
+- langbox — https://langbox.ai/careers
+- Smarticus — https://smarticus.net/careers
+- top.legal — https://www.top.legal/unternehmen
+- ChronoDesk — https://chronodesk.com/careers
+- GovernLens — https://www.governlens.com/careers
+- fieldbrain — https://fieldbrain.io/careers
+- Clarity Careers — https://www.clarity-careers.com/register
+- PageCompliance — https://pagecompliance.de/login?redirect=%2Fcareers
+- Talent VP — https://talentvp.com/en/blog
+- Greenda — https://de.linkedin.com/company/greenda
+- krafthub.ai — https://www.krafthub.ai/de/about/careers
+- placefindr — https://placefindr.de/
+- ambuflow — https://ambuflow.com/offene-stellen/
+- Offgen — https://www.offgen.ai/de/careers
+- Anton Robotics — https://anton-robotics.com/careers
+- Kuroko Labs — https://kurokolabs.ai/karriere
+- Invoice Converter — https://www.invoice-converter.com/en/careers
 
 ## New (never attempted)
 
