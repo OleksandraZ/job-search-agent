@@ -1,8 +1,13 @@
 meta:
   usage: 'title_match_terms: case-insensitive match against job TITLE (broad net) and used
-    as the search query sent to every board.'
+    as the search query sent to every board.
+
+    report_label: names this search in the Telegram report heading ("New {label} jobs")
+    and the no-jobs fallback message, so runs against different keyword files are
+    distinguishable in chat history - see main.py:main() and notifier/telegram.py.'
   counts:
     title_match_terms: 20
+report_label: QA
 title_match_terms:
 - QA Engineer
 - QA Automation Engineer

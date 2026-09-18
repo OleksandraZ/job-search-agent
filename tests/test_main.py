@@ -68,7 +68,7 @@ def _patch_orchestration(monkeypatch, *, german_jobs, english_jobs, calls):
     def fake_mark_seen(jobs, db_path):
         calls.append(("mark_seen", jobs))
 
-    def fake_send_report(german_jobs, english_jobs, bot_token, chat_id):
+    def fake_send_report(german_jobs, english_jobs, bot_token, chat_id, report_label="QA"):
         calls.append(("send_report", german_jobs, english_jobs))
         return german_jobs + english_jobs
 

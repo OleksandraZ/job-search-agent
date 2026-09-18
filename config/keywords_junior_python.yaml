@@ -25,6 +25,7 @@ meta:
   counts:
     title_match_terms: 20
     title_exclude_terms: 16
+report_label: Junior/Associate Python
 title_match_terms:
 - Python
 - Junior Software Engineer

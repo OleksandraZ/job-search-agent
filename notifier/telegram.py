@@ -19,14 +19,14 @@ def _entry(i: int, job: NormalizedJob) -> str:
 
 
 def _blocks(
-    german_jobs: list[NormalizedJob], english_jobs: list[NormalizedJob]
+    german_jobs: list[NormalizedJob], english_jobs: list[NormalizedJob], report_label: str = "QA"
 ) -> list[tuple[str, NormalizedJob | None]]:
     """Header/section-header/per-job blocks, each paired with the job it represents
     (None for the date header and the two section headers) so a chunk built from
     these blocks can report exactly which jobs it contains.
     """
     date_str = datetime.now().strftime("%d.%m.%Y")
-    blocks: list[tuple[str, NormalizedJob | None]] = [(f"📅 {date_str} — New QA jobs", None)]
+    blocks: list[tuple[str, NormalizedJob | None]] = [(f"📅 {date_str} — New {report_label} jobs", None)]
 
     if english_jobs:
         blocks.append((f"🇬🇧 English-speaking ({len(english_jobs)})", None))
@@ -62,11 +62,13 @@ def _pack_chunks(blocks: list[tuple[str, NormalizedJob | None]]) -> list[tuple[s
     return chunks
 
 
-def format_message(german_jobs: list[NormalizedJob], english_jobs: list[NormalizedJob]) -> list[str]:
+def format_message(
+    german_jobs: list[NormalizedJob], english_jobs: list[NormalizedJob], report_label: str = "QA"
+) -> list[str]:
     """Format the EN/DE-split report into one or more messages, each under Telegram's length limit."""
     if not german_jobs and not english_jobs:
-        return ["No new QA jobs today."]
-    return [text for text, _jobs in _pack_chunks(_blocks(german_jobs, english_jobs))]
+        return [f"No new {report_label} jobs today."]
+    return [text for text, _jobs in _pack_chunks(_blocks(german_jobs, english_jobs, report_label))]
 
 
 def send_message(text: str, bot_token: str, chat_id: str) -> dict:
@@ -79,7 +81,11 @@ def send_message(text: str, bot_token: str, chat_id: str) -> dict:
 
 
 def send_report(
-    german_jobs: list[NormalizedJob], english_jobs: list[NormalizedJob], bot_token: str, chat_id: str
+    german_jobs: list[NormalizedJob],
+    english_jobs: list[NormalizedJob],
+    bot_token: str,
+    chat_id: str,
+    report_label: str = "QA",
 ) -> list[NormalizedJob]:
     """Send each chunk in order, stopping at the first failure rather than raising.
     Returns only the jobs whose chunk actually sent, so the caller marks exactly
@@ -88,12 +94,12 @@ def send_report(
     went out.
     """
     if not german_jobs and not english_jobs:
-        send_message("No new QA jobs today.", bot_token, chat_id)
+        send_message(f"No new {report_label} jobs today.", bot_token, chat_id)
         return []
 
     total = len(german_jobs) + len(english_jobs)
     sent_jobs: list[NormalizedJob] = []
-    for text, jobs_in_chunk in _pack_chunks(_blocks(german_jobs, english_jobs)):
+    for text, jobs_in_chunk in _pack_chunks(_blocks(german_jobs, english_jobs, report_label)):
         try:
             send_message(text, bot_token, chat_id)
         except httpx.HTTPError as exc:

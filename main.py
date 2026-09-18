@@ -93,16 +93,17 @@ def main(dry_run: bool = False, keywords_file: str = "keywords_qa.yaml") -> None
     raw_jobs = raw_board_jobs + raw_company_jobs
 
     german_jobs, english_jobs = build_report(raw_jobs, keywords_config, db_path)
+    report_label = keywords_config.get("report_label", "QA")
 
     if dry_run:
-        for chunk in telegram.format_message(german_jobs, english_jobs):
+        for chunk in telegram.format_message(german_jobs, english_jobs, report_label):
             print(chunk)
             print("---")
         return
 
     bot_token = os.environ["TELEGRAM_BOT_TOKEN"]
     chat_id = os.environ["TELEGRAM_CHAT_ID"]
-    sent_jobs = telegram.send_report(german_jobs, english_jobs, bot_token, chat_id)
+    sent_jobs = telegram.send_report(german_jobs, english_jobs, bot_token, chat_id, report_label)
     dedupe.mark_seen(sent_jobs, db_path=db_path)
     logger.info("sent Telegram message(s), marked %d jobs as seen", len(sent_jobs))
 
