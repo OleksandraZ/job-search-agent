@@ -1,6 +1,6 @@
 ---
 name: add-board-source
-description: Add a real fetch_jobs adapter for a job board source in config/sources.yaml, replacing its _todo classification placeholder. Use when wiring up one of the board sources (e.g. building out Phase 5 of job_search_agent_plan.md), or fixing an adapter that broke.
+description: Add a real fetch_jobs adapter for a job board source in config/sources.yaml, replacing its _todo classification placeholder. Use when wiring up one of the still-unbuilt board sources, or fixing an adapter that broke.
 ---
 
 # Add a board source adapter

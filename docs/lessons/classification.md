@@ -120,8 +120,8 @@ was reviewed before its real send. Fix: `is_german_required()`'s second check
 `whole_description_language_signal`) was calibrated against real fetched samples
 before wiring in (3 pure-German postings scored 0.91-0.94 German-word ratio; a
 genuinely English Built In posting scored 0.00) — thresholds have wide margin on
-both sides. This is a deliberate, narrow exception to "requires, not written in" (see
-`job_search_agent_plan.md` §8).
+both sides. This is a deliberate, narrow exception to "requires, not written in" —
+the only place that framing is relaxed.
 
 **When building a true-negative test sample for this kind of check, verify it's
 actually negative.** An initial "clean English" calibration sample turned out to

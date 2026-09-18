@@ -36,8 +36,8 @@ meta:
       reaching for a browser-automation dependency.
     anti_bot_avoid: Blocked (HTTP 401/403/429/999) during the automated pass, or known to be
       heavily anti-scraping regardless of what an unauthenticated request returns (linkedin_jobs -
-      its plain GET returns only cookie-consent boilerplate, not real listings; per job_search_agent_plan.md
-      §4 Tier 3, use an alternate channel like an email job alert instead of direct scraping).
+      its plain GET returns only cookie-consent boilerplate, not real listings; use an alternate
+      channel like an email job alert instead of direct scraping).
     broken_todo: URL was unreachable (DNS failure, connection/read timeout) during the automated
       pass. May be a dead/renamed domain, or a transient network issue - re-check before assuming
       the source is gone.

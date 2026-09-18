@@ -1,7 +1,8 @@
 meta:
   usage: >
     Classifies by the language the role REQUIRES, not the language the posting is
-    written in (see job_search_agent_plan.md §8). German bucket = one of
+    written in (see docs/lessons/classification.md#whole-description-german for the
+    one deliberate exception). German bucket = one of
     german_required_patterns matches somewhere in the job description, and isn't
     immediately followed by an optional_disclaimer_patterns phrase that applies to
     German itself (see pipeline/classify_language.py for the exact logic). English

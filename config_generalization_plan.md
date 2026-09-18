@@ -111,8 +111,8 @@ representative set below; sweep is mechanical, same find-and-rename each place)
   `munich_jobs + remote_jobs` heading/anchor/prose to `city_jobs + remote_jobs`.
 - `.claude/skills/add-board-source/SKILL.md`, `adapters/boards/xing_jobs.py`,
   `adapters/boards/munich_startup_jobs.py` (comment only, not the file/source
-  itself), `adapters/ats/_common.py`, `job_search_agent_plan.md` — each has one or
-  two comment/prose references to the old symbol or file names; update in place.
+  itself), `adapters/ats/_common.py` — each has one or two comment/prose
+  references to the old symbol names; update in place.
 
 ## Explicitly out of scope this round
 - GitHub Actions workflow / cron — separate follow-up plan once this lands.

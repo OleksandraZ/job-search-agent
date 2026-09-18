@@ -134,8 +134,9 @@ sources into `json_api_todo`/`html_scrape_todo`/`js_rendered_todo`/`anti_bot_avo
 single-page-fetch heuristic (text length, SPA-shell detection, status code), verified
 against a priority-1 sample by hand. The one real catch: LinkedIn's plain GET returns
 only cookie-consent boilerplate, not real listings, despite "looking" scrapeable by
-text volume — overridden to `anti_bot_avoid` per `job_search_agent_plan.md` §4's own
-Tier-3 guidance (see `sources.yaml`'s `linkedin_jobs` entry).
+text volume — overridden to `anti_bot_avoid` since actively anti-scraping/ToS-risk
+platforms are avoided outright rather than scraped around (see `sources.yaml`'s
+`linkedin_jobs` entry).
 
 ## Failure handling and retries: why two layers, not one
 
@@ -173,7 +174,8 @@ built, 12 adapters total), a full run had grown to ~25-30 minutes end to end.
 detail-page requests at 1s spacing on a title-match-heavy run), on top of XING's
 ~80-90 requests and every other source's. Re-measure rather than trusting that
 figure once more sources are added — check the *current* per-run time against any
-timeout budget (e.g. GitHub Actions scheduling in Phase 7), not this historical one.
+timeout budget (`.github/workflows/daily-job-search.yml` runs two full searches
+back to back on GitHub's shared runners), not this historical one.
 
 ## <a name="run-once"></a>Why `main.py` doesn't call each agent's `run()`
 
