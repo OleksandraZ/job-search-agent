@@ -22,9 +22,10 @@ fetch (boards + companies) → scope filter (Munich / Germany-remote) → title 
 - **Agents** — `agents/munich_local.py` and `agents/germany_remote.py` each filter the
   same raw job list down to their scope (`pipeline/location.py`).
 - **Pipeline** — `pipeline/filters.py` matches titles against
-  `config/keywords.yaml`, `storage/dedupe.py` drops jobs already sent (SQLite,
-  `storage/jobs.db`), and `pipeline/classify_language.py` splits the rest into
-  German-required vs English-okay.
+  `config/keywords_qa.yaml` (or whatever file `--keywords` points at),
+  `storage/dedupe.py` drops jobs already sent (SQLite, `storage/jobs.db`), and
+  `pipeline/classify_language.py` splits the rest into German-required vs
+  English-okay.
 - **Notifier** — `notifier/telegram.py` formats and sends the report.
 
 ## Setup
@@ -50,9 +51,28 @@ TELEGRAM_CHAT_ID=<your chat id>
 # print the report instead of sending it to Telegram
 python main.py --dry-run
 
-# fetch, filter, and send today's report to Telegram
+# fetch, filter, and send today's report to Telegram (default: config/keywords_qa.yaml)
 python main.py
+
+# run against a different keyword set (e.g. the junior/associate Python search)
+python main.py --keywords keywords_junior_python.yaml
 ```
+
+## Scheduled runs (GitHub Actions)
+
+`.github/workflows/daily-job-search.yml` runs both keyword searches once a day
+(04:00 UTC) and on manual dispatch. It needs two repo secrets (Settings → Secrets
+and variables → Actions):
+
+```
+TELEGRAM_BOT_TOKEN
+TELEGRAM_CHAT_ID
+```
+
+`storage/jobs.db` (dedupe state) and `config/companies.yaml` (ATS resolution
+results) are tracked in git rather than ignored, because the runner's filesystem
+doesn't survive between runs — the workflow commits whatever changed back to the
+repo at the end of each run so the next scheduled run sees it.
 
 ## Project layout
 
@@ -64,7 +84,7 @@ agents/            scope filters (Munich-local, Germany-remote)
 pipeline/          title/location/language filtering
 storage/           SQLite dedupe of already-sent jobs
 notifier/          Telegram formatting + sending
-config/            sources.yaml, companies.yaml, keywords.yaml, language_rules.yaml
+config/            sources.yaml, companies.yaml, keywords_*.yaml, language_rules.yaml
 tools/             resolve_ats.py — resolves companies.yaml entries to an ATS vendor
 docs/lessons/      the "why" behind adapter/classification gotchas
 tests/             pytest suite

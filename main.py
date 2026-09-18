@@ -52,6 +52,14 @@ def build_report(
     matched = filters.filter_by_title(list(by_url.values()), keywords_config["title_match_terms"])
     logger.info("%d jobs matched title_match_terms", len(matched))
 
+    # Optional: drop jobs whose title carries an explicit disqualifying seniority word
+    # (e.g. "Senior"), regardless of which title_match_terms entry matched them - a bare
+    # broad term like "Python" would otherwise pull in senior postings too. See
+    # keywords_junior_python.yaml's meta.usage.
+    if "title_exclude_terms" in keywords_config:
+        matched = filters.exclude_by_title(matched, keywords_config["title_exclude_terms"])
+        logger.info("%d left after title_exclude_terms", len(matched))
+
     unseen = dedupe.filter_unseen(matched, db_path=db_path)
     logger.info("%d of those are new (not previously seen)", len(unseen))
 
@@ -60,9 +68,9 @@ def build_report(
     return german_jobs, english_jobs
 
 
-def main(dry_run: bool = False) -> None:
+def main(dry_run: bool = False, keywords_file: str = "keywords_qa.yaml") -> None:
     sources_config = load_yaml("sources.yaml")
-    keywords_config = load_yaml("keywords.yaml")
+    keywords_config = load_yaml(keywords_file)
     db_path = dedupe.DB_PATH
 
     # A fresh companies.yaml entry (bare name+url, never resolved) has no ats set,
@@ -106,5 +114,10 @@ if __name__ == "__main__":
         action="store_true",
         help="print the message instead of sending it to Telegram",
     )
+    parser.add_argument(
+        "--keywords",
+        default="keywords_qa.yaml",
+        help="config/ yaml file providing title_match_terms (default: keywords_qa.yaml)",
+    )
     args = parser.parse_args()
-    main(dry_run=args.dry_run)
+    main(dry_run=args.dry_run, keywords_file=args.keywords)

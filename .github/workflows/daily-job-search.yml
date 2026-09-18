@@ -1,0 +1,52 @@
+name: Daily job search
+
+on:
+  schedule:
+    # 04:00 UTC ~= 06:00 CEST / 05:00 CET - GitHub Actions cron is always UTC,
+    # so this drifts an hour against local wall-clock time across the DST switch.
+    - cron: "0 4 * * *"
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+concurrency:
+  group: daily-job-search
+  cancel-in-progress: false
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - run: pip install -r requirements.txt
+
+      - name: Run QA keyword search
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: python main.py
+
+      - name: Run junior/associate Python keyword search
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: python main.py --keywords keywords_junior_python.yaml
+
+      # Both runs above mutate state on disk that has to survive to tomorrow's
+      # run: storage/jobs.db (dedupe - without this every job would look "new"
+      # again every day) and config/companies.yaml (resolve_pending() fills in
+      # any freshly-added company's `ats` field in place). Commit whatever
+      # changed back to the repo so the next scheduled run picks it up.
+      - name: Persist dedupe DB and resolved companies
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add storage/jobs.db config/companies.yaml
+          git diff --cached --quiet || git commit -m "chore: update dedupe DB and resolved companies [skip ci]"
+          git push

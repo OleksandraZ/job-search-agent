@@ -1,0 +1,65 @@
+meta:
+  usage: 'title_match_terms: case-insensitive match against job TITLE (broad net) and used
+    as the search query sent to every board - same OR-only semantics as keywords.yaml
+    (adapters/boards/__init__.py:title_matches(), no AND logic). Scope: junior/associate-
+    level roles only - no working student, graduate/trainee, or internship titles (per
+    explicit request). A title does not need to mention "python" AND a seniority word
+    together - a plain "Junior Software Engineer" is accepted too, since generic junior
+    SWE roles frequently use Python without saying so in the title; a bare "Python" term
+    below separately catches explicit python postings regardless of how the seniority
+    word is phrased around it. Checked against real fetched data (2026-09-16): real
+    titles rarely follow clean "Junior Python Developer"-style combined phrasing (e.g.
+    "Junior Backend-Entwickler (Java / Python, Microservices)", "Junior Full Stack
+    Developer, Python React") - a fixed multi-word combinatorial phrase list matched 0
+    real jobs, which is why this list leans on short, bare terms instead.
+
+    title_exclude_terms: applied by main.py:build_report() AFTER title_match_terms, on
+    every matched job regardless of which term matched it - drops anything with an
+    explicit above-junior seniority word (Senior/Lead/Principal/Staff/Head of) OR an
+    explicit working-student/internship/graduate-program word, since these are out of
+    scope per the original request even when caught only via the bare "Python" term.
+    Needed because bare "Python" matched real postings like "Senior GenAI Engineer
+    LLMs/RAG/Python", "Senior Data Engineer (Cloud, AWS, Python...)", and "Werkstudent
+    (w/m/d) Python-/KI-Entwicklung" (verified 2026-09-16 dry runs) - keywords.yaml has no
+    such key, so this is opt-in and does not affect the QA search.'
+  counts:
+    title_match_terms: 20
+    title_exclude_terms: 16
+title_match_terms:
+- Python
+- Junior Software Engineer
+- Junior Software Developer
+- Junior Developer
+- Junior Backend Developer
+- Junior Backend Engineer
+- Junior Full Stack Developer
+- Junior Full-Stack Developer
+- Associate Software Engineer
+- Associate Software Developer
+- Associate Developer
+- Associate Backend Developer
+- Associate Backend Engineer
+- Associate Full Stack Developer
+- Junior Softwareentwickler
+- Junior Entwickler
+- Junior Backend-Entwickler
+- Junior Backend Entwickler
+- Associate Softwareentwickler
+- Associate Entwickler
+title_exclude_terms:
+- Senior
+- Lead
+- Principal
+- Staff
+- Head of
+- Working Student
+- Werkstudent
+- Werkstudium
+- Praktikum
+- Praktikant
+- Intern
+- Internship
+- Trainee
+- Graduate
+- Absolvent
+- Werkstudentin
