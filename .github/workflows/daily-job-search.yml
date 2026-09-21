@@ -2,13 +2,16 @@ name: Daily job search
 
 on:
   schedule:
-    # 13:00 and 19:00 Europe/Berlin. GitHub Actions cron is always UTC, so these
+    # ~13:00 and ~19:00 Europe/Berlin. GitHub Actions cron is always UTC, so these
     # are pinned to the current CEST offset (UTC+2) and drift an hour against
-    # local wall-clock time across the DST switch (lands at 12:00/18:00 local
+    # local wall-clock time across the DST switch (lands at ~12:00/~18:00 local
     # once CET (UTC+1) kicks back in) - update by hand each side of the switch
-    # if exact local times matter more than the drift.
-    - cron: "0 11 * * *"
-    - cron: "0 17 * * *"
+    # if exact local times matter more than the drift. Offset off the exact hour
+    # on purpose: GitHub's own docs warn that top-of-the-hour is the highest-load
+    # slot for the schedule event and runs there can be delayed for hours or
+    # dropped entirely - a round-hour cron here missed a whole day (2026-09-21).
+    - cron: "13 11 * * *"
+    - cron: "17 17 * * *"
   workflow_dispatch: {}
 
 permissions:
