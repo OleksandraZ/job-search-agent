@@ -1,4 +1,3 @@
-from typing import Union
 
 from adapters.boards import NormalizedJob, title_matches
 from pipeline.experience import required_years
@@ -33,7 +32,7 @@ def require_term_groups(jobs: list[NormalizedJob], groups: list[list[str]]) -> l
 
 
 def exclude_by_description(
-    jobs: list[NormalizedJob], description_exclude_terms: list[Union[str, dict[str, list[str]]]]
+    jobs: list[NormalizedJob], description_exclude_terms: list[str | dict[str, list[str]]]
 ) -> list[NormalizedJob]:
     # Drops a job whose description (or title) mentions an out-of-scope domain/tool,
     # even when its title is otherwise a perfect match - a term that rules a job out

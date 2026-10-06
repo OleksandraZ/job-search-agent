@@ -5,14 +5,10 @@ import re
 import time
 from collections.abc import Callable, Iterable, Iterator
 from concurrent.futures import ThreadPoolExecutor
-from typing import TypeVar
 
 import httpx
 
 logger = logging.getLogger(__name__)
-
-T = TypeVar("T")
-R = TypeVar("R")
 
 # 429 = rate limited (seen on Arbeitnow's search endpoint); 5xx = transient server
 # error. Neither is worth retrying more than once here - a daily cron job can just
@@ -102,7 +98,7 @@ def post_with_retry(url: str, **kwargs) -> httpx.Response:
     return _request_with_retry("POST", url, **kwargs)
 
 
-def fetch_each(
+def fetch_each[T, R](
     items: Iterable[T],
     fetch_one: Callable[[T], R],
     *,
@@ -126,7 +122,7 @@ def fetch_each(
 _FAILED = object()
 
 
-def fetch_each_concurrent(
+def fetch_each_concurrent[T, R](
     items: Iterable[T],
     fetch_one: Callable[[T], R],
     *,
@@ -155,6 +151,6 @@ def fetch_each_concurrent(
             return _FAILED
 
     with ThreadPoolExecutor(max_workers=max_workers) as executor:
-        for item, result in zip(items, executor.map(_safe_fetch, items)):
+        for item, result in zip(items, executor.map(_safe_fetch, items), strict=True):
             if result is not _FAILED:
                 yield item, result

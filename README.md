@@ -45,7 +45,7 @@ fetch (boards + companies) → scope filter (Munich / Germany-remote) → title 
 
 ## Setup
 
-Requires Python 3.9+.
+Requires Python 3.13+ (the same version the GitHub workflow uses).
 
 ```bash
 python -m venv .venv

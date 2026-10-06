@@ -1,7 +1,7 @@
 import hashlib
 import sqlite3
 from contextlib import closing
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 
 from adapters.boards import NormalizedJob
@@ -41,7 +41,7 @@ def mark_seen(jobs: list[NormalizedJob], db_path: Path) -> None:
         return
 
     init_db(db_path)
-    first_seen_at = datetime.now(timezone.utc).isoformat()
+    first_seen_at = datetime.now(UTC).isoformat()
     with closing(sqlite3.connect(db_path)) as conn:
         conn.executemany(
             """

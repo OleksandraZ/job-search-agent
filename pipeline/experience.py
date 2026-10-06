@@ -19,7 +19,6 @@ requirement - see _PREFERENCE_BEFORE/_PREFERENCE_AFTER.
 """
 
 import re
-from typing import Optional
 
 MAX_PLAUSIBLE_YEARS = 15
 
@@ -68,7 +67,7 @@ def _to_int(token: str) -> int:
     return int(token) if token.isdigit() else _NUMBER_WORDS[token.lower()]
 
 
-def required_years(description: str) -> Optional[int]:
+def required_years(description: str) -> int | None:
     """Highest minimum-years requirement found, or None if the text states none."""
     text = re.sub(r"\s+", " ", _TAG.sub(" | ", description.replace("&nbsp;", " ").replace("&#xa0;", " ")))
     found: list[int] = []

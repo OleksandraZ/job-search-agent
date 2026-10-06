@@ -30,7 +30,6 @@ import json
 import logging
 import re
 from pathlib import Path
-from typing import Optional
 
 from openpyxl import Workbook
 from openpyxl.styles import Font
@@ -222,7 +221,7 @@ def fetch_raw_jobs(keywords_configs: list[dict]) -> list[NormalizedJob]:
     return raw_jobs
 
 
-def main_cli(keywords_files: list[str], out: Path, from_raw: Optional[Path]) -> None:
+def main_cli(keywords_files: list[str], out: Path, from_raw: Path | None) -> None:
     keywords_configs = [main.load_yaml(name) for name in keywords_files]
     if from_raw:
         # Only keywords files whose title_match_terms were part of that fetch's search
@@ -236,7 +235,7 @@ def main_cli(keywords_files: list[str], out: Path, from_raw: Optional[Path]) -> 
         logger.info("saved raw jobs to %s", raw_path)
 
     results = []
-    for name, config in zip(keywords_files, keywords_configs):
+    for name, config in zip(keywords_files, keywords_configs, strict=True):
         jobs = main.select_jobs(raw_jobs, config)
         results.append((config.get("report_label", name), jobs))
         logger.info("%s: %d fitting jobs", name, len(jobs))

@@ -36,7 +36,7 @@ import argparse
 import logging
 import re
 from concurrent.futures import ThreadPoolExecutor
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 from urllib.parse import urljoin, urlparse
 
@@ -554,7 +554,7 @@ def resolve_all(companies: list[dict]) -> None:
         company["identifier"] = result["identifier"]
         company["careers_url"] = result["careers_url"]
         company["match_method"] = result["match_method"]
-        company["resolved_at"] = datetime.now(timezone.utc).isoformat()
+        company["resolved_at"] = datetime.now(UTC).isoformat()
         logger.info("%s -> %s", company["name"], result["ats"])
 
     with ThreadPoolExecutor(max_workers=MAX_WORKERS) as executor:
