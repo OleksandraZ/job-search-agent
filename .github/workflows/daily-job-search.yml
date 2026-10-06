@@ -55,5 +55,12 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add storage/jobs.db config/companies.yaml
-          git diff --cached --quiet || git commit -m "chore: update dedupe DB and resolved companies [skip ci]"
+          git diff --cached --quiet && exit 0
+          git commit -m "chore: update dedupe DB and resolved companies [skip ci]"
+          # main may have moved while this run was going (a run takes up to an hour
+          # and often starts hours late) - a plain push was rejected that way on
+          # 2026-10-06. Rebase onto it first; if both sides changed the binary
+          # jobs.db, keep this run's copy (-X theirs = the commit being replayed),
+          # since it is the freshest dedupe state.
+          git pull --rebase -X theirs origin main
           git push
