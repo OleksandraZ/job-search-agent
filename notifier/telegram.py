@@ -5,8 +5,8 @@ from datetime import datetime
 
 import httpx
 
-from adapters.boards import NormalizedJob
 from http_client import post_with_retry
+from pipeline.duplicates import JobGroup
 
 logger = logging.getLogger(__name__)
 
@@ -14,19 +14,26 @@ TELEGRAM_API_URL = "https://api.telegram.org/bot{token}/sendMessage"
 TELEGRAM_MAX_MESSAGE_LENGTH = 4096
 
 
-def _entry(i: int, job: NormalizedJob) -> str:
-    return f"{i}. {job.title} — {job.company} ({job.location})\n   {job.url}"
+def _entry(i: int, group: JobGroup) -> str:
+    # One entry per job, however many boards/cities it was found on - see
+    # pipeline/duplicates.py. The other boards are named, not linked, to keep the
+    # message short (user decision 2026-10-06).
+    job = group.main
+    text = f"{i}. {job.title} — {job.company} ({group.locations})\n   {job.url}"
+    if group.other_hosts:
+        text += f"\n   also on: {', '.join(group.other_hosts)}"
+    return text
 
 
 def _blocks(
-    german_jobs: list[NormalizedJob], english_jobs: list[NormalizedJob], report_label: str = "QA"
-) -> list[tuple[str, NormalizedJob | None]]:
-    """Header/section-header/per-job blocks, each paired with the job it represents
-    (None for the date header and the two section headers) so a chunk built from
-    these blocks can report exactly which jobs it contains.
+    german_jobs: list[JobGroup], english_jobs: list[JobGroup], report_label: str = "QA"
+) -> list[tuple[str, JobGroup | None]]:
+    """Header/section-header/per-job blocks, each paired with the job group it
+    represents (None for the date header and the two section headers) so a chunk
+    built from these blocks can report exactly which jobs it contains.
     """
     date_str = datetime.now().strftime("%d.%m.%Y")
-    blocks: list[tuple[str, NormalizedJob | None]] = [(f"📅 {date_str} — New {report_label} jobs", None)]
+    blocks: list[tuple[str, JobGroup | None]] = [(f"📅 {date_str} — New {report_label} jobs", None)]
 
     if english_jobs:
         blocks.append((f"🇬🇧 English-speaking ({len(english_jobs)})", None))
@@ -38,13 +45,13 @@ def _blocks(
     return blocks
 
 
-def _pack_chunks(blocks: list[tuple[str, NormalizedJob | None]]) -> list[tuple[str, list[NormalizedJob]]]:
+def _pack_chunks(blocks: list[tuple[str, JobGroup | None]]) -> list[tuple[str, list[JobGroup]]]:
     """Greedily pack blocks into chunks under Telegram's length limit, each chunk
     paired with the jobs whose blocks it contains.
     """
     chunks = []
     current_parts: list[str] = []
-    current_jobs: list[NormalizedJob] = []
+    current_jobs: list[JobGroup] = []
     current_len = 0
     for text, job in blocks:
         if current_parts and current_len + len(text) + 2 > TELEGRAM_MAX_MESSAGE_LENGTH:
@@ -63,7 +70,7 @@ def _pack_chunks(blocks: list[tuple[str, NormalizedJob | None]]) -> list[tuple[s
 
 
 def format_message(
-    german_jobs: list[NormalizedJob], english_jobs: list[NormalizedJob], report_label: str = "QA"
+    german_jobs: list[JobGroup], english_jobs: list[JobGroup], report_label: str = "QA"
 ) -> list[str]:
     """Format the EN/DE-split report into one or more messages, each under Telegram's length limit."""
     if not german_jobs and not english_jobs:
@@ -81,24 +88,24 @@ def send_message(text: str, bot_token: str, chat_id: str) -> dict:
 
 
 def send_report(
-    german_jobs: list[NormalizedJob],
-    english_jobs: list[NormalizedJob],
+    german_jobs: list[JobGroup],
+    english_jobs: list[JobGroup],
     bot_token: str,
     chat_id: str,
     report_label: str = "QA",
-) -> list[NormalizedJob]:
+) -> list[JobGroup]:
     """Send each chunk in order, stopping at the first failure rather than raising.
-    Returns only the jobs whose chunk actually sent, so the caller marks exactly
-    those as seen - a job in a later, undelivered chunk is retried next run instead
-    of being silently dropped or resent as a duplicate alongside jobs that already
-    went out.
+    Returns only the job groups whose chunk actually sent, so the caller marks
+    exactly those (every copy in them) as seen - a job in a later, undelivered
+    chunk is retried next run instead of being silently dropped or resent as a
+    duplicate alongside jobs that already went out.
     """
     if not german_jobs and not english_jobs:
         send_message(f"No new {report_label} jobs today.", bot_token, chat_id)
         return []
 
     total = len(german_jobs) + len(english_jobs)
-    sent_jobs: list[NormalizedJob] = []
+    sent_jobs: list[JobGroup] = []
     for text, jobs_in_chunk in _pack_chunks(_blocks(german_jobs, english_jobs, report_label)):
         try:
             send_message(text, bot_token, chat_id)

@@ -1,7 +1,12 @@
 import httpx
 
 from notifier import telegram
+from pipeline.duplicates import JobGroup
 from tests.conftest import make_job
+
+
+def _group(**kwargs) -> JobGroup:
+    return JobGroup([make_job(**kwargs)])
 
 
 def test_format_message_with_no_jobs():
@@ -9,7 +14,7 @@ def test_format_message_with_no_jobs():
 
 
 def test_format_message_english_only_section():
-    job = make_job(title="QA Engineer", company="Acme")
+    job = _group(title="QA Engineer", company="Acme")
     chunks = telegram.format_message(german_jobs=[], english_jobs=[job])
     assert len(chunks) == 1
     assert "🇬🇧 English-speaking (1)" in chunks[0]
@@ -18,15 +23,15 @@ def test_format_message_english_only_section():
 
 
 def test_format_message_orders_english_before_german():
-    en_job = make_job(url="https://example.test/en")
-    de_job = make_job(url="https://example.test/de")
+    en_job = _group(url="https://example.test/en")
+    de_job = _group(url="https://example.test/de")
     chunks = telegram.format_message(german_jobs=[de_job], english_jobs=[en_job])
     assert len(chunks) == 1
     assert chunks[0].index("English-speaking") < chunks[0].index("German-speaking")
 
 
 def test_format_message_splits_into_multiple_chunks_under_the_length_limit():
-    many_jobs = [make_job(url=f"https://example.test/{i}", title="Q" * 200) for i in range(60)]
+    many_jobs = [_group(url=f"https://example.test/{i}", title="Q" * 200) for i in range(60)]
     chunks = telegram.format_message(german_jobs=[], english_jobs=many_jobs)
     assert len(chunks) > 1
     assert all(len(chunk) <= telegram.TELEGRAM_MAX_MESSAGE_LENGTH for chunk in chunks)
@@ -68,7 +73,7 @@ def test_send_report_sends_one_message_per_chunk(monkeypatch):
 
     monkeypatch.setattr(telegram, "post_with_retry", fake_post)
 
-    many_jobs = [make_job(url=f"https://example.test/{i}", title="Q" * 200) for i in range(60)]
+    many_jobs = [_group(url=f"https://example.test/{i}", title="Q" * 200) for i in range(60)]
     telegram.send_report(german_jobs=[], english_jobs=many_jobs, bot_token="TOKEN", chat_id="1")
 
     expected_chunks = telegram.format_message(german_jobs=[], english_jobs=many_jobs)
@@ -94,7 +99,7 @@ def test_send_report_stops_and_returns_only_delivered_jobs_on_chunk_failure(monk
 
     monkeypatch.setattr(telegram, "post_with_retry", fake_post)
 
-    many_jobs = [make_job(url=f"https://example.test/{i}", title="Q" * 200) for i in range(60)]
+    many_jobs = [_group(url=f"https://example.test/{i}", title="Q" * 200) for i in range(60)]
     expected_chunks = telegram.format_message(german_jobs=[], english_jobs=many_jobs)
     assert len(expected_chunks) > 1  # the failure must land on a real 2nd chunk for this to mean anything
 
@@ -104,3 +109,24 @@ def test_send_report_stops_and_returns_only_delivered_jobs_on_chunk_failure(monk
     assert sent_jobs
     assert sent_jobs != many_jobs
     assert all(job in many_jobs for job in sent_jobs)
+
+
+def test_format_message_shows_one_entry_per_job_with_other_boards_and_all_cities():
+    group = JobGroup([
+        make_job(source_id="xing_jobs", title="Test Automation Engineer (m/w/d)", company="imbus AG",
+                 url="https://www.xing.com/jobs/1?utm_source=x", location="München"),
+        make_job(source_id="devjobs_germany_qa_engineer", title="Test Automation Engineer - m/f/d",
+                 company="imbus", url="https://en.devjobs.de/job/2", location="Erlangen",
+                 description="Longest description wins the main link."),
+    ])
+    text = telegram.format_message(german_jobs=[], english_jobs=[group])[0]
+    assert "🇬🇧 English-speaking (1)" in text
+    assert "(Erlangen, München)" in text or "(München, Erlangen)" in text
+    assert "https://en.devjobs.de/job/2" in text
+    assert "also on: xing.com" in text
+    assert "xing.com/jobs/1" not in text  # other boards are named, not linked
+
+
+def test_format_message_has_no_also_on_line_for_a_single_listing():
+    text = telegram.format_message(german_jobs=[], english_jobs=[_group(title="QA Engineer")])[0]
+    assert "also on" not in text

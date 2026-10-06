@@ -2,6 +2,7 @@ import argparse
 import logging
 import os
 from pathlib import Path
+from typing import NamedTuple
 
 import yaml
 from dotenv import load_dotenv
@@ -12,6 +13,7 @@ from agents import germany_remote, munich_local
 from agents._common import SOURCE_IDS
 from notifier import telegram
 from pipeline import classify_language, filters
+from pipeline.duplicates import JobGroup, group_duplicates
 from storage import dedupe
 from tools.resolve_ats import resolve_pending
 
@@ -81,20 +83,32 @@ def select_jobs(raw_jobs: list[NormalizedJob], keywords_config: dict) -> list[No
     return matched
 
 
-def build_report(
-    raw_jobs: list[NormalizedJob], keywords_config: dict, db_path: Path
-) -> tuple[list[NormalizedJob], list[NormalizedJob]]:
+class Report(NamedTuple):
+    german: list[JobGroup]
+    english: list[JobGroup]
+    matched: list[NormalizedJob]  # every job that fit this search, seen or not
+
+
+def build_report(raw_jobs: list[NormalizedJob], keywords_config: dict, db_path: Path) -> Report:
     """Turn already-fetched jobs into the (german, english) report to send. No
-    network/Telegram/env dependency, so it's testable with a plain job list -
-    main() keeps only the true I/O seams (fetch, send, mark-seen).
+    network/Telegram/env dependency and no DB writes, so it's testable with a plain
+    job list - main() keeps only the true I/O seams (fetch, send, mark-seen).
+
+    The same job found on several boards/cities, or already sent within
+    dedupe.SEEN_WINDOW under another URL, appears once / not at all - see
+    pipeline/duplicates.py.
     """
     matched = select_jobs(raw_jobs, keywords_config)
     unseen = dedupe.filter_unseen(matched, db_path=db_path)
-    logger.info("%d of those are new (not previously seen)", len(unseen))
+    groups = group_duplicates(unseen)
+    logger.info("%d of those are new (not previously seen) - %d distinct jobs", len(unseen), len(groups))
 
-    german_jobs, english_jobs = classify_language.split_by_language(unseen)
-    logger.info("%d German-required, %d English jobs", len(german_jobs), len(english_jobs))
-    return german_jobs, english_jobs
+    # Language from the most completely described copy - an empty description
+    # would otherwise silently default to English.
+    german = [g for g in groups if classify_language.is_german_required(g.best_described)]
+    english = [g for g in groups if not classify_language.is_german_required(g.best_described)]
+    logger.info("%d German-required, %d English jobs", len(german), len(english))
+    return Report(german, english, matched)
 
 
 def main(dry_run: bool = False, keywords_file: str = "keywords_qa.yaml") -> None:
@@ -121,20 +135,25 @@ def main(dry_run: bool = False, keywords_file: str = "keywords_qa.yaml") -> None
     )
     raw_jobs = raw_board_jobs + raw_company_jobs
 
-    german_jobs, english_jobs = build_report(raw_jobs, keywords_config, db_path)
+    report = build_report(raw_jobs, keywords_config, db_path)
     report_label = keywords_config.get("report_label", "QA")
 
     if dry_run:
-        for chunk in telegram.format_message(german_jobs, english_jobs, report_label):
+        for chunk in telegram.format_message(report.german, report.english, report_label):
             print(chunk)
             print("---")
         return
 
     bot_token = os.environ["TELEGRAM_BOT_TOKEN"]
     chat_id = os.environ["TELEGRAM_CHAT_ID"]
-    sent_jobs = telegram.send_report(german_jobs, english_jobs, bot_token, chat_id, report_label)
+    sent_groups = telegram.send_report(report.german, report.english, bot_token, chat_id, report_label)
+    sent_jobs = [job for group in sent_groups for job in group.copies]
     dedupe.mark_seen(sent_jobs, db_path=db_path)
-    logger.info("sent Telegram message(s), marked %d jobs as seen", len(sent_jobs))
+    # Keep already-sent jobs that are still listed "seen" (dedupe.SEEN_WINDOW).
+    dedupe.refresh_seen(report.matched, db_path=db_path)
+    logger.info(
+        "sent Telegram message(s): %d jobs (%d listings) marked as seen", len(sent_groups), len(sent_jobs)
+    )
 
 
 if __name__ == "__main__":

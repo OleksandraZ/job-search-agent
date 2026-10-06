@@ -12,7 +12,7 @@ call resolve_pending(), so config/companies.yaml is never modified; companies st
 at `ats: null` are simply skipped, as in any run before resolution.
 
 The same job reposted on several boards (or for several cities) is merged into one
-row - see group_duplicates() - so the counts are distinct positions, not listings.
+row - see pipeline/duplicates.py - so the counts are distinct positions, not listings.
 
 Every run also saves all fetched raw jobs (descriptions included) as JSON next to
 the workbook, so after a keywords change the workbook can be rebuilt from that file in
@@ -28,7 +28,6 @@ import dataclasses
 import datetime
 import json
 import logging
-import re
 from pathlib import Path
 
 from openpyxl import Workbook
@@ -41,6 +40,7 @@ from adapters.registry import fetch_from_companies, fetch_from_sources
 from agents import germany_remote, munich_local
 from agents._common import SOURCE_IDS
 from pipeline import classify_language
+from pipeline.duplicates import duplicate_key, group_duplicates
 
 logger = logging.getLogger(__name__)
 
@@ -66,36 +66,6 @@ def union_search_terms(keywords_configs: list[dict]) -> list[str]:
                 seen.add(term.lower())
                 terms.append(term)
     return terms
-
-
-# Legal-form tokens ignored when comparing company names ("imbus AG" == "imbus").
-_LEGAL_FORMS = {
-    "gmbh", "mbh", "ag", "se", "kg", "kgaa", "co", "ug", "ohg", "gbr", "ev", "inc",
-    "ltd", "llc", "plc", "bv", "nv", "sa", "sas", "srl", "oy", "ab", "as",
-}
-_GENDER_MARKER = re.compile(
-    r"\(.*?\)|\[.*?\]|\b[mwfdx]\s*[/|]\s*[mwfdx]\s*(?:[/|]\s*[mwfdx])?\b|\ball[\s-]*genders?\b",
-    re.IGNORECASE,
-)
-
-
-def duplicate_key(job: NormalizedJob) -> tuple[str, str]:
-    """(normalized title, first meaningful company word). Real duplicates differ only
-    in gender markers ("(m/w/d)" vs "- m/f/d"), legal forms and branch suffixes
-    ("FERCHAU GmbH Niederlassung ..." vs "FERCHAU - Connecting People") or casing
-    ("imbus AG" vs "Imbus Ag") - verified on the 2026-10-06 fetch, e.g. one Blackwave
-    posting listed 4x (Bundesagentur, stellenanzeigen.de, Xing per city)."""
-    title = " ".join(re.findall(r"[a-z0-9äöüß+#]+", _GENDER_MARKER.sub(" ", job.title.lower())))
-    company_words = [w for w in re.findall(r"[a-z0-9äöüß]+", job.company.lower()) if w not in _LEGAL_FORMS]
-    return title, company_words[0] if company_words else ""
-
-
-def group_duplicates(jobs: list[NormalizedJob]) -> list[list[NormalizedJob]]:
-    """Jobs grouped by duplicate_key(), in first-seen order."""
-    groups: dict[tuple[str, str], list[NormalizedJob]] = {}
-    for job in jobs:
-        groups.setdefault(duplicate_key(job), []).append(job)
-    return list(groups.values())
 
 
 def _unique(values: list[str]) -> str:
@@ -137,23 +107,19 @@ def build_workbook(results: list[tuple[str, list[NormalizedJob]]], as_of: dateti
     for cell in summary[summary.max_row]:
         cell.font = Font(bold=True)
 
-    all_keys: set[tuple[str, str]] = set()
+    all_keys: set[str] = set()
     for label, jobs in results:
-        groups = group_duplicates(jobs)
         rows = []
-        for group in groups:
-            # The copy with the longest description carries the most information
-            # for the language label and is the most useful link.
-            best = max(group, key=lambda job: len(job.description))
-            scopes = {scope_label(job) for job in group}
+        for group in group_duplicates(jobs):
+            scopes = {scope_label(job) for job in group.copies}
             munich = any(s.startswith("München") for s in scopes)
             remote = any(s != "München" for s in scopes)
             if munich and remote:
                 scope = "München + Remote"
             else:
                 scope = "München" if munich else "Remote (Deutschland)"
-            rows.append((best, scope, language_label(best), group))
-            all_keys.add(duplicate_key(best))
+            rows.append((group.main, scope, language_label(group.best_described), group.copies))
+            all_keys.add(duplicate_key(group.main))
 
         summary.append([
             label,
@@ -168,14 +134,14 @@ def build_workbook(results: list[tuple[str, list[NormalizedJob]]], as_of: dateti
         sheet.append(COLUMNS)
         for cell in sheet[1]:
             cell.font = Font(bold=True)
-        for best, scope, language, group in rows:
+        for best, scope, language, copies in rows:
             sheet.append([
                 best.title,
                 best.company,
-                _unique([job.location for job in group]),
+                _unique([job.location for job in copies]),
                 scope,
                 language,
-                _unique([job.source_id for job in group]),
+                _unique([job.source_id for job in copies]),
                 best.url,
             ])
             link = sheet.cell(row=sheet.max_row, column=len(COLUMNS))
