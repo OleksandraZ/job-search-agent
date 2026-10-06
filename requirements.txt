@@ -2,3 +2,4 @@ httpx
 PyYAML
 python-dotenv
 beautifulsoup4
+openpyxl

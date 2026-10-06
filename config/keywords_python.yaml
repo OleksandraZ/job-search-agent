@@ -1,0 +1,117 @@
+meta:
+  usage: 'Python developer search. Revised 2026-10-06 (user decision): no longer
+    junior-specific. Titles may be any level except senior-and-above and
+    student/internship roles; seniority is instead judged from the description via
+    max_required_years.
+
+    title_match_terms: role terms only, no seniority prefixes (OR, word-boundary, each
+    one also sent as a search query to every board). Real titles rarely follow clean
+    "Junior Python Developer" phrasing (a combinatorial phrase list matched 0 real jobs,
+    2026-09-16), so the list leans on short role terms plus bare "Python". Broad terms
+    like "Software Engineer" are safe only because require_term_groups drops anything
+    whose title and description never mention Python/FastAPI (e.g. Java/Node.js roles).
+    "Software Engineer in Test" deliberately not added: the QA run goes first and its
+    skill check also accepts Python, so any such title passing this file''s check is
+    already reported and marked seen by QA.
+
+    title_exclude_terms: senior-and-above (Senior/Sr./Lead/Principal/Staff/Head
+    of/Director/VP/Chief/Architect, German Teamleiter/Leiter, Trainee/Graduate) and student/internship/
+    apprenticeship/thesis titles. Junior titles are allowed.
+    Also part-time titles (Teilzeit/part-time in the TITLE only - in descriptions it
+    is almost always "Voll- oder Teilzeit", verified 2026-10-06), and other stacks/
+    domains far from the profile (user decision 2026-10-06, from real report rows like
+    "Embedded Software Developer", "C++ Software Engineer", "Robotics Software
+    Engineer", "Mobile/Frontend AI Software Engineer", "Data & AI Engineer - Cloud
+    Data Engineer"): Embedded/C++/Rust/Mobile/Frontend/Robotics/Data Engineer plus
+    Java/Kotlin/Node.js/.NET/C#/PHP/Golang/iOS/Android/Firmware/Hardware.
+
+    require_term_groups: title OR description must mention Python or FastAPI; empty
+    descriptions are kept (pipeline/filters.py:require_term_groups).
+
+    max_required_years: drops a job whose description asks for more than this many
+    years of experience (pipeline/experience.py:required_years - built against real
+    postings; company-history/contract/"ideally N years" mentions don''t count). A job
+    stating no number is kept.'
+  counts:
+    title_match_terms: 15
+    title_exclude_terms: 57
+    require_term_groups: 1
+report_label: Python
+max_required_years: 3
+title_match_terms:
+- Python
+- Software Engineer
+- Software Developer
+- Softwareentwickler
+- Software-Entwickler
+- Backend Developer
+- Backend Engineer
+- Backend Entwickler
+- Backend-Entwickler
+- Full Stack Developer
+- Full-Stack Developer
+- Fullstack Developer
+- API Developer
+- API Engineer
+- AI Engineer
+title_exclude_terms:
+- Senior
+- Sr.
+- Lead
+- Teamlead
+- Teamleiter
+- Leiter
+- Principal
+- Staff
+- Head of
+- Director
+- VP
+- Chief
+- Architect
+- Architekt
+- Working Student
+- Werkstudent
+- Werkstudentin
+- Werkstudium
+- Praktikum
+- Praktikant
+- Praktikantin
+- Intern
+- Internship
+- Ausbildung
+- Azubi
+- Auszubildende
+- Duales Studium
+- Abschlussarbeit
+- Masterarbeit
+- Bachelorarbeit
+- Teilzeit
+- part-time
+- part time
+- Embedded
+- "C++"
+- Rust
+- Mobile
+- Frontend
+- Front-End
+- Robotics
+- Data Engineer
+- Java
+- Kotlin
+- "Node.js"
+- NodeJS
+- ".NET"
+- "C#"
+- PHP
+- Golang
+- iOS
+- Android
+- Firmware
+- Hardware
+- Trainee
+- Graduate
+- Absolvent
+- Absolventin
+require_term_groups:
+- - Python
+  - FastAPI

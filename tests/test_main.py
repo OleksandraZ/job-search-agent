@@ -21,6 +21,30 @@ def test_build_report_filters_dedupes_and_classifies(tmp_path):
     assert english_jobs == [munich_job]
 
 
+def test_build_report_applies_require_term_groups_when_present(tmp_path):
+    aws_job = make_job(
+        title="Junior DevOps Engineer",
+        url="https://example.test/1",
+        location="München",
+        description="English-speaking team, AWS and Terraform.",
+    )
+    azure_job = make_job(
+        title="Junior DevOps Engineer",
+        url="https://example.test/2",
+        location="München",
+        description="English-speaking team, Azure only.",
+    )
+
+    german_jobs, english_jobs = main.build_report(
+        [aws_job, azure_job],
+        {"title_match_terms": ["DevOps"], "require_term_groups": [["AWS"]]},
+        db_path=tmp_path / "jobs.db",
+    )
+
+    assert german_jobs == []
+    assert english_jobs == [aws_job]
+
+
 def test_build_report_excludes_previously_seen_jobs(tmp_path):
     db_path = tmp_path / "jobs.db"
     job = make_job(title="QA Engineer", location="München", description="English required.")

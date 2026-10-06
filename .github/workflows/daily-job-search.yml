@@ -2,16 +2,19 @@ name: Daily job search
 
 on:
   schedule:
-    # ~13:00 and ~19:00 Europe/Berlin. GitHub Actions cron is always UTC, so these
-    # are pinned to the current CEST offset (UTC+2) and drift an hour against
-    # local wall-clock time across the DST switch (lands at ~12:00/~18:00 local
-    # once CET (UTC+1) kicks back in) - update by hand each side of the switch
-    # if exact local times matter more than the drift. Offset off the exact hour
-    # on purpose: GitHub's own docs warn that top-of-the-hour is the highest-load
-    # slot for the schedule event and runs there can be delayed for hours or
-    # dropped entirely - a round-hour cron here missed a whole day (2026-09-21).
-    - cron: "13 11 * * *"
-    - cron: "17 17 * * *"
+    # Once a day, nominally ~06:13 Europe/Berlin. GitHub Actions cron is always UTC,
+    # so this is pinned to the current CEST offset (UTC+2) and drifts an hour against
+    # local wall-clock time across the DST switch (lands at ~05:13 local once CET
+    # (UTC+1) kicks back in) - update by hand each side of the switch if exact local
+    # times matter more than the drift. Offset off the exact hour on purpose: GitHub's
+    # own docs warn that top-of-the-hour is the highest-load slot for the schedule
+    # event and runs there can be delayed for hours or dropped entirely - a round-hour
+    # cron here missed a whole day (2026-09-21). Even off the hour, scheduled runs
+    # actually started ~4-6h late (11:13 UTC slot started 15:00-17:20 UTC every day
+    # 2026-09-25..10-04, GitHub API run_started_at) - hence the early slot, so results
+    # still land in the morning. History: 11:13+17:17 UTC until 2026-10-05, then
+    # 08:13+14:17, then (2026-10-06, user decision) a single run 4h earlier.
+    - cron: "13 4 * * *"
   workflow_dispatch: {}
 
 permissions:
@@ -39,13 +42,10 @@ jobs:
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
         run: python main.py
 
-      - name: Run junior/associate Python keyword search
-        env:
-          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
-        run: python main.py --keywords keywords_junior_python.yaml
-
-      # Both runs above mutate state on disk that has to survive to tomorrow's
+      # Only the QA search runs on schedule (user decision 2026-10-06). The Python,
+      # Cloud/DevOps and Data Engineering keyword files are run locally on demand:
+      # python main.py --keywords keywords_python.yaml (or tools/market_report.py).
+      # The run above mutates state on disk that has to survive to tomorrow's
       # run: storage/jobs.db (dedupe - without this every job would look "new"
       # again every day) and config/companies.yaml (resolve_pending() fills in
       # any freshly-added company's `ats` field in place). Commit whatever

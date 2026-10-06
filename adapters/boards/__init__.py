@@ -23,4 +23,9 @@ def title_matches(title: str, terms: list[str]) -> bool:
     # bare word" rule) - accepting the tradeoff that a term won't match a title that
     # appends a German inflectional suffix directly (e.g. "Softwaretester" term
     # against a literal "Softwaretesterin" title with no separating space/slash).
-    return any(re.search(rf"\b{re.escape(term)}\b", title, re.IGNORECASE) for term in terms)
+    # Lookarounds rather than \b: \b needs a word char on one side, so a term that
+    # starts/ends with a non-word char ("C#", "C++") could never match at all - for
+    # terms that start and end with a word char the two are equivalent.
+    return any(
+        re.search(rf"(?<!\w){re.escape(term)}(?!\w)", title, re.IGNORECASE) for term in terms
+    )

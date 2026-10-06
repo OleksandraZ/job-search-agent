@@ -4,28 +4,276 @@ meta:
 
     report_label: names this search in the Telegram report heading ("New {label} jobs")
     and the no-jobs fallback message, so runs against different keyword files are
-    distinguishable in chat history - see main.py:main() and notifier/telegram.py.'
+    distinguishable in chat history - see main.py:main() and notifier/telegram.py.
+
+    Revised 2026-10-05 against the target query ("QA Engineer" OR "Test Automation" OR
+    "QA Automation" OR SDET OR "Quality Engineer" OR Testautomatisierer OR
+    Softwaretester) AND (Python OR Playwright OR "API testing" OR Locust), seniority
+    mid-level. Added terms close real word-boundary gaps: "Quality Assurance Engineer"
+    (neither "QA Engineer" nor "Software Quality Assurance Engineer" matches it),
+    spelled-out "Software Development Engineer in Test" ("Software Engineer in Test"
+    does not match it), bare "Test Automation"/"QA Automation"/"Testautomatisierung"
+    (catch Specialist/Developer/"Ingenieur Testautomatisierung" variants), and
+    "Qualitätssicherung" - broad on its own (manufacturing/pharma QA), usable only
+    because require_term_groups drops anything without a matching skill. Older,
+    now-redundant specific terms (e.g. "Backend QA Engineer" inside "QA Engineer")
+    are kept on purpose: each is also a separate board search, and a narrower query
+    can surface results a broad one loses to a board''s page/size cap.
+
+    title_exclude_terms: drops student/apprenticeship, above-mid and manager titles.
+    "Junior" is deliberately NOT excluded (only not targeted). German compounds need
+    their own entry since word-boundary matching does not see inside them
+    ("Testmanager", "Teamleiter").
+
+    require_term_groups: title OR description must mention one skill; empty
+    descriptions are kept (pipeline/filters.py:require_term_groups). "API testing" is
+    listed with its common spelling variants, since word-boundary matching treats
+    "API testing" and "API-Testing" as different strings. This drops QA roles that
+    only mention e.g. Java/Selenium or Cypress - intended by the target query.
+
+    description_exclude_terms (2026-10-06, user-curated from real noisy postings):
+    a job is dropped if its title or description mentions any of these domains
+    (robotics/mechatronics, embedded/HIL, environmental/mechanical testing, optics,
+    PLC/SIMATIC, automotive functional safety, radio/radar, space AIT, defense
+    simulation, aerospace/aviation - added after a Blackwave "Quality Engineer
+    Aerospace" posting got through), RHEL/Rocky Linux, network-protocol
+    tooling (Wireshark/OpenSSL), mobile QA, native/C2 German requirements,
+    usability/accessibility testing. Plain terms, word-boundary matched. The last entry is a conditional
+    rule (user decision 2026-10-06): any other programming language, test
+    framework/tool, or Azure only drops a job that mentions neither Python nor
+    Playwright ("Playwright and Cypress" stays, "Selenium with Java" goes).
+    TypeScript/JavaScript deliberately not listed (Playwright''s own languages);
+    "Go" only as "Golang" (bare "Go" matches "go-live"); app frameworks
+    (Angular/React) not listed - in QA ads they describe the product under test. See pipeline/filters.py:exclude_by_description().'
   counts:
-    title_match_terms: 20
+    title_match_terms: 26
+    title_exclude_terms: 27
+    require_term_groups: 1
+    description_exclude_terms: 117
 report_label: QA
 title_match_terms:
 - QA Engineer
 - QA Automation Engineer
+- QA Automation
 - Test Automation Engineer
+- Test Automation
 - Software Test Engineer
 - Software Engineer in Test
+- Software Development Engineer in Test
 - SDET
 - Quality Engineer
+- Quality Assurance Engineer
 - Software Quality Assurance Engineer
 - Backend QA Engineer
 - Test Engineer
 - QA Ingenieur
 - QA-Automatisierungsingenieur
 - Testautomatisierungsingenieur
+- Testautomatisierung
 - Softwaretestingenieur
 - Software-Testingenieur
 - Qualitätsingenieur
 - Qualitätssicherungsingenieur
+- Qualitätssicherung
 - Softwaretester
 - Testautomatisierer
 - Testingenieur
+title_exclude_terms:
+- Senior
+- Lead
+- Teamlead
+- Teamleiter
+- Leiter
+- Principal
+- Staff
+- Head of
+- Manager
+- Testmanager
+- Architect
+- Architekt
+- Working Student
+- Werkstudent
+- Werkstudentin
+- Werkstudium
+- Praktikum
+- Praktikant
+- Intern
+- Internship
+- Ausbildung
+- Azubi
+- Auszubildende
+- Trainee
+- Teilzeit
+- part-time
+- part time
+require_term_groups:
+- - Python
+  - Playwright
+  - Locust
+  - API testing
+  - API-Testing
+  - API Tests
+  - API-Tests
+  - API-Testautomatisierung
+description_exclude_terms:
+- "robotics"
+- "ROS 2"
+- "ROS2"
+- "mechatronic"
+- "mechatronics"
+- "mechanical engineering"
+- "mechanical design"
+- "electrical engineering"
+- "environmental testing"
+- "environmental tests"
+- "hardware-in-the-loop"
+- "HIL"
+- "hardwarenah"
+- "hardware-near"
+- "embedded software"
+- "embedded systems"
+- "Embedded-Systeme"
+- "SolidWorks"
+- "3DEXPERIENCE"
+- "LabVIEW"
+- "VBS4"
+- "HOTAS"
+- "TVAC"
+- "thermal vacuum"
+- "vibration test"
+- "tensile test"
+- "shaker"
+- "torque sensor"
+- "test bench"
+- "Prüfstand"
+- "hydraulic"
+- "pneumatic"
+- "DAQ"
+- "experimental setup"
+- "Breakout-Box"
+- "Breakout-Boxen"
+- "breakout box"
+- "Testequipment"
+- "AIT"
+- "AIV"
+- "Assembly, Integration"
+- "electrical testing"
+- "elektrische Tests"
+- "Optik"
+- "optics"
+- "optische"
+- "optischer"
+- "optical systems"
+- "Messtechnik"
+- "Messdatenanalyse"
+- "Präzisionspositionierungssystemen"
+- "Reinraum"
+- "Reinraumumfeld"
+- "cleanroom"
+- "clean room"
+- "SIMATIC"
+- "PROFINET"
+- "TIA Portal"
+- "SCL"
+- "mission simulation"
+- "simulator hardware"
+- "tactical peripherals"
+- "networking gear"
+- "gTest"
+- "gMock"
+- "Automotive SPICE"
+- "ASPICE"
+- "ISO 26262"
+- "Functional Safety"
+- "Funktionale Sicherheit"
+- "CANoe"
+- "CANalyzer"
+- "dSPACE"
+- "Software Defined Radio"
+- "Software-Defined-Radio"
+- "SDR"
+- "Wellenform"
+- "Wellenformen"
+- "waveform"
+- "radar"
+- "radar systems"
+- "Radarsysteme"
+- "HF technology"
+- "Hochfrequenztechnik"
+- "HF-Technik"
+- "Hochfrequenz"
+- "C2"
+- "Muttersprache"
+- "muttersprachlich"
+- "Muttersprachniveau"
+- "native German"
+- "German native speaker"
+- "Usability Testing"
+- "Emulation"
+- "WCAG"
+- "Barrierefreiheitstest"
+- "Barrierefreiheitstests"
+- "accessibility testing"
+- "BITV"
+- "BFSG"
+- "Aerospace"
+- "Luftfahrt"
+- "Raumfahrt"
+- "aviation"
+- "avionics"
+- "Avionik"
+- "spaceflight"
+- "Airbus"
+- "RHEL"
+- "Red Hat Enterprise Linux"
+- "Rocky Linux"
+- "RockyOS"
+- "Netzwerktechnologien"
+- "Wireshark"
+- "OpenSSL"
+- "Mobile QA"
+- terms:
+  - "Java"
+  - "C#"
+  - "C++"
+  - "C/C++"
+  - ".NET"
+  - "ASP.NET"
+  - "Kotlin"
+  - "Swift"
+  - "Objective-C"
+  - "Golang"
+  - "Ruby"
+  - "PHP"
+  - "Rust"
+  - "Scala"
+  - "Perl"
+  - "Groovy"
+  - "Dart"
+  - "VBA"
+  - "Visual Basic"
+  - "ABAP"
+  - "COBOL"
+  - "Delphi"
+  - "Selenium"
+  - "Cypress"
+  - "WebdriverIO"
+  - "Protractor"
+  - "Appium"
+  - "Espresso"
+  - "XCUITest"
+  - "Robot Framework"
+  - "Tosca"
+  - "Ranorex"
+  - "TestComplete"
+  - "UFT"
+  - "Katalon"
+  - "JUnit"
+  - "TestNG"
+  - "NUnit"
+  - "xUnit"
+  - "REST Assured"
+  - "REST-assured"
+  - "Serenity"
+  - "Azure"
+  unless: [Python, Playwright]

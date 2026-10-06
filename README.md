@@ -3,11 +3,12 @@
 A scheduled pipeline that finds new job postings in Germany (remote) and Munich
 (onsite/hybrid/remote) matching a keyword set of your choosing, splits them by the
 language *required* for the role (German vs English), and sends a formatted
-summary to Telegram twice a day. Fork it, point it at your own role, done — no code
+summary to Telegram once a day. Fork it, point it at your own role, done — no code
 changes needed to search for something other than what it ships with. Ships with
-two keyword sets as working examples: QA Engineer roles (`config/keywords_qa.yaml`,
-the default) and junior/associate Python roles
-(`config/keywords_junior_python.yaml`) — see [Add your own search](#add-your-own-search).
+four keyword sets as working examples: QA Engineer roles (`config/keywords_qa.yaml`,
+the default), Python developer roles (`config/keywords_python.yaml`), Cloud/DevOps
+roles (`config/keywords_cloud_devops.yaml`) and Data Engineering roles
+(`config/keywords_data_engineering.yaml`) — see [Add your own search](#add-your-own-search).
 
 **Scope that's *not* yet configurable:** the location filter is fixed to Munich +
 Germany-wide-remote (`pipeline/location.py`), and the board/company source lists
@@ -66,7 +67,7 @@ python main.py --dry-run
 python main.py
 
 # run against a different keyword set (e.g. the junior/associate Python search)
-python main.py --keywords keywords_junior_python.yaml
+python main.py --keywords keywords_python.yaml
 ```
 
 ## Add your own search
@@ -103,8 +104,9 @@ To run your new search on a schedule too, add a step to
 
 ## Scheduled runs (GitHub Actions)
 
-`.github/workflows/daily-job-search.yml` runs both keyword searches twice a day
-(13:00 and 19:00 Europe/Berlin) and on manual dispatch. It needs two repo secrets
+`.github/workflows/daily-job-search.yml` runs the QA keyword search once a day
+(nominally ~06:13 Europe/Berlin - GitHub often starts scheduled runs hours late) and
+on manual dispatch; the other keyword files are run locally on demand. It needs two repo secrets
 (Settings → Secrets and variables → Actions):
 
 ```

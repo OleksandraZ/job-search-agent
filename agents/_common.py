@@ -8,7 +8,6 @@ SOURCE_IDS = [
     "stepstone_germany",
     "devjobs_germany_qa_engineer",
     "testdevjobs_remote_germany",
-    "wearedevelopers_jobs",
     "englishjobsde",
     "built_in_qa_germany",
     "xing_jobs",

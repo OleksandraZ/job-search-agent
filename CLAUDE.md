@@ -74,7 +74,7 @@ def fetch_jobs(source_config: dict) -> list[NormalizedJob]:
 `adapter`, `url`, plus whatever adapter-specific fields it needs), with one key always
 injected on top: `search_terms` — the active keywords file's `title_match_terms`
 (`config/keywords_qa.yaml` by default; `main.py --keywords <file>` swaps in a
-different one, e.g. `keywords_junior_python.yaml`), added by
+different one, e.g. `keywords_python.yaml`), added by
 `adapters/registry.py:fetch_from_sources()` before calling the adapter. An adapter only
 needs to read `search_terms` if it actually sends queries to the source.
 

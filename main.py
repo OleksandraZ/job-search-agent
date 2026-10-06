@@ -34,12 +34,11 @@ def load_yaml(name: str) -> dict:
         return yaml.safe_load(f)
 
 
-def build_report(
-    raw_jobs: list[NormalizedJob], keywords_config: dict, db_path: Path
-) -> tuple[list[NormalizedJob], list[NormalizedJob]]:
-    """Turn already-fetched jobs into the (german, english) report to send. No
-    network/Telegram/env dependency, so it's testable with a plain job list -
-    main() keeps only the true I/O seams (fetch, send, mark-seen).
+def select_jobs(raw_jobs: list[NormalizedJob], keywords_config: dict) -> list[NormalizedJob]:
+    """Every already-fetched job that fits one keywords file: in Munich/Germany-remote
+    scope and passing all of that file's title/skill/description filters. No dedupe -
+    shared by build_report() (daily Telegram run) and tools/market_report.py (full
+    statistics, seen or not), so both always apply exactly the same selection.
     """
     munich_jobs = munich_local.filter_jobs(raw_jobs)
     remote_jobs = germany_remote.filter_jobs(raw_jobs)
@@ -55,11 +54,41 @@ def build_report(
     # Optional: drop jobs whose title carries an explicit disqualifying seniority word
     # (e.g. "Senior"), regardless of which title_match_terms entry matched them - a bare
     # broad term like "Python" would otherwise pull in senior postings too. See
-    # keywords_junior_python.yaml's meta.usage.
+    # keywords_python.yaml's meta.usage.
     if "title_exclude_terms" in keywords_config:
         matched = filters.exclude_by_title(matched, keywords_config["title_exclude_terms"])
         logger.info("%d left after title_exclude_terms", len(matched))
 
+    # Optional: require at least one term from every skill group in the title or
+    # description - see pipeline/filters.py:require_term_groups() and
+    # keywords_data_engineering.yaml's meta.usage.
+    if "require_term_groups" in keywords_config:
+        matched = filters.require_term_groups(matched, keywords_config["require_term_groups"])
+        logger.info("%d left after require_term_groups", len(matched))
+
+    # Optional: drop jobs whose description mentions an out-of-scope domain/tool - see
+    # pipeline/filters.py:exclude_by_description() and keywords_qa.yaml's meta.usage.
+    if "description_exclude_terms" in keywords_config:
+        matched = filters.exclude_by_description(matched, keywords_config["description_exclude_terms"])
+        logger.info("%d left after description_exclude_terms", len(matched))
+
+    # Optional: drop jobs whose description asks for more years of experience than
+    # this - see pipeline/experience.py and keywords_python.yaml's meta.usage.
+    if "max_required_years" in keywords_config:
+        matched = filters.exclude_by_required_years(matched, keywords_config["max_required_years"])
+        logger.info("%d left after max_required_years", len(matched))
+
+    return matched
+
+
+def build_report(
+    raw_jobs: list[NormalizedJob], keywords_config: dict, db_path: Path
+) -> tuple[list[NormalizedJob], list[NormalizedJob]]:
+    """Turn already-fetched jobs into the (german, english) report to send. No
+    network/Telegram/env dependency, so it's testable with a plain job list -
+    main() keeps only the true I/O seams (fetch, send, mark-seen).
+    """
+    matched = select_jobs(raw_jobs, keywords_config)
     unseen = dedupe.filter_unseen(matched, db_path=db_path)
     logger.info("%d of those are new (not previously seen)", len(unseen))
 

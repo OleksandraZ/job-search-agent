@@ -132,7 +132,7 @@ sources:
   url: https://www.wearedevelopers.com/en/jobs
   priority: 1
   category: tech
-  enabled: true
+  enabled: false
   adapter: wearedevelopers
   notes: Strong European developer board with active German software-testing and automation roles.
     A large multi-source aggregator (Adzuna/Indeed/Xing/etc. under the hood), but
@@ -145,6 +145,19 @@ sources:
     "Germany (Remote available)"). Detail pages are plain markdown, not HTML, so
     there's no <li>/<ul> structure for classify_language.py's HTML-tag clause
     boundary to key off - "." and ";" alone still bound each clause there.
+    DISABLED 2026-10-05 (removed from agents/_common.py SOURCE_IDS) - every search
+    result for every term checked (QA Engineer, Test Automation, Python, DevOps,
+    Data Engineer, Backend Developer, Cloud Engineer) is an external re-listing
+    (/jobs/ext/<id>, original on Indeed/StepStone/Adzuna/Xing - 0 native results
+    on page 1), and Cloudflare blocks every non-browser request to /jobs/ext/ pages
+    ("Sorry, you have been blocked" - .md and HTML alike, also with a browser UA,
+    while the same IP opens them fine in a real browser, so it is client
+    fingerprinting, not an IP block; robots.txt does not disallow them). Without a
+    description these jobs passed every require_term_groups check automatically
+    (58 of 130 QA matches, incl. SAP/aerospace noise). Deliberately not worked
+    around with a disguised headless browser; decision was to drop them, so the source
+    contributes nothing. The search .md still works and carries a "Published:" date
+    and the original Apply link - re-check /jobs/ext/<id>.md before re-enabling.
 - id: arbeitnow_qa_jobs
   name: Arbeitnow – QA Jobs
   url: https://www.arbeitnow.com/jobs/qa

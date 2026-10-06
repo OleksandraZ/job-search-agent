@@ -114,11 +114,18 @@ def _fetch_description(url: str) -> str:
     soup = BeautifulSoup(response.text, "html.parser")
     # The single element wrapping the whole job posting body (role, responsibilities,
     # requirements, benefits, company info) - identified by an id matching the job's
-    # own numeric id, confirmed unique on the page. It also trails into a "Similar
-    # Companies Hiring" widget at the end (company names/industries only, not
-    # requirement-shaped text - accepted as harmless noise rather than chasing an
-    # exact-boundary selector).
+    # own numeric id, confirmed unique on the page.
     desc_el = soup.select_one("div.job-post-item")
+    # It also contains "Similar Jobs" / "Similar Companies Hiring" widgets listing
+    # OTHER companies and their industry tags (e.g. "Aerospace • Hardware •
+    # Robotics") - once accepted as harmless noise, but description_exclude_terms
+    # matched them: real Air Apps / Pod Network QA jobs were dropped as "robotics"
+    # (verified 2026-10-06). Removed before extracting.
+    if desc_el:
+        for widget in desc_el.select(
+            ".jobs-at-similar-companies-container, .similar-companies-hiring-container"
+        ):
+            widget.decompose()
     # Raw inner HTML, not get_text() - keeps <li>/<ul> bullet-point structure intact
     # for pipeline/classify_language.py's HTML-tag clause boundary.
     return desc_el.decode_contents() if desc_el else ""

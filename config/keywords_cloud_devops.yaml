@@ -1,0 +1,97 @@
+meta:
+  usage: 'Target query: ("Cloud Engineer" OR "DevOps Engineer" OR "Platform Engineer" OR
+    "Site Reliability" OR "Cloud Operations") AND (AWS OR Terraform OR Kubernetes). Same mechanism as keywords_python.yaml -
+    see its meta.usage (incl. title_exclude_terms and max_required_years, revised
+    2026-10-06: not junior-specific, at most 3 required years).
+
+    title_match_terms: role terms only (OR, word-boundary, each one also sent as a
+    search query to every board, so every term adds requests to the run). "DevOps" is
+    bare on purpose so it also catches "DevOps-Ingenieur"/"DevOps Specialist"; bare
+    "Cloud" is NOT, it would match sales/consulting titles. Bridge roles "Test
+    Automation Engineer DevOps"/"SDET Cloud" deliberately not added (user decision
+    2026-10-05): test automation titles belong to the QA search only, even though a
+    e.g. Java + Kubernetes SDET role that fails QA''s skill check would then not be
+    reported by either search.
+
+    require_term_groups: the (AWS OR Terraform OR Kubernetes) AND - title OR description
+    must mention one; empty descriptions are kept (pipeline/filters.py:require_term_groups).
+    This is what keeps broad terms like "Systemadministrator"/"Infrastructure
+    Engineer" usable.
+
+    Seniority: judged from the description via max_required_years (not from
+    "Junior" in the title); title_exclude_terms drops senior-and-above and
+    student/internship titles, plus (user decision 2026-10-06) Azure-titled roles and
+    general IT admin roles ("IT-Systemadministrator (m/w/d)", "IT-Administrator") -
+    "Linux Systemadministrator" titles are kept.'
+  counts:
+    title_match_terms: 14
+    title_exclude_terms: 42
+    require_term_groups: 7
+report_label: Cloud/DevOps
+max_required_years: 3
+title_match_terms:
+- Cloud Engineer
+- DevOps
+- Platform Engineer
+- Site Reliability Engineer
+- SRE
+- Cloud Operations
+- Cloud Support
+- Infrastructure Engineer
+- AWS Engineer
+- Systemadministrator
+- Linux Administrator
+- CI/CD Engineer
+- Build Engineer
+- Release Engineer
+title_exclude_terms:
+- Senior
+- Sr.
+- Lead
+- Teamlead
+- Teamleiter
+- Leiter
+- Principal
+- Staff
+- Head of
+- Director
+- VP
+- Chief
+- Architect
+- Architekt
+- Working Student
+- Werkstudent
+- Werkstudentin
+- Werkstudium
+- Praktikum
+- Praktikant
+- Praktikantin
+- Intern
+- Internship
+- Ausbildung
+- Azubi
+- Auszubildende
+- Duales Studium
+- Abschlussarbeit
+- Masterarbeit
+- Bachelorarbeit
+- Teilzeit
+- part-time
+- part time
+- Trainee
+- Graduate
+- Absolvent
+- Absolventin
+- Azure
+- IT-Systemadministrator
+- IT Systemadministrator
+- IT-Administrator
+- IT Administrator
+require_term_groups:
+- - AWS
+  - Amazon Web Services
+  - Terraform
+  - Kubernetes
+  - K8s
+  - CloudFormation
+  - EKS

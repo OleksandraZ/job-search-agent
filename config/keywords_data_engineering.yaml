@@ -1,0 +1,100 @@
+meta:
+  usage: 'Target query: ("Data Engineer" OR "Analytics Engineer" OR "ETL Developer" OR
+    "Data Quality Engineer" OR "ETL Tester" OR Dateningenieur) AND (Python OR SQL) AND
+    (Airflow OR dbt OR Spark OR ETL). Same mechanism as keywords_python.yaml - see
+    its meta.usage (incl. title_exclude_terms and max_required_years, revised
+    2026-10-06: not junior-specific, at most 3 required years).
+
+    title_match_terms: role terms only (OR, word-boundary, each one also sent as a
+    search query to every board). "Data Engineer" already covers Junior/Cloud/Big
+    Data/"Data Engineer Python" variants; "Data Platform Engineer" and the hyphenated
+    "Data-Engineer" need their own entries because word-boundary matching does not
+    see across them. Bridge roles "Data Quality Engineer"/"Data QA Engineer"/"Data
+    Test Engineer" also match QA terms ("Quality Engineer", "QA Engineer", "Test
+    Engineer") and the QA run goes first - kept here anyway, since QA''s skill check
+    (Python/Playwright/Locust/API testing) differs: a SQL + dbt data-quality role is
+    dropped by QA and can still be reported here.
+
+    require_term_groups: BOTH groups must match (title or description) - one
+    (Python OR SQL) term AND one (Airflow OR dbt OR Spark OR ETL) term; empty
+    descriptions are kept (pipeline/filters.py:require_term_groups). PostgreSQL/MySQL
+    and PySpark are listed separately because word-boundary matching does not find
+    "SQL" inside "PostgreSQL" or "Spark" inside "PySpark".
+
+    Seniority: judged from the description via max_required_years (not from
+    "Junior" in the title); title_exclude_terms drops senior-and-above,
+    student/internship titles and Data Scientist/Data Analyst titles (also when
+    combined, e.g. "Data Engineer / Data Analyst").'
+  counts:
+    title_match_terms: 14
+    title_exclude_terms: 40
+    require_term_groups: 2
+report_label: Data Engineering
+max_required_years: 3
+title_match_terms:
+- Data Engineer
+- Data-Engineer
+- Data Platform Engineer
+- Analytics Engineer
+- ETL Developer
+- ETL Engineer
+- ELT Engineer
+- ETL Entwickler
+- Datenengineer
+- Dateningenieur
+- Data Quality Engineer
+- Data QA Engineer
+- Data Test Engineer
+- ETL Tester
+title_exclude_terms:
+- Senior
+- Sr.
+- Lead
+- Teamlead
+- Teamleiter
+- Leiter
+- Principal
+- Staff
+- Head of
+- Director
+- VP
+- Chief
+- Architect
+- Architekt
+- Working Student
+- Werkstudent
+- Werkstudentin
+- Werkstudium
+- Praktikum
+- Praktikant
+- Praktikantin
+- Intern
+- Internship
+- Ausbildung
+- Azubi
+- Auszubildende
+- Duales Studium
+- Abschlussarbeit
+- Masterarbeit
+- Bachelorarbeit
+- Data Scientist
+- Data Analyst
+- Datenanalyst
+- Teilzeit
+- part-time
+- part time
+- Trainee
+- Graduate
+- Absolvent
+- Absolventin
+require_term_groups:
+- - Python
+  - SQL
+  - PostgreSQL
+  - MySQL
+- - Airflow
+  - dbt
+  - Spark
+  - PySpark
+  - ETL
+  - ELT
