@@ -40,8 +40,9 @@ fetch (boards + companies) → scope filter (Munich / Germany-remote) → title 
   that file's optional filters (`pipeline/experience.py` reads the required years of
   experience from the description), `storage/dedupe.py` drops jobs already sent
   (SQLite, `storage/jobs.db`) — recognized by normalized title + company
-  (`pipeline/duplicates.py`), not URL, so a repost on another board, under a new
-  tracking URL or for another city isn't sent again within 90 days — and
+  (`pipeline/duplicates.py`) or by the same source + URL, so a repost on another
+  board, under a new tracking URL or for another city, or a listing retitled under
+  its old URL, isn't sent again within 90 days — and
   `pipeline/classify_language.py` splits the rest into German-required vs
   English-okay. Copies of one job found in the same run become a single Telegram
   entry with an `also on: …` line.

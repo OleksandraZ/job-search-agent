@@ -51,6 +51,40 @@ def test_same_job_on_another_board_or_url_counts_as_seen(tmp_path):
     assert filter_unseen([repost, other_board], db_path=db_path, now=NOW + timedelta(days=3)) == []
 
 
+def test_retitled_listing_under_the_same_url_counts_as_seen(tmp_path):
+    # Real case (2026-10-13/14): medatixx renamed its Bundesagentur listing from
+    # "Softwaretester ..." to "Spezialist ..." under the same URL - a new
+    # duplicate_key, so it was resent every day.
+    db_path = tmp_path / "jobs.db"
+    url = "https://www.arbeitsagentur.de/jobsuche/jobdetail/12811-2344134-S"
+    mark_seen([make_job(title="Softwaretester (m/w/d) Testautomatisierung", company="medatixx", url=url)],
+              db_path=db_path, now=NOW)
+    retitled = make_job(title="Spezialist (m/w/d) Testautomatisierung", company="medatixx", url=url)
+
+    assert filter_unseen([retitled], db_path=db_path, now=NOW + timedelta(days=1)) == []
+
+
+def test_mark_seen_stores_the_current_title_of_a_retitled_listing(tmp_path):
+    # The retitled copy must also be recognized on another board (no shared URL).
+    db_path = tmp_path / "jobs.db"
+    for title in ("Softwaretester Testautomatisierung", "Spezialist Testautomatisierung"):
+        mark_seen([make_job(title=title, company="medatixx")], db_path=db_path, now=NOW)
+
+    other_board = make_job(source_id="xing_jobs", title="Spezialist Testautomatisierung", company="medatixx",
+                           url="https://www.xing.com/jobs/spezialist-1")
+    assert filter_unseen([other_board], db_path=db_path, now=NOW) == []
+
+
+def test_refresh_seen_keeps_a_retitled_listing_seen_by_url(tmp_path):
+    db_path = tmp_path / "jobs.db"
+    mark_seen([make_job(title="Softwaretester Testautomatisierung")], db_path=db_path, now=NOW)
+    retitled = make_job(title="Spezialist Testautomatisierung")
+
+    refresh_seen([retitled], db_path=db_path, now=NOW + timedelta(days=80))
+
+    assert filter_unseen([retitled], db_path=db_path, now=NOW + SEEN_WINDOW + timedelta(days=30)) == []
+
+
 def test_job_counts_as_new_again_after_the_seen_window(tmp_path):
     db_path = tmp_path / "jobs.db"
     job = make_job(title="QA Engineer")
