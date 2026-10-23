@@ -364,8 +364,16 @@ both found re-verifying a batch of newly-resolved companies against a live fetch
   tracking subdomain, the only recruitee.com reference present) because there was no
   real company slug on the page for the existing fuzzy-name-preference logic to
   prefer instead. The `companyId`-keyed API requires authentication
-  (`api.recruitee.com/c/<id>/offers` returns 401 unauthenticated) - no public fetch
-  path exists for this product shape at all. Reclassified to `custom`.
+  (`api.recruitee.com/c/<id>/offers` returns 401 unauthenticated). They were meant to
+  be reclassified to `custom`, but that edit never reached the committed
+  `companies.yaml` - both still carried `careers-analytics` (and fetched nothing) on
+  2026-10-23. **Correction (2026-10-23):** this product *does* have a public path -
+  the same `/api/offers/` answers on the company's own careers domain
+  (`career.limehome.de/api/offers/` -> 24 offers, `careers.smartpatient.eu` -> 2;
+  `career.quantum-systems.com` -> 193, whose `quantumsystems.recruitee.com` says
+  "Public API disabled"). `recruitee_api.py` takes that domain as `identifier` (a dot
+  can't occur in a slug); all five `careers-analytics` entries were switched to their
+  careers domain.
 
 Neither is fixable by tightening the existing tracking-subdomain preference logic -
 in both cases the *only* candidate found was the wrong one. Worth a live spot-check
@@ -373,3 +381,29 @@ of the resolved identifier specifically when a company's real careers page is a
 subdomain of its own domain rather than `<slug>.<vendor>.<tld>` - that shape doesn't
 match either of `_slug_candidates()`'s two guesses (domain label, or a
 name-derived slug) reliably.
+
+## A Personio `/xml` 404 means two different things - check `search.json` and the careers page itself
+
+Found 2026-10-23 checking every `personio` entry (~380) after a batch run, two
+months after most were resolved:
+
+- **Feed switched off, careers page live (27 companies, 127 jobs):** `/xml` 404s but
+  `https://<id>.jobs.personio.de/search.json` lists every open position (e.g.
+  `finapi-gmbh`, `carly`). `personio_feed.py` now falls back to it on a 404. Its
+  `description` field is always `""`, so the title-matched subset gets its
+  description from the detail page's JSON-LD `JobPosting`.
+- **Whole careers page switched off (59 companies):** `/xml`, `search.json` *and* the
+  landing page `https://<id>.jobs.personio.de/` all 404. Not one cause: re-running
+  `resolve_ats.py`'s detection read-only on each company's own site showed some still
+  *link* the dead Personio page (not hiring / cancelled - Tracify, Envoria), some
+  switched vendor (Agile Robots -> Greenhouse, KoRo -> Ashby, Speexx -> Workable,
+  Quantum Systems/Instagrid -> Recruitee), some no longer link any ATS, and some had
+  been wrong since a hand-added entry (Salesforce) or an `api_probe` guess. Entries
+  whose site still links Personio, or whose site was unreachable, were left as
+  `personio` - the adapter returns `[]` for them quietly and picks them up again if
+  the page comes back.
+
+So an ATS identifier that resolved correctly once doesn't stay correct: companies
+switch vendors or close their page within weeks. A 0-jobs company isn't proof of a
+bad match either (Kingstone's live `kingstone-im` page simply had no openings) - check
+the vendor's landing page, not just the feed.

@@ -1,0 +1,49 @@
+name: Weekly company re-check
+
+on:
+  schedule:
+    # Sundays ~05:37 Europe/Berlin (CEST; cron is UTC), off the hour for the same
+    # reason as the daily run - see daily-job-search.yml. A full run re-detects
+    # every config/unresolved_companies.yaml entry (~2000 sites at 4 workers) and
+    # live-checks every config/companies.yaml endpoint: expect 2-3 hours.
+    - cron: "37 3 * * 0"
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+# Same group as the daily run: both commit config/companies.yaml, so they must
+# never run at the same time.
+concurrency:
+  group: daily-job-search
+  cancel-in-progress: false
+
+jobs:
+  recheck:
+    runs-on: ubuntu-latest
+    timeout-minutes: 330
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - run: pip install -r requirements.txt
+
+      # Moves companies that now resolve to a live, supported ATS into
+      # companies.yaml, moves ones whose ATS endpoint is gone out, and writes
+      # tools/resolve_ats_report.md (counts per reason, moves, "CHECK:" cases worth
+      # a manual look) - see tools/company_lists.py.
+      - name: Re-check unresolved companies and companies.yaml endpoints
+        run: python -m tools.resolve_ats
+
+      - name: Commit updated company lists and report
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add config/companies.yaml config/unresolved_companies.yaml tools/resolve_ats_report.md
+          git diff --cached --quiet && exit 0
+          git commit -m "chore: weekly company re-check [skip ci]"
+          git pull --rebase -X theirs origin main
+          git push

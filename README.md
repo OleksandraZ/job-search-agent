@@ -30,7 +30,9 @@ fetch (boards + companies) → scope filter (Munich / Germany-remote) → title 
 ```
 
 - **Sources** — `config/sources.yaml` lists job boards; `config/companies.yaml` lists
-  companies sourced directly from their ATS (Greenhouse, Lever, Personio, etc). Each
+  companies sourced directly from their ATS (Greenhouse, Lever, Personio, etc) —
+  only ones that can actually be fetched; the rest wait in
+  `config/unresolved_companies.yaml` with a `reason` and are re-checked weekly. Each
   source/company resolves to an adapter under `adapters/boards/` or `adapters/ats/`
   that fetches and normalizes postings into a common `NormalizedJob` shape.
 - **Agents** — `agents/munich_local.py` and `agents/germany_remote.py` each filter the
@@ -146,8 +148,17 @@ TELEGRAM_BOT_TOKEN
 TELEGRAM_CHAT_ID
 ```
 
-`storage/jobs.db` (dedupe state) and `config/companies.yaml` (ATS resolution
-results) are tracked in git rather than ignored, because the runner's filesystem
+`.github/workflows/weekly-company-recheck.yml` runs `python -m tools.resolve_ats`
+every Sunday (2-3 hours, no secrets needed): it re-detects every
+`config/unresolved_companies.yaml` entry, live-checks every `config/companies.yaml`
+ATS endpoint, moves companies between the two files, and commits
+`tools/resolve_ats_report.md` — counts per reason, what moved, and `CHECK:` cases
+worth a manual look. It shares the daily run's concurrency group, so the two never
+push at the same time.
+
+`storage/jobs.db` (dedupe state) and `config/companies.yaml` /
+`config/unresolved_companies.yaml` (ATS resolution results) are tracked in git rather
+than ignored, because the runner's filesystem
 doesn't survive between runs — the workflow commits whatever changed back to the
 repo at the end of each run so the next scheduled run sees it.
 
@@ -169,7 +180,8 @@ pipeline/          title/skill/description/experience/location/language filterin
 storage/           SQLite dedupe of already-sent jobs
 notifier/          Telegram formatting + sending
 config/            sources.yaml, companies.yaml, keywords_*.yaml, language_rules.yaml
-tools/             resolve_ats.py — resolves companies.yaml entries to an ATS vendor;
+tools/             resolve_ats.py — resolves companies to an ATS vendor (weekly re-check);
+                   company_lists.py — keeps companies.yaml to fetchable companies;
                    market_report.py — Excel report of all fitting jobs
 reports/           market reports + saved raw jobs (git-ignored)
 docs/lessons/      the "why" behind adapter/classification gotchas

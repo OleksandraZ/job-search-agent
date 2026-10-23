@@ -32,26 +32,28 @@ Compare each new `name`/`url` against the existing entries in **both**
 `config/companies.yaml` **and** `config/unresolved_companies.yaml` — case-insensitive
 name match, and the same domain-label-stripping `resolve_ats.py`'s
 `_slug_candidates`/`_normalize_name` use (drop `www`/`de`/`en`/etc., compare the
-remaining label). `unresolved_companies.yaml` holds every company a past resolution
-attempt found no careers page/vendor for (`ats: unresolved`) — it's excluded from
-`companies.yaml` specifically so it doesn't take a fetch slot, but a name/url match
-there still means "already tried, skip re-adding" just as much as a match in
-`companies.yaml` does. A duplicate wastes a resolution request, and if it resolves to
+remaining label). `unresolved_companies.yaml` holds every company that can't be
+fetched right now - `custom`, `unresolved`, a vendor with no adapter, or a dead ATS
+endpoint - each with a `reason` (see `tools/company_lists.py`). A name/url match
+there still means "already known, skip re-adding" just as much as a match in
+`companies.yaml` does; the weekly re-check retries it anyway. A duplicate wastes a resolution request, and if it resolves to
 a different `identifier` than an existing entry for the same real company,
 double-fetches the same jobs. Not a correctness bug downstream — `storage/jobs.db`
 dedupes by job `url`, not by company — but still worth flagging rather than silently
 absorbing.
 
-## 3. Run resolve_ats.py — no `--force`
+## 3. Resolve just the new entries
 
 ```bash
-.venv/bin/python -m tools.resolve_ats
+.venv/bin/python -c "from tools.resolve_ats import resolve_pending; import logging; logging.basicConfig(level=logging.INFO); resolve_pending()"
 ```
 
-Default behavior (`needs_resolution()`) targets `ats: null`/`"unresolved"`/`"custom"`,
-so already-resolved companies are untouched — safe to run after any batch of
-additions. Rewrites `config/companies.yaml` in place and writes
-`tools/resolve_ats_report.md`.
+`resolve_pending()` resolves only never-attempted (`ats: null`) entries - the same
+call `main.py` makes before every run - then moves any that can't be fetched to
+`config/unresolved_companies.yaml` with a `reason`, and writes
+`tools/resolve_ats_report.md`. Don't use the bare CLI (`python -m tools.resolve_ats`)
+for a new batch: that is the weekly re-check - it re-detects the *whole* unresolved
+file (~2000 sites, 2-3 hours) and live-checks every companies.yaml endpoint.
 
 ## 4. Bucket the newly resolved entries by what needs attention
 
@@ -63,21 +65,19 @@ hand-maintained count here): `greenhouse`, `lever`, `ashby`, `smartrecruiters`,
 
 - **Resolved to a built vendor above** — no further action, will fetch on the next
   run.
-- **Resolved to a vendor with no adapter** (`rexx`, `teamtailor`, `dvinci`,
-  `jazzhr`) — inert, same as a board `_todo` entry. `rexx` in particular isn't
-  buildable as one shared adapter at all - see the "rexx isn't a centralized
-  per-slug service" lesson in `docs/lessons/ats_adapters.md` before spending time on
-  it. Worth noting if several new companies cluster on `teamtailor`/`dvinci`/`jazzhr`
-  — may justify building that adapter next.
-- **`ats: "custom"`** — a real careers page was found, no recognized vendor
-  fingerprint. Leave as-is unless you're deliberately building a generic scraper.
-- **`ats: "unresolved"`** — no careers page found at all. Worth one manual look
-  (wrong homepage URL? a Cloudflare challenge, like GetYourGuide/AnyDesk — see the
-  module docstring) before accepting it as genuinely unresolvable. `resolve_ats.py`
-  leaves these in `config/companies.yaml` — moving them into
-  `config/unresolved_companies.yaml` (matching that file's existing entries'
-  structure) is a manual cleanup step, done by request, not automatic; do it if
-  asked, otherwise leave them be.
+- **Everything else moved to `unresolved_companies.yaml`** - read its `reason`:
+  - `<vendor>: no adapter yet` (`rexx`, `teamtailor`, `dvinci`, `jazzhr`) - inert.
+    `rexx` in particular isn't buildable as one shared adapter at all - see the
+    "rexx isn't a centralized per-slug service" lesson in
+    `docs/lessons/ats_adapters.md`. The weekly report's per-reason counts show
+    which vendor would recover the most companies if built next.
+  - `careers page has no supported ATS` (`ats: custom`) - a real careers page, no
+    recognized vendor fingerprint.
+  - `no careers page found` / homepage DNS, TLS, timeout, HTTP 403 or bot-challenge
+    reasons (`ats: unresolved`) - worth one manual look (wrong homepage URL? a
+    Cloudflare challenge, like GetYourGuide/AnyDesk?) before accepting it.
+  - `<vendor> endpoint ... is gone (404)` - resolved to a supported ATS whose page
+    no longer exists for that identifier (switched off, or a wrong guess).
 
 ## 5. Spot-check the resolved matches against a live fetch
 
@@ -131,7 +131,7 @@ probe match is trusting response *shape* alone.
 from adapters.registry import ATS_ADAPTERS
 import yaml
 companies = yaml.safe_load(open('config/companies.yaml'))['companies']
-keywords = yaml.safe_load(open('config/keywords.yaml'))
+keywords = yaml.safe_load(open('config/keywords_qa.yaml'))
 new = [c for c in companies if c['name'] in {'<new company names>'}]
 for c in new:
     fetch = ATS_ADAPTERS.get(c['ats'])

@@ -48,13 +48,15 @@ jobs:
       # The run above mutates state on disk that has to survive to tomorrow's
       # run: storage/jobs.db (dedupe - without this every job would look "new"
       # again every day) and config/companies.yaml (resolve_pending() fills in
-      # any freshly-added company's `ats` field in place). Commit whatever
-      # changed back to the repo so the next scheduled run picks it up.
+      # any freshly-added company's `ats` field in place, and moves one that can't
+      # be fetched to config/unresolved_companies.yaml - tools/company_lists.py).
+      # Commit whatever changed back to the repo so the next scheduled run picks
+      # it up.
       - name: Persist dedupe DB and resolved companies
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add storage/jobs.db config/companies.yaml
+          git add storage/jobs.db config/companies.yaml config/unresolved_companies.yaml tools/resolve_ats_report.md
           git diff --cached --quiet && exit 0
           git commit -m "chore: update dedupe DB and resolved companies [skip ci]"
           # main may have moved while this run was going (a run takes up to an hour

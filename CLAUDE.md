@@ -117,12 +117,21 @@ back to `null`. This distinction is why `tools/resolve_ats.py`'s `is_new_entry()
 be a plain `ats is None` check, and it's what `main.py` relies on: it calls
 `resolve_pending()` before every run, which resolves only genuinely new (`ats: null`)
 companies automatically — so a freshly-added `companies.yaml` entry doesn't need a
-manual `resolve_ats.py` run first. It does **not** retry `"unresolved"`/`"custom"`
-entries on every run — re-fetching an already-attempted dead/vendor-less careers page
-on every single run would add real latency for an outcome that essentially never
-changes. Run `python -m tools.resolve_ats` (optionally `--force`) by hand to retry
-those deliberately — see `tools/resolve_ats.py`'s `needs_resolution()` for exactly
-what that targets, and the `process-new-companies` skill for the full workflow.
+manual `resolve_ats.py` run first.
+
+**Two files, split by "can we fetch it":** `config/companies.yaml` holds only
+companies whose `ats` has an adapter *and* whose ATS endpoint still answers for that
+identifier; everything else (`custom`, `unresolved`, a vendor with no adapter, a dead
+endpoint) lives in `config/unresolved_companies.yaml` with a `reason`.
+`tools/company_lists.py:rebalance()` moves entries both ways and is called by
+`resolve_pending()` (new entries only) and by `python -m tools.resolve_ats`, which is
+the weekly re-check (`.github/workflows/weekly-company-recheck.yml`): it re-detects
+the whole unresolved file, live-checks every companies.yaml endpoint, and writes
+`tools/resolve_ats_report.md`. Liveness, not just "has an adapter", is what decides:
+a switched-off Personio page still linked from the company's own site would
+otherwise bounce back in on every re-check. `main.py` never retries an unresolved
+entry itself — re-fetching dead/vendor-less careers pages on every run adds latency
+for an outcome that rarely changes. See the `process-new-companies` skill.
 
 **Adapter interface:** `adapters/ats/<name>.py` exposes
 
@@ -140,10 +149,10 @@ noted below.
 
 **Registration:** ATS adapters are looked up by the company's `ats:` value in
 `adapters/registry.py`'s `ATS_ADAPTERS` dict — unlike board `ADAPTERS`, there's no
-per-company opt-in list; every resolved company is automatically in scope. A vendor
-with no adapter built (e.g. `rexx`, `teamtailor`, `dvinci`, `jazzhr`) is inert, same
-as a board `_todo` entry, and not an error — `fetch_from_companies()` just returns `[]`
-for it.
+per-company opt-in list; every company in `companies.yaml` is in scope. A vendor with
+no adapter built (e.g. `rexx`, `teamtailor`, `dvinci`, `jazzhr`) is moved to
+`unresolved_companies.yaml` (reason `<vendor>: no adapter yet`) — and comes back on
+its own once an adapter for it is registered and the weekly re-check runs.
 
 See `docs/lessons/ats_adapters.md` for the fetch-mechanism specifics of each built
 vendor (which have a structured country field vs. which need `is_germany_relevant`/
