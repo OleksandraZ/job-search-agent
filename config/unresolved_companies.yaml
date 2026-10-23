@@ -149,14 +149,6 @@ companies:
   match_method: null
   resolved_at: '2026-08-20T20:50:57.348666+00:00'
   reason: homepage timed out / refused connection
-- name: GOLDBECK GmbH
-  url: https://www.goldbeck.de/
-  ats: unresolved
-  identifier: null
-  careers_url: null
-  match_method: null
-  resolved_at: '2026-08-20T20:51:45.196263+00:00'
-  reason: 'CHECK: homepage references workday but no live identifier matched'
 - name: Bayer (Deutschland)
   url: https://www.bayer.com/de/de/
   ats: unresolved
@@ -6490,7 +6482,8 @@ companies:
   careers_url: https://www.aeb.com/en/work-at-aeb/jobs.php
   match_method: null
   resolved_at: '2026-10-22T14:49:10.348397+00:00'
-  reason: 'CHECK: careers page references softgarden but no live identifier matched'
+  reason: own job page fed server-side by softgarden's API - no public softgarden
+    board to read; page had 0 jobs on 2026-10-23 (checked by hand)
 - name: Vodafone GmbH
   url: https://www.vodafone.de/
   ats: custom
@@ -6628,10 +6621,12 @@ companies:
   url: https://www.devk.de/
   ats: custom
   identifier: null
-  careers_url: https://jobs.devk.de/
+  careers_url: https://jobs.devk.de/jobs/
   match_method: null
   resolved_at: '2026-10-22T14:51:48.009029+00:00'
-  reason: 'CHECK: careers page references workday but no live identifier matched'
+  reason: careers page has JSON-LD JobPosting data (generic-adapter candidate) - own
+    Nuxt portal, listing at jobs.devk.de/jobs/, each /job/<id>-<slug>/ page carries
+    JSON-LD; checked by hand 2026-10-23
 - name: Elektro Breitling GmbH
   url: https://www.elektro-breitling.de/
   ats: custom
@@ -6679,7 +6674,9 @@ companies:
   careers_url: https://www.enzensberg.de/jobs
   match_method: null
   resolved_at: '2026-10-22T14:55:13.175283+00:00'
-  reason: 'CHECK: careers page references softgarden but no live identifier matched'
+  reason: careers page has JSON-LD JobPosting data (generic-adapter candidate) - own
+    job pages /job/<slug>; the softgarden hit was an image filename; checked by hand
+    2026-10-23
 - name: LEONHARD WEISS GmbH & Co. KG
   url: https://www.leonhard-weiss.de/
   ats: custom
@@ -6981,14 +6978,6 @@ companies:
   match_method: null
   resolved_at: '2026-10-22T14:59:04.377547+00:00'
   reason: careers page shows a bot-challenge page
-- name: Power Factors
-  url: https://www.powerfactors.com/
-  ats: custom
-  identifier: null
-  careers_url: https://www.powerfactors.com/careers
-  match_method: null
-  resolved_at: '2026-10-22T14:58:25.547589+00:00'
-  reason: 'CHECK: careers page references workable but no live identifier matched'
 - name: innosabi
   url: https://innosabi.com/
   ats: custom
@@ -7188,7 +7177,9 @@ companies:
   careers_url: https://www.edag.com/de/karriere/stellenanzeigen
   match_method: null
   resolved_at: '2026-10-23T09:25:33.733556+00:00'
-  reason: 'CHECK: careers page references workable but no live identifier matched'
+  reason: careers page uses successfactors (no adapter yet) - own paginated listing
+    (17 pages) linking career5.successfactors.eu jobs; Workable edag-uk is UK only;
+    checked by hand 2026-10-23
 - name: Bertrandt
   url: https://www.bertrandt.com/
   ats: custom
@@ -7327,9 +7318,11 @@ companies:
   reason: careers page has no recognizable ATS (own listing or JS-rendered)
 - name: Deloitte
   url: https://www.deloitte.com/de/de.html
-  ats: lever
-  identifier: deloitte
-  reason: lever endpoint for 'deloitte' is gone (404)
+  ats: custom
+  identifier: null
+  reason: own job portal (job.deloitte.com/search?search=<term>, ~583 jobs, 51 for
+    'QA') - candidate for a dedicated adapter; checked by hand 2026-10-23
+  careers_url: https://job.deloitte.com/
 - name: PwC Germany
   url: https://www.pwc.de/
   ats: unresolved
@@ -10320,16 +10313,6 @@ companies:
   match_method: null
   resolved_at: '2026-10-22T15:48:19.009013+00:00'
   reason: careers page uses factorial (no adapter yet)
-- name: kiwiHR
-  url: https://kiwihr.com/
-  ats: recruitee
-  identifier: tagging-server
-  careers_url: https://recruitee.com/career-page-multiposting
-  match_method: page_scan
-  resolved_at: '2026-08-21T18:59:50.167341+00:00'
-  note: real vendor is Tellent (unrecognized/no adapter); the recruitee.com link scraped
-    was a stray marketing-page link, not kiwiHR's own board
-  reason: recruitee endpoint for 'tagging-server' is gone (404)
 - name: Limedix GmbH
   url: http://www.neolexon.de
   ats: custom
@@ -10876,14 +10859,15 @@ companies:
   reason: careers page has no recognizable ATS (own listing or JS-rendered)
 - name: simpleclub GmbH
   url: https://business.simpleclub.com/
-  ats: greenhouse
+  ats: pinpoint
   identifier: simpleclub
-  careers_url: https://simpleclub.com/careers
+  careers_url: https://simpleclub.com/careers#jobs
   match_method: page_scan
   resolved_at: '2026-08-21T19:11:43.478620+00:00'
   note: migrated off Greenhouse to Pinpoint (simpleclub.pinpointhq.com, unrecognized
     vendor) - the greenhouse.io reference on the page is a leftover unused JS template
-  reason: greenhouse endpoint for 'simpleclub' is gone (404)
+  reason: 'pinpoint: no adapter yet (public JSON: simpleclub.pinpointhq.com/postings.json);
+    checked by hand 2026-10-23'
 - name: everdrop GmbH
   url: https://www.everdrop.de/
   ats: custom

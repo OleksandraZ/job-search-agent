@@ -4139,3 +4139,29 @@ companies:
   careers_url: https://www.adiutabyte.de/karriere/
   match_method: manual
   resolved_at: '2026-10-23T10:28:38.918880+00:00'
+- name: Tellent (kiwiHR)
+  url: https://kiwihr.com/
+  ats: recruitee
+  identifier: careers.tellent.com
+  careers_url: https://careers.tellent.com/open-positions
+  match_method: manual
+  resolved_at: '2026-10-23T10:34:33.994881+00:00'
+  note: real vendor is Tellent (unrecognized/no adapter); the recruitee.com link scraped
+    was a stray marketing-page link, not kiwiHR's own board
+- name: GOLDBECK GmbH
+  url: https://www.goldbeck.de/
+  ats: workday
+  identifier:
+    tenant: goldbeck
+    wd_host: wd103
+    site: goldbeck-jobs
+  careers_url: https://goldbeck.wd103.myworkdayjobs.com/de-DE/goldbeck-jobs
+  match_method: manual
+  resolved_at: '2026-10-23T10:35:19.952348+00:00'
+- name: Power Factors
+  url: https://www.powerfactors.com/
+  ats: workable
+  identifier: power-factors
+  careers_url: https://www.powerfactors.com/careers
+  match_method: manual
+  resolved_at: '2026-10-23T10:37:37.440113+00:00'
