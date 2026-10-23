@@ -3937,13 +3937,6 @@ companies:
   careers_url: https://amasol.com/career/
   match_method: page_scan
   resolved_at: '2026-10-22T16:44:03.867441+00:00'
-- name: Kingstone Real Estate
-  url: https://www.kingstone-re.com/
-  ats: personio
-  identifier: kingstone-im
-  careers_url: https://www.kingstone-re.com/karriere/
-  match_method: manual
-  resolved_at: '2026-10-23T09:25:33.733556+00:00'
 - name: MST
   url: https://www.mst-group.eu/
   ats: personio

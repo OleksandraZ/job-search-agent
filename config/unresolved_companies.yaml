@@ -1392,7 +1392,8 @@ companies:
   careers_url: null
   match_method: null
   resolved_at: '2026-08-20T21:43:20.319287+00:00'
-  reason: homepage reachable, no careers link found (JS-rendered site?)
+  reason: removed by hand 2026-10-23 - domain now redirects to a gambling shop (ecommercegenius.shop)
+  excluded: true
 - name: Spotninja
   url: http://www.spotninja.co/
   ats: unresolved
@@ -14794,7 +14795,8 @@ companies:
   careers_url: https://www.justetf.com/en-de/about/career.html
   match_method: null
   resolved_at: '2026-10-22T16:38:00.737548+00:00'
-  reason: 'CHECK: careers page references smartrecruiters but no live identifier matched'
+  reason: covered by Scalable Capital's SmartRecruiters board (scalablegmbh, in companies.yaml)
+    - no separate justETF board; checked by hand 2026-10-23
 - name: mybestbrands
   url: https://www.mybestbrands.de/
   ats: unresolved
@@ -15946,7 +15948,8 @@ companies:
   careers_url: https://www.cbs-consulting.com/karriere-bei-cbs/stellenangebote/
   match_method: null
   resolved_at: '2026-10-22T16:48:14.250063+00:00'
-  reason: 'CHECK: careers page references recruitee but no live identifier matched'
+  reason: 'only a US board exists (recruitee cbsamericainc: US/AR jobs, 0 in Germany);
+    German careers page has no detected ATS - checked by hand 2026-10-23'
 - name: DekaBank
   url: https://www.dekabank.de
   ats: custom
@@ -16468,3 +16471,12 @@ companies:
   match_method: null
   resolved_at: '2026-10-22T16:56:22.527654+00:00'
   reason: homepage returns HTTP 404
+- name: Kingstone Real Estate
+  url: https://www.kingstone-re.com/
+  ats: personio
+  identifier: kingstone-im
+  careers_url: https://www.kingstone-re.com/karriere/
+  match_method: manual
+  resolved_at: '2026-10-23T09:25:33.733556+00:00'
+  excluded: true
+  reason: removed by hand 2026-10-23 (not a fit)
