@@ -4119,3 +4119,30 @@ companies:
   careers_url: https://jobs.thyssenkrupp.com/en?businessUnit=Marine+Systems&jobField=Production+%26+Manufacturing
   match_method: page_scan
   resolved_at: '2026-10-22T16:56:17.423277+00:00'
+- name: NTT DATA
+  url: https://de.nttdata.com/
+  ats: workday
+  identifier:
+    tenant: nttlimited
+    wd_host: wd3
+    site: NTT_Careers
+  careers_url: https://careers.nttdata.com/de/de/search-results
+  match_method: manual
+  resolved_at: '2026-10-23T10:28:38.918880+00:00'
+- name: FUNKE Works (AZUBIYO)
+  url: http://www.azubiyo.de
+  ats: personio
+  identifier: funkeworks
+  careers_url: https://www.funkeworks.de/jobs/
+  match_method: manual
+  resolved_at: '2026-10-23T10:28:38.918880+00:00'
+- name: ResMed (MEDIFOX DAN, adiutaByte)
+  url: https://www.adiutabyte.de/
+  ats: workday
+  identifier:
+    tenant: resmed
+    wd_host: wd3
+    site: ResMed_External_Careers
+  careers_url: https://www.adiutabyte.de/karriere/
+  match_method: manual
+  resolved_at: '2026-10-23T10:28:38.918880+00:00'

@@ -7360,14 +7360,6 @@ companies:
   match_method: null
   resolved_at: '2026-10-22T15:03:47.050675+00:00'
   reason: careers page has no recognizable ATS (own listing or JS-rendered)
-- name: NTT DATA
-  url: https://de.nttdata.com/
-  ats: custom
-  identifier: null
-  careers_url: https://www.nttdata.com/de-de/careers
-  match_method: null
-  resolved_at: '2026-10-22T15:03:35.486657+00:00'
-  reason: 'CHECK: careers page references workday but no live identifier matched'
 - name: CGI
   url: https://www.cgi.com/de/de
   ats: custom
@@ -8277,14 +8269,6 @@ companies:
   match_method: null
   resolved_at: '2026-10-22T15:23:09.787119+00:00'
   reason: careers page has no recognizable ATS (own listing or JS-rendered)
-- name: AZUBIYO GmbH
-  url: http://www.azubiyo.de
-  ats: custom
-  identifier: null
-  careers_url: https://www.funkeworks.de/
-  match_method: null
-  resolved_at: '2026-10-22T15:23:09.489617+00:00'
-  reason: 'CHECK: careers page references personio but no live identifier matched'
 - name: HRinstruments GmbH
   url: http://www.hr-instruments.com
   ats: custom
@@ -9015,12 +8999,13 @@ companies:
   reason: careers page has no recognizable ATS (own listing or JS-rendered)
 - name: TIVITY GmbH
   url: https://www.tivity.one/de/
-  ats: custom
+  ats: unresolved
   identifier: null
-  careers_url: https://www.productplan.com/glossary/product-manager
+  careers_url: null
   match_method: null
   resolved_at: '2026-10-22T15:38:00.226431+00:00'
-  reason: 'CHECK: careers page references bamboohr but no live identifier matched'
+  reason: no careers page (homepage redirects to a glossary; the productplan.com link
+    was ProductPlan's glossary, not an ATS - checked by hand 2026-10-23)
 - name: Made in Germany GmbH
   url: http://www.madeingermany.online
   ats: custom
@@ -11953,14 +11938,6 @@ companies:
   match_method: null
   resolved_at: '2026-10-22T15:57:08.096827+00:00'
   reason: 'CHECK: homepage links a careers page the resolver didn''t use: https://www.dmrc.de/join-us'
-- name: adiutaByte
-  url: https://www.adiutabyte.de/
-  ats: custom
-  identifier: null
-  careers_url: https://www.adiutabyte.de/karriere/
-  match_method: null
-  resolved_at: '2026-10-22T15:56:54.855114+00:00'
-  reason: 'CHECK: careers page references workday but no live identifier matched'
 - name: AdRegeneer
   url: https://www.adregeneer.com/
   ats: custom
