@@ -9226,14 +9226,6 @@ companies:
   match_method: null
   resolved_at: '2026-10-22T15:39:18.715525+00:00'
   reason: careers page has no recognizable ATS (own listing or JS-rendered)
-- name: Retorio
-  url: http://www.retorio.com
-  ats: custom
-  identifier: null
-  careers_url: https://www.retorio.com/en/career
-  match_method: null
-  resolved_at: '2026-10-23T09:25:33.733556+00:00'
-  reason: 'CHECK: careers page references join but no live identifier matched'
 - name: Cluno
   url: https://www.cluno.com
   ats: unresolved
@@ -9370,14 +9362,6 @@ companies:
   match_method: null
   resolved_at: '2026-10-22T15:40:01.739638+00:00'
   reason: careers page has no recognizable ATS (own listing or JS-rendered)
-- name: FT Fitness Technology GmbH
-  url: http://www.pullup-dip.de
-  ats: custom
-  identifier: null
-  careers_url: https://www.pullup-dip.de/pages/jobs
-  match_method: null
-  resolved_at: '2026-10-22T15:40:06.714009+00:00'
-  reason: 'CHECK: careers page references join but no live identifier matched'
 - name: FLUICS GmbH
   url: http://www.fluics.com
   ats: custom
@@ -9498,14 +9482,6 @@ companies:
   match_method: null
   resolved_at: '2026-10-22T15:42:03.933435+00:00'
   reason: careers page has no recognizable ATS (own listing or JS-rendered)
-- name: robominds GmbH
-  url: http://www.robominds.de
-  ats: custom
-  identifier: null
-  careers_url: https://www.robominds.de/robominds/karriere
-  match_method: null
-  resolved_at: '2026-10-22T15:42:09.352061+00:00'
-  reason: 'CHECK: careers page references join but no live identifier matched'
 - name: PLANETICS
   url: http://www.planetics.de
   ats: custom
@@ -10410,14 +10386,6 @@ companies:
   match_method: null
   resolved_at: '2026-10-22T15:48:46.803485+00:00'
   reason: careers page has no recognizable ATS (own listing or JS-rendered)
-- name: oculai GmbH
-  url: https://www.oculai.de/
-  ats: custom
-  identifier: null
-  careers_url: https://www.oculai.de/jobs
-  match_method: null
-  resolved_at: '2026-10-22T15:49:11.323703+00:00'
-  reason: 'CHECK: careers page references join but no live identifier matched'
 - name: Tentary UG (haftungsbeschränkt)
   url: https://tentary.com/
   ats: custom
@@ -10681,7 +10649,8 @@ companies:
   careers_url: https://www.carsync.de/karriere
   match_method: null
   resolved_at: '2026-10-22T15:50:45.854911+00:00'
-  reason: 'CHECK: careers page references join but no live identifier matched'
+  reason: 'CHECK: stored careers page is CARSYNC''s (carsync.de -> JOIN vispiron-gmbh)
+    - motum''s own careers page unknown'
 - name: NumberSquare GmbH
   url: https://numbersquare.de/
   ats: custom
@@ -10754,14 +10723,6 @@ companies:
   match_method: null
   resolved_at: '2026-10-22T15:51:07.961515+00:00'
   reason: careers page has no recognizable ATS (own listing or JS-rendered)
-- name: ONCARE GmbH
-  url: https://www.myoncare.com/de/
-  ats: custom
-  identifier: null
-  careers_url: https://www.myoncare.com/de/karriere
-  match_method: null
-  resolved_at: '2026-10-22T15:51:08.912593+00:00'
-  reason: 'CHECK: careers page references join but no live identifier matched'
 - name: Pina Earth
   url: https://www.pina.earth/
   ats: custom
@@ -10778,14 +10739,6 @@ companies:
   match_method: null
   resolved_at: '2026-10-22T15:51:30.920409+00:00'
   reason: careers page has no recognizable ATS (own listing or JS-rendered)
-- name: VePa Vertical Parking
-  url: https://vepa.space
-  ats: custom
-  identifier: null
-  careers_url: https://vepa.space/jobs/
-  match_method: null
-  resolved_at: '2026-10-22T15:51:44.902574+00:00'
-  reason: 'CHECK: careers page references join but no live identifier matched'
 - name: Siqens GmbH
   url: http://www.siqens.de/
   ats: custom
@@ -11037,14 +10990,6 @@ companies:
   match_method: null
   resolved_at: '2026-10-22T15:52:32.964237+00:00'
   reason: 'CHECK: careers page references join but no live identifier matched'
-- name: ExoMatter
-  url: https://www.exomatter.ai/
-  ats: custom
-  identifier: null
-  careers_url: https://www.exomatter.ai/careers/
-  match_method: null
-  resolved_at: '2026-10-23T09:25:33.733556+00:00'
-  reason: 'CHECK: careers page references join but no live identifier matched'
 - name: Radkurier24
   url: https://radkurier24.com/
   ats: custom
@@ -11261,14 +11206,6 @@ companies:
   match_method: null
   resolved_at: '2026-10-22T15:53:57.161854+00:00'
   reason: careers page has no recognizable ATS (own listing or JS-rendered)
-- name: StellDirVor GmbH
-  url: https://stelldirvor-xr.de/
-  ats: custom
-  identifier: null
-  careers_url: https://www.stelldirvor-xr.de/karriere/
-  match_method: null
-  resolved_at: '2026-10-22T15:53:55.143467+00:00'
-  reason: 'CHECK: careers page references join but no live identifier matched'
 - name: Sinpex
   url: https://www.sinpex.de/
   ats: custom
@@ -11573,14 +11510,6 @@ companies:
   match_method: null
   resolved_at: '2026-10-22T15:55:04.942986+00:00'
   reason: careers page has no recognizable ATS (own listing or JS-rendered)
-- name: Moonscale
-  url: https://www.moonscale.com/
-  ats: custom
-  identifier: null
-  careers_url: https://www.moonscale.com/career
-  match_method: null
-  resolved_at: '2026-10-22T15:55:06.605765+00:00'
-  reason: 'CHECK: careers page references join but no live identifier matched'
 - name: Bai Soft GmbH
   url: https://bai-soft.de/
   ats: unresolved
@@ -12221,14 +12150,6 @@ companies:
   match_method: null
   resolved_at: '2026-10-22T15:58:06.384018+00:00'
   reason: homepage shows a bot-challenge page
-- name: encosa
-  url: https://www.encosa.energy/
-  ats: custom
-  identifier: null
-  careers_url: https://www.encosa.energy/careers
-  match_method: null
-  resolved_at: '2026-10-22T15:58:07.309777+00:00'
-  reason: 'CHECK: careers page references join but no live identifier matched'
 - name: Evum Motors
   url: https://evum-motors.com/en/
   ats: unresolved
@@ -13405,14 +13326,6 @@ companies:
   match_method: null
   resolved_at: '2026-10-22T16:04:41.460850+00:00'
   reason: careers page has no recognizable ATS (own listing or JS-rendered)
-- name: deepeye
-  url: https://www.deepeye-medical.com/
-  ats: custom
-  identifier: null
-  careers_url: https://www.deepeye-medical.com/career
-  match_method: null
-  resolved_at: '2026-10-22T16:04:48.909524+00:00'
-  reason: 'CHECK: careers page references join but no live identifier matched'
 - name: Ortivity
   url: https://www.ortivity.de/
   ats: custom
@@ -13581,14 +13494,6 @@ companies:
   match_method: page_scan
   resolved_at: '2026-08-21T20:10:48.180519+00:00'
   reason: personio endpoint for 'instamotionretail' is gone (404)
-- name: CARSYNC
-  url: https://www.carsync.de/
-  ats: custom
-  identifier: null
-  careers_url: https://www.carsync.de/karriere
-  match_method: null
-  resolved_at: '2026-10-22T16:28:31.561218+00:00'
-  reason: 'CHECK: careers page references join but no live identifier matched'
 - name: Orthogonal
   url: https://www.orthogonal.cc/
   ats: unresolved
@@ -14517,14 +14422,6 @@ companies:
   match_method: null
   resolved_at: '2026-10-22T16:35:57.650751+00:00'
   reason: careers page has no recognizable ATS (own listing or JS-rendered)
-- name: Nakoa Digital
-  url: https://www.nakoa.digital/
-  ats: custom
-  identifier: null
-  careers_url: https://www.nakoa.digital/karriere.html
-  match_method: null
-  resolved_at: '2026-10-22T16:36:00.133650+00:00'
-  reason: 'CHECK: careers page references join but no live identifier matched'
 - name: Navigance
   url: https://www.navigance.com/
   ats: custom

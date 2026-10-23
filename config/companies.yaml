@@ -4176,3 +4176,94 @@ companies:
   careers_url: https://www.jacobian.com/careers
   match_method: manual
   resolved_at: '2026-10-23T10:40:10.729670+00:00'
+- name: Retorio
+  url: http://www.retorio.com
+  ats: join
+  identifier: retoriocom
+  careers_url: https://www.retorio.com/en/career
+  match_method: manual
+  resolved_at: '2026-10-23T10:42:04.179423+00:00'
+- name: FT Fitness Technology GmbH
+  url: http://www.pullup-dip.de
+  ats: join
+  identifier: pullup-dip
+  careers_url: https://www.pullup-dip.de/pages/jobs
+  match_method: manual
+  resolved_at: '2026-10-23T10:42:04.179423+00:00'
+- name: robominds GmbH
+  url: http://www.robominds.de
+  ats: join
+  identifier: robominds
+  careers_url: https://www.robominds.de/robominds/karriere
+  match_method: manual
+  resolved_at: '2026-10-23T10:42:04.179423+00:00'
+- name: oculai GmbH
+  url: https://www.oculai.de/
+  ats: join
+  identifier: oculai
+  careers_url: https://www.oculai.de/jobs
+  match_method: manual
+  resolved_at: '2026-10-23T10:42:04.179423+00:00'
+- name: ONCARE GmbH
+  url: https://www.myoncare.com/de/
+  ats: join
+  identifier: oncare
+  careers_url: https://www.myoncare.com/de/karriere
+  match_method: manual
+  resolved_at: '2026-10-23T10:42:04.179423+00:00'
+- name: VePa Vertical Parking
+  url: https://vepa.space
+  ats: join
+  identifier: verticalparking
+  careers_url: https://vepa.space/jobs/
+  match_method: manual
+  resolved_at: '2026-10-23T10:42:04.179423+00:00'
+- name: ExoMatter
+  url: https://www.exomatter.ai/
+  ats: join
+  identifier: exomatter
+  careers_url: https://www.exomatter.ai/careers/
+  match_method: manual
+  resolved_at: '2026-10-23T10:42:04.179423+00:00'
+- name: StellDirVor GmbH
+  url: https://stelldirvor-xr.de/
+  ats: join
+  identifier: stelldirvor
+  careers_url: https://www.stelldirvor-xr.de/karriere/
+  match_method: manual
+  resolved_at: '2026-10-23T10:42:04.179423+00:00'
+- name: Moonscale
+  url: https://www.moonscale.com/
+  ats: join
+  identifier: vidlab71
+  careers_url: https://www.moonscale.com/career
+  match_method: manual
+  resolved_at: '2026-10-23T10:42:04.179423+00:00'
+- name: encosa
+  url: https://www.encosa.energy/
+  ats: join
+  identifier: encosa615
+  careers_url: https://www.encosa.energy/careers
+  match_method: manual
+  resolved_at: '2026-10-23T10:42:04.179423+00:00'
+- name: deepeye
+  url: https://www.deepeye-medical.com/
+  ats: join
+  identifier: deepeye
+  careers_url: https://www.deepeye-medical.com/career
+  match_method: manual
+  resolved_at: '2026-10-23T10:42:04.179423+00:00'
+- name: CARSYNC (VISPIRON)
+  url: https://www.carsync.de/
+  ats: join
+  identifier: vispiron-gmbh
+  careers_url: https://www.carsync.de/karriere
+  match_method: manual
+  resolved_at: '2026-10-23T10:42:04.179423+00:00'
+- name: Nakoa Digital
+  url: https://www.nakoa.digital/
+  ats: join
+  identifier: nakoa
+  careers_url: https://www.nakoa.digital/karriere.html
+  match_method: manual
+  resolved_at: '2026-10-23T10:42:04.179423+00:00'
