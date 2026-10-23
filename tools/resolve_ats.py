@@ -41,14 +41,15 @@ from pathlib import Path
 from urllib.parse import urljoin, urlparse
 
 import httpx
-import yaml
 from bs4 import BeautifulSoup
 
 from http_client import get_with_retry
+from tools import company_lists
 
 logger = logging.getLogger(__name__)
 
-COMPANIES_PATH = Path(__file__).parent.parent / "config" / "companies.yaml"
+COMPANIES_PATH = company_lists.COMPANIES_PATH
+UNRESOLVED_PATH = company_lists.UNRESOLVED_PATH
 REPORT_PATH = Path(__file__).parent / "resolve_ats_report.md"
 
 # Every company hits a different host, so - unlike adapters/registry.py's concern
@@ -123,7 +124,9 @@ ATS_PATTERNS: list[tuple[str, list[re.Pattern[str]]]] = [
         ],
     ),
     ("lever", [re.compile(r"jobs\.lever\.co/([a-z0-9_-]+)", re.IGNORECASE)]),
-    ("ashby", [re.compile(r"jobs\.ashbyhq\.com/([a-z0-9_-]+)", re.IGNORECASE)]),
+    # An Ashby slug can contain dots ("taxfix.com", "roadsurfer.com") - stopping at
+    # the first dot stored "taxfix", a 404 (2026-10-23; roadsurfer was fixed by hand).
+    ("ashby", [re.compile(r"jobs\.ashbyhq\.com/([a-z0-9_-]+(?:\.[a-z0-9_-]+)*)", re.IGNORECASE)]),
     (
         "smartrecruiters",
         [
@@ -134,7 +137,17 @@ ATS_PATTERNS: list[tuple[str, list[re.Pattern[str]]]] = [
     ("personio", [re.compile(r"([a-z0-9-]+)\.jobs\.personio\.(?:de|com)", re.IGNORECASE)]),
     (
         "workday",
-        [re.compile(r"([a-z0-9-]+)\.(wd\d+)\.myworkdayjobs\.com/([a-z0-9_-]+)", re.IGNORECASE)],
+        # The path can start with a locale ("/de-DE/Aareon") or the API prefix
+        # ("/wday/cxs/aareon/Aareon/jobs") before the real site name - grabbing the
+        # first segment stored "de-DE"/"en-US" as `site` for 11 companies, every one
+        # a 404 on fetch (2026-10-23). The lookahead rejects a bare locale as site.
+        [
+            re.compile(
+                r"([a-z0-9-]+)\.(wd\d+)\.myworkdayjobs\.com/(?:wday/cxs/[a-z0-9_-]+/)?"
+                r"(?:[a-z]{2}-[a-z]{2}/)?(?![a-z]{2}-[a-z]{2}\b)([a-z0-9_-]+)",
+                re.IGNORECASE,
+            )
+        ],
     ),
     # softgarden: no fetch_jobs adapter exists yet (not one of the 6 in
     # adapters/registry.py's ATS_ADAPTERS), so this is inert like a board `_todo`
@@ -444,8 +457,32 @@ def is_new_entry(company: dict) -> bool:
     return company.get("ats") is None
 
 
-def _unresolved() -> dict:
-    return {"ats": UNRESOLVED, "identifier": None, "careers_url": None, "match_method": None}
+def _unresolved(reason: str = "no careers page found on the site") -> dict:
+    return {
+        "ats": UNRESOLVED,
+        "identifier": None,
+        "careers_url": None,
+        "match_method": None,
+        "reason": reason,
+    }
+
+
+def _unreachable_reason(exc: httpx.HTTPError) -> str:
+    """Why the homepage couldn't be fetched, in the words a person checking by hand
+    needs: is the domain gone, blocking us, or just slow?"""
+    if isinstance(exc, httpx.HTTPStatusError):
+        code = exc.response.status_code
+        if code in (401, 403, 429):
+            return f"homepage blocks automated requests (HTTP {code})"
+        return f"homepage returns HTTP {code}"
+    message = str(exc).lower()
+    if "nodename" in message or "name or service" in message or "getaddrinfo" in message:
+        return "domain doesn't resolve (DNS) - site gone?"
+    if "ssl" in message or "certificate" in message:
+        return "homepage TLS/SSL error"
+    if isinstance(exc, httpx.TimeoutException):
+        return "homepage timed out"
+    return f"homepage unreachable ({type(exc).__name__})"
 
 
 def _scan_page(url: str, text: str, expected_name: str) -> dict | None:
@@ -468,7 +505,7 @@ def _detect_ats(company: dict) -> dict:
         probed = _probe_all_platforms(company)
         if probed:
             return {**probed, "careers_url": None, "match_method": "api_probe"}
-        return _unresolved()
+        return _unresolved(_unreachable_reason(exc))
 
     found = _scan_page(str(homepage.url), homepage.text, company["name"])
     if found:
@@ -535,6 +572,7 @@ def _detect_ats(company: dict) -> dict:
             "identifier": None,
             "careers_url": first_found_career_url,
             "match_method": None,
+            "reason": "careers page has no supported ATS",
         }
     return _unresolved()
 
@@ -544,7 +582,7 @@ def _detect_ats_safe(company: dict) -> dict:
         return _detect_ats(company)
     except Exception:
         logger.exception("ATS detection failed for %s", company["name"])
-        return _unresolved()
+        return _unresolved("detection crashed - see the run log")
 
 
 def resolve_all(companies: list[dict]) -> None:
@@ -555,6 +593,10 @@ def resolve_all(companies: list[dict]) -> None:
         company["careers_url"] = result["careers_url"]
         company["match_method"] = result["match_method"]
         company["resolved_at"] = datetime.now(UTC).isoformat()
+        if result.get("reason"):
+            company["reason"] = result["reason"]
+        else:
+            company.pop("reason", None)
         logger.info("%s -> %s", company["name"], result["ats"])
 
     with ThreadPoolExecutor(max_workers=MAX_WORKERS) as executor:
@@ -574,47 +616,53 @@ def _summarize(companies: list[dict]) -> dict[str, int]:
     return counts
 
 
-def _write_report(companies: list[dict]) -> None:
-    total = len(companies)
-    counts = _summarize(companies)
-    vendor_counts = {k: v for k, v in counts.items() if k not in (UNRESOLVED, "custom", "new")}
-    resolved_count = sum(vendor_counts.values())
-    custom = [c for c in companies if c.get("ats") == "custom"]
-    unresolved = [c for c in companies if c.get("ats") == UNRESOLVED]
-    new = [c for c in companies if c.get("ats") is None]
-
-    def _pct(count: int) -> float:
-        return (count / total * 100) if total else 0.0
+def _write_report(
+    companies: list[dict],
+    unresolved: list[dict],
+    moved_in: list[dict] | None = None,
+    moved_out: list[dict] | None = None,
+) -> None:
+    """Markdown summary of both files - what's fetchable, why the rest isn't, and
+    what moved this run. The "why" counts are the input for deciding which adapter
+    to build next (e.g. many `teamtailor: no adapter yet`)."""
+    vendors: dict[str, int] = {}
+    for c in companies:
+        vendors[c["ats"]] = vendors.get(c["ats"], 0) + 1
+    reasons: dict[str, int] = {}
+    for c in unresolved:
+        # Group per-company details away: "personio endpoint for 'x' is gone" ->
+        # "personio endpoint ... is gone", "CHECK: ... careers page: <url>" -> no url.
+        key = re.sub(r" for '[^']*'", "", c.get("reason") or "unknown")
+        key = re.sub(r": https?://\S+$", "", key)
+        reasons[key] = reasons.get(key, 0) + 1
 
     lines = [
         "# ATS resolution report",
         "",
-        f"Total companies: {total}",
+        f"- `config/companies.yaml` (fetched every run): {len(companies)}",
+        f"- `config/unresolved_companies.yaml` (not fetchable): {len(unresolved)}",
         "",
-        "## Bucket summary",
-        "",
-        f"- Resolved (real vendor): {resolved_count} ({_pct(resolved_count):.1f}%)",
-        f"- Custom (careers page found, no recognized vendor): {len(custom)} ({_pct(len(custom)):.1f}%)",
-        f"- Unresolved (attempted, no careers page found): {len(unresolved)} ({_pct(len(unresolved)):.1f}%)",
-        f"- New (never attempted): {len(new)} ({_pct(len(new)):.1f}%)",
-        "",
-        "## Resolved by vendor",
+        "## Fetchable, by vendor",
         "",
     ]
-    for vendor, count in sorted(vendor_counts.items(), key=lambda kv: -kv[1]):
-        lines.append(f"- {vendor}: {count}")
-
-    lines += ["", "## Unresolved companies (attempted, found nothing)", ""]
-    lines += [f"- {c['name']} — {c['url']}" for c in unresolved] or ["(none)"]
-
-    lines += ["", "## Custom (candidate for a future generic scraper)", ""]
-    lines += [f"- {c['name']} — {c.get('careers_url') or c['url']}" for c in custom] or ["(none)"]
-
-    lines += ["", "## New (never attempted)", ""]
-    lines += [f"- {c['name']} — {c['url']}" for c in new] or ["(none)"]
-
+    lines += [f"- {vendor}: {count}" for vendor, count in sorted(vendors.items(), key=lambda kv: -kv[1])]
+    lines += ["", "## Not fetchable, by reason", ""]
+    lines += [f"- {reason}: {count}" for reason, count in sorted(reasons.items(), key=lambda kv: -kv[1])]
+    lines += ["", "## Moved to companies.yaml this run", ""]
+    lines += [f"- {c['name']} — {c['ats']}:{c.get('identifier')} — {c['url']}" for c in moved_in or []] or [
+        "(none)"
+    ]
+    lines += ["", "## Moved to unresolved_companies.yaml this run", ""]
+    lines += [
+        f"- {c['name']} — {c['reason']} — {c.get('careers_url') or c['url']}" for c in moved_out or []
+    ] or ["(none)"]
     REPORT_PATH.write_text("\n".join(lines) + "\n", encoding="utf-8")
     logger.info("wrote report to %s", REPORT_PATH)
+
+
+def _save_both(companies: list[dict], unresolved: list[dict]) -> None:
+    company_lists.save(COMPANIES_PATH, companies)
+    company_lists.save(UNRESOLVED_PATH, unresolved, header=company_lists.UNRESOLVED_HEADER)
 
 
 def resolve_pending() -> list[dict]:
@@ -623,59 +671,61 @@ def resolve_pending() -> list[dict]:
     main.py before each run - a freshly-added companies.yaml entry (name+url only)
     has no `ats`, so `adapters/registry.py`'s
     `ATS_ADAPTERS.get(company.get("ats"))` would silently return None and skip it
-    forever without this.
+    forever without this. A new entry that turns out not to be fetchable moves to
+    unresolved_companies.yaml right away (company_lists.rebalance()).
 
-    Deliberately narrower than `needs_resolution()` - an already-attempted
-    `null`/`custom` result is not re-fetched here (see `is_new_entry()`'s
-    docstring for why); run `python -m tools.resolve_ats` by hand to retry those.
-    No-op (returns `[]`, doesn't touch the file) once every company has been
-    through resolution at least once, which is the common case on every run after
-    a company's first.
+    Deliberately narrower than the CLI: nothing already attempted is re-fetched here
+    (see `is_new_entry()`'s docstring for why). No-op (returns `[]`, doesn't touch
+    either file) once every company has been through resolution at least once,
+    which is the common case on every run after a company's first.
     """
-    with open(COMPANIES_PATH, encoding="utf-8") as f:
-        data = yaml.safe_load(f)
-
-    companies = data["companies"]
+    companies = company_lists.load(COMPANIES_PATH)
     to_resolve = [c for c in companies if is_new_entry(c)]
     if not to_resolve:
         return []
 
     logger.info("resolving %d pending company ATS entries", len(to_resolve))
     resolve_all(to_resolve)
-
-    with open(COMPANIES_PATH, "w", encoding="utf-8") as f:
-        yaml.safe_dump(data, f, sort_keys=False, allow_unicode=True, default_flow_style=False)
-
     logger.info("pending resolution summary: %s", _summarize(to_resolve))
-    _write_report(companies)
+
+    companies, unresolved, moved_in, moved_out = company_lists.rebalance(
+        companies, company_lists.load(UNRESOLVED_PATH), check_live=to_resolve
+    )
+    _save_both(companies, unresolved)
+    _write_report(companies, unresolved, moved_in, moved_out)
     return to_resolve
 
 
 def main(argv: list[str] | None = None) -> None:
+    """Default (the weekly workflow): re-detect every unresolved_companies.yaml entry
+    plus any companies.yaml entry that needs_resolution(), check every companies.yaml
+    endpoint is still alive, then rebalance the two files. --force re-detects every
+    company in both files."""
     logging.basicConfig(level=logging.INFO, format="%(levelname)s %(name)s: %(message)s")
 
     parser = argparse.ArgumentParser()
     parser.add_argument(
         "--force",
         action="store_true",
-        help="re-check every company, not just those currently unresolved/custom",
+        help="re-detect every company in both files, not just the unresolved ones",
     )
     args = parser.parse_args(argv)
 
-    with open(COMPANIES_PATH, encoding="utf-8") as f:
-        data = yaml.safe_load(f)
-
-    companies = data["companies"]
-    to_resolve = companies if args.force else [c for c in companies if needs_resolution(c)]
-    logger.info("resolving %d of %d companies (force=%s)", len(to_resolve), len(companies), args.force)
-
+    companies = company_lists.load(COMPANIES_PATH)
+    unresolved = company_lists.load(UNRESOLVED_PATH)
+    to_resolve = (
+        companies + unresolved if args.force else [c for c in companies if needs_resolution(c)] + unresolved
+    )
+    total = len(companies) + len(unresolved)
+    logger.info("resolving %d of %d companies (force=%s)", len(to_resolve), total, args.force)
     resolve_all(to_resolve)
 
-    with open(COMPANIES_PATH, "w", encoding="utf-8") as f:
-        yaml.safe_dump(data, f, sort_keys=False, allow_unicode=True, default_flow_style=False)
-
-    logger.info("ATS resolution summary: %s", _summarize(companies))
-    _write_report(companies)
+    companies, unresolved, moved_in, moved_out = company_lists.rebalance(
+        companies, unresolved, check_live=companies
+    )
+    _save_both(companies, unresolved)
+    logger.info("ATS resolution summary: %s", _summarize(companies + unresolved))
+    _write_report(companies, unresolved, moved_in, moved_out)
 
 
 if __name__ == "__main__":

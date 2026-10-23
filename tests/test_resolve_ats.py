@@ -1,7 +1,18 @@
 import httpx
+import pytest
 
 from tests.conftest import fake_response
-from tools import resolve_ats
+from tools import company_lists, resolve_ats
+
+
+@pytest.fixture(autouse=True)
+def _isolated_files_and_no_liveness_calls(monkeypatch, tmp_path):
+    # Never read/write the real config files; tests that need a companies file set
+    # COMPANIES_PATH themselves. Liveness is tested in test_company_lists.py.
+    monkeypatch.setattr(resolve_ats, "COMPANIES_PATH", tmp_path / "companies.yaml")
+    monkeypatch.setattr(resolve_ats, "UNRESOLVED_PATH", tmp_path / "unresolved_companies.yaml")
+    monkeypatch.setattr(resolve_ats, "REPORT_PATH", tmp_path / "report.md")
+    monkeypatch.setattr(company_lists, "endpoint_alive", lambda company: True)
 
 
 def _company(name="Acme", url="https://acme.test"):
@@ -83,7 +94,13 @@ def test_no_careers_page_found_anywhere_resolves_to_unresolved(monkeypatch):
 
     result = resolve_ats._detect_ats(_company())
 
-    assert result == {"ats": "unresolved", "identifier": None, "careers_url": None, "match_method": None}
+    assert result == {
+        "ats": "unresolved",
+        "identifier": None,
+        "careers_url": None,
+        "match_method": None,
+        "reason": "no careers page found on the site",
+    }
 
 
 def test_careers_page_found_with_no_fingerprint_resolves_to_custom(monkeypatch):
@@ -103,6 +120,7 @@ def test_careers_page_found_with_no_fingerprint_resolves_to_custom(monkeypatch):
         "identifier": None,
         "careers_url": "https://acme.test/careers",
         "match_method": None,
+        "reason": "careers page has no supported ATS",
     }
 
 
@@ -114,7 +132,13 @@ def test_unreachable_homepage_resolves_to_unresolved_without_raising(monkeypatch
 
     result = resolve_ats._detect_ats(_company())
 
-    assert result == {"ats": "unresolved", "identifier": None, "careers_url": None, "match_method": None}
+    assert result == {
+        "ats": "unresolved",
+        "identifier": None,
+        "careers_url": None,
+        "match_method": None,
+        "reason": "homepage unreachable (HTTPError)",
+    }
 
 
 def test_greenhouse_v1_boards_prefix_with_no_real_slug_does_not_false_positive(monkeypatch):
@@ -599,3 +623,42 @@ def test_resolve_pending_is_a_noop_when_no_company_is_new(monkeypatch, tmp_path)
     monkeypatch.setattr(resolve_ats, "get_with_retry", fake_get)
 
     assert resolve_ats.resolve_pending() == []
+
+
+def test_workday_site_skips_a_locale_or_api_prefix_in_the_path(monkeypatch):
+    # Real cases (2026-10-23): DATEV, Novartis, Zühlke... all stored the locale as
+    # `site`, so every fetch 404'd.
+    for html, site in [
+        ('<a href="https://aareon.wd103.myworkdayjobs.com/de-DE/Aareon">Jobs</a>', "Aareon"),
+        ('<a href="https://datev.wd3.myworkdayjobs.com/Datev_Careers">Jobs</a>', "Datev_Careers"),
+        ('fetch("https://acme.wd1.myworkdayjobs.com/wday/cxs/acme/External/jobs")', "External"),
+    ]:
+        def fake_get(url, html=html, **kwargs):
+            return fake_response(text=html, request_url=url)
+
+        monkeypatch.setattr(resolve_ats, "get_with_retry", fake_get)
+        result = resolve_ats._detect_ats(_company())
+        assert result["ats"] == "workday"
+        assert result["identifier"]["site"] == site
+
+
+def test_workday_link_with_only_a_locale_is_not_a_site(monkeypatch):
+    html = '<a href="https://acme.wd3.myworkdayjobs.com/en-US">Jobs</a>'
+    monkeypatch.setattr(
+        resolve_ats, "get_with_retry", lambda url, **kw: fake_response(text=html, request_url=url)
+    )
+    monkeypatch.setattr(resolve_ats, "_probe_all_platforms", lambda company: None)
+
+    assert resolve_ats._detect_ats(_company())["ats"] != "workday"
+
+
+def test_ashby_slug_keeps_a_dot(monkeypatch):
+    # Real case: Taxfix's board is jobs.ashbyhq.com/taxfix.com - "taxfix" 404s.
+    html = '<a href="https://jobs.ashbyhq.com/taxfix.com/abc-123">Open roles</a>'
+    monkeypatch.setattr(
+        resolve_ats, "get_with_retry", lambda url, **kw: fake_response(text=html, request_url=url)
+    )
+
+    result = resolve_ats._detect_ats(_company(name="Taxfix", url="https://taxfix.de"))
+
+    assert (result["ats"], result["identifier"]) == ("ashby", "taxfix.com")
