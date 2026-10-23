@@ -81,8 +81,11 @@ def fetch_jobs(company_config: dict) -> list[NormalizedJob]:
     ).json()
     applied_facets = _collect_germany_facet_ids(facets_response.get("facets", []))
     if not applied_facets:
-        logger.warning("no Germany-relevant location facet found for %s, skipping", company_config["name"])
-        return []
+        # No facet entry looked German - usually a German office in a town the
+        # city-name heuristic doesn't know (verified live 2026-10-23: EOS lists only
+        # "Krailling"/"Maisach"; skipping fetched 0 of its jobs). Search unfiltered
+        # instead; the detail endpoint's country check below drops non-German jobs.
+        logger.info("no Germany location facet for %s - searching unfiltered", company_config["name"])
 
     source_id = f"workday:{tenant}/{site}"
     jobs_by_url: dict[str, NormalizedJob] = {}

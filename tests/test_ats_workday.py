@@ -115,9 +115,11 @@ def test_detail_endpoint_country_check_drops_a_false_positive(monkeypatch):
     assert jobs == []
 
 
-def test_no_germany_facet_returns_empty_list(monkeypatch):
-    no_germany = {
-        "total": 0,
+def test_no_germany_facet_searches_unfiltered_and_keeps_jobs_confirmed_german(monkeypatch):
+    # Real case (2026-10-23): EOS's facet only has "Krailling"/"Maisach", towns the
+    # German-city heuristic doesn't know - skipping the company fetched nothing.
+    no_known_city = {
+        "total": 2,
         "jobPostings": [],
         "facets": [
             {
@@ -126,17 +128,41 @@ def test_no_germany_facet_returns_empty_list(monkeypatch):
                     {
                         "facetParameter": "locations",
                         "descriptor": "Locations",
-                        "values": [{"descriptor": "Warsaw", "id": "warsaw-id", "count": 10}],
+                        "values": [
+                            {"descriptor": "Krailling", "id": "krailling-id", "count": 1},
+                            {"descriptor": "Novi", "id": "novi-id", "count": 1},
+                        ],
                     }
                 ],
             }
         ],
     }
-    monkeypatch.setattr(workday_api, "post_with_retry", lambda *a, **k: fake_response(json=no_germany))
+    postings = [
+        {"title": "QA Engineer", "externalPath": "/job/Krailling/QA_1", "locationsText": "Krailling"},
+        {"title": "QA Engineer US", "externalPath": "/job/Novi/QA_2", "locationsText": "Novi"},
+    ]
+    applied = []
+
+    def fake_post(url, **kwargs):
+        body = kwargs["json"]
+        if body["searchText"] == "":
+            return fake_response(json=no_known_city)
+        applied.append(body["appliedFacets"])
+        return fake_response(json=_search_response(postings))
+
+    def fake_get(url, **kwargs):
+        country = "Germany" if "Krailling" in url else "United States of America"
+        info = {"country": {"descriptor": country}, "jobDescription": "d"}
+        return fake_response(json={"jobPostingInfo": info})
+
+    monkeypatch.setattr(workday_api, "post_with_retry", fake_post)
+    monkeypatch.setattr(workday_api, "get_with_retry", fake_get)
+    monkeypatch.setattr(http_client.time, "sleep", lambda *_: None)
 
     jobs = workday_api.fetch_jobs(_company_config())
 
-    assert jobs == []
+    assert applied == [{}]
+    assert [(j.title, j.location) for j in jobs] == [("QA Engineer", "Krailling")]
 
 
 def test_paginates_when_a_term_has_more_results_than_one_page(monkeypatch):
