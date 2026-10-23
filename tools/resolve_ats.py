@@ -457,6 +457,41 @@ def is_new_entry(company: dict) -> bool:
     return company.get("ats") is None
 
 
+# Platforms with no adapter (yet), seen on careers pages in the 2026-10-23 audit of
+# all custom/unresolved companies. Only used to make a `custom` result's reason
+# specific ("careers page uses successfactors (no adapter yet)"), so the weekly
+# report's per-reason counts show which adapter would recover the most companies.
+UNSUPPORTED_VENDOR_HINTS = {
+    "successfactors": re.compile(r"successfactors\.(?:com|eu)|jobs\.sap\.com|rmk-map", re.I),
+    "teamtailor": re.compile(r"teamtailor\.com|teamtailor-cdn", re.I),
+    "notion": re.compile(r"\.notion\.site/", re.I),
+    "dvinci": re.compile(r"dvinci(?:-hr)?\.(?:de|com)", re.I),
+    "hrworks": re.compile(r"hrworks\.de", re.I),
+    "factorial": re.compile(r"factorialhr\.(?:com|de)", re.I),
+    "cornerstone": re.compile(r"csod\.com", re.I),
+    "phenom": re.compile(r"phenompeople\.com|cdn\.phenom", re.I),
+    "avature": re.compile(r"avature\.net", re.I),
+    "breezy": re.compile(r"breezy\.hr", re.I),
+    "zoho": re.compile(r"zohorecruit", re.I),
+    "oracle": re.compile(r"oraclecloud\.com/hcmUI", re.I),
+    "pinpoint": re.compile(r"pinpointhq\.com", re.I),
+    "hibob": re.compile(r"hibob\.com|bob\.careers", re.I),
+    "umantis": re.compile(r"umantis\.com", re.I),
+    "bite": re.compile(r"b-ite\.(?:com|de)", re.I),
+    "talention": re.compile(r"talention|talentry", re.I),
+}
+JSON_LD_JOB_POSTING = re.compile(r'"@type"\s*:\s*"JobPosting"', re.I)
+
+
+def _custom_reason(html: str) -> str:
+    vendors = sorted(name for name, pattern in UNSUPPORTED_VENDOR_HINTS.items() if pattern.search(html))
+    if vendors:
+        return f"careers page uses {', '.join(vendors)} (no adapter yet)"
+    if JSON_LD_JOB_POSTING.search(html):
+        return "careers page has JSON-LD JobPosting data (generic-adapter candidate)"
+    return "careers page has no supported ATS"
+
+
 def _unresolved(reason: str = "no careers page found on the site") -> dict:
     return {
         "ats": UNRESOLVED,
@@ -515,6 +550,7 @@ def _detect_ats(company: dict) -> dict:
     # the custom-vs-unresolved decision below can tell "found a page, no known
     # vendor" apart from "couldn't find a careers page at all".
     first_found_career_url: str | None = None
+    first_found_career_html = ""
     visited = {str(homepage.url)}
     for url in _candidate_career_urls(company_url, str(homepage.url), homepage.text):
         if url in visited:
@@ -527,6 +563,7 @@ def _detect_ats(company: dict) -> dict:
 
         if first_found_career_url is None:
             first_found_career_url = str(response.url)
+            first_found_career_html = response.text
 
         found = _scan_page(str(response.url), response.text, company["name"])
         if found:
@@ -572,7 +609,7 @@ def _detect_ats(company: dict) -> dict:
             "identifier": None,
             "careers_url": first_found_career_url,
             "match_method": None,
-            "reason": "careers page has no supported ATS",
+            "reason": _custom_reason(first_found_career_html),
         }
     return _unresolved()
 

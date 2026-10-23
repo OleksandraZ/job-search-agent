@@ -662,3 +662,24 @@ def test_ashby_slug_keeps_a_dot(monkeypatch):
     result = resolve_ats._detect_ats(_company(name="Taxfix", url="https://taxfix.de"))
 
     assert (result["ats"], result["identifier"]) == ("ashby", "taxfix.com")
+
+
+def test_custom_reason_names_an_unsupported_platform(monkeypatch):
+    # Real case (2026-10-23): Neocom's job board is a public Notion page.
+    pages = {
+        "https://acme.test": '<a href="/careers">Karriere</a>',
+        "https://acme.test/careers": '<a href="https://acme.notion.site/Jobs-123">Open roles</a>',
+    }
+
+    def fake_get(url, **kwargs):
+        if url not in pages:
+            raise httpx.HTTPError("404")
+        return fake_response(text=pages[url], request_url=url)
+
+    monkeypatch.setattr(resolve_ats, "get_with_retry", fake_get)
+    monkeypatch.setattr(resolve_ats, "_probe_all_platforms", lambda company: None)
+
+    result = resolve_ats._detect_ats(_company())
+
+    assert result["ats"] == "custom"
+    assert result["reason"] == "careers page uses notion (no adapter yet)"
