@@ -4267,3 +4267,10 @@ companies:
   careers_url: https://www.nakoa.digital/karriere.html
   match_method: manual
   resolved_at: '2026-10-23T10:42:04.179423+00:00'
+- name: Envalor (Klimahelden)
+  url: https://klimahelden.eu/
+  ats: join
+  identifier: envalor
+  careers_url: https://envalor.com/de/karriere/
+  match_method: join_widget
+  resolved_at: '2026-10-23T10:46:14.164211+00:00'

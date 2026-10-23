@@ -10983,14 +10983,6 @@ companies:
   match_method: null
   resolved_at: '2026-10-22T15:52:24.192749+00:00'
   reason: homepage reachable, no careers link found (JS-rendered site?)
-- name: Klimahelden GmbH
-  url: https://klimahelden.eu/
-  ats: custom
-  identifier: null
-  careers_url: https://envalor.com/de/download/case-study-iflow/
-  match_method: null
-  resolved_at: '2026-10-22T15:52:32.964237+00:00'
-  reason: 'CHECK: careers page references join but no live identifier matched'
 - name: Radkurier24
   url: https://radkurier24.com/
   ats: custom
