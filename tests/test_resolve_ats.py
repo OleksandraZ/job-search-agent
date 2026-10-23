@@ -683,3 +683,24 @@ def test_custom_reason_names_an_unsupported_platform(monkeypatch):
 
     assert result["ats"] == "custom"
     assert result["reason"] == "careers page uses notion (no adapter yet)"
+
+
+def test_join_widget_bundle_reveals_the_company_slug(monkeypatch):
+    # Real case (2026-10-23): Retorio's careers page only embeds JOIN's widget by a
+    # signed token; the slug ("retoriocom") is inside the widget bundle script.
+    pages = {
+        "https://acme.test": '<script src="https://join.com/api/widget/bundle/eyJ.abc.def"></script>',
+        "https://join.com/api/widget/bundle/eyJ.abc.def": 'fetch("https://join.com/companies/retoriocom/jobs")',
+    }
+
+    def fake_get(url, **kwargs):
+        if url not in pages:
+            raise httpx.HTTPError("404")
+        return fake_response(text=pages[url], request_url=url)
+
+    monkeypatch.setattr(resolve_ats, "get_with_retry", fake_get)
+
+    result = resolve_ats._detect_ats(_company(name="Retorio"))
+
+    assert (result["ats"], result["identifier"]) == ("join", "retoriocom")
+    assert result["match_method"] == "join_widget"

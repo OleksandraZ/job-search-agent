@@ -527,6 +527,28 @@ def _scan_page(url: str, text: str, expected_name: str) -> dict | None:
     data_match = _match_data_attributes(text)
     if data_match:
         return {**data_match, "careers_url": url, "match_method": "data_attr"}
+    widget_match = _match_join_widget(text, expected_name)
+    if widget_match:
+        return {**widget_match, "careers_url": url, "match_method": "join_widget"}
+    return None
+
+
+# JOIN's embeddable widget is loaded as join.com/api/widget/bundle/<signed token>;
+# the page itself never names the company slug, but the bundle script does
+# (verified live 2026-10-23: 14 companies - Retorio -> "retoriocom", robominds,
+# oculai... - had only this widget on their careers page).
+JOIN_WIDGET = re.compile(r"join\.com/api/widget/bundle/([A-Za-z0-9._-]+)")
+
+
+def _match_join_widget(text: str, expected_name: str) -> dict | None:
+    for token in dict.fromkeys(JOIN_WIDGET.findall(text)):
+        try:
+            bundle = get_with_retry(f"https://join.com/api/widget/bundle/{token}", headers=HEADERS)
+        except httpx.HTTPError:
+            continue
+        match = _match_signature(str(bundle.url), bundle.text, expected_name)
+        if match and match["ats"] == "join":
+            return match
     return None
 
 
