@@ -128,3 +128,34 @@ def test_resolver_cli_retries_the_unresolved_file_and_moves_entries_both_ways(mo
     report = (tmp_path / "report.md").read_text()
     assert "NowOnLever — lever:acme" in report
     assert "Fetchable — lever endpoint for 'fetchable' is gone (404)" in report
+
+
+def test_an_excluded_company_never_moves_back_even_with_a_live_ats(monkeypatch):
+    # Real case (2026-10-23): Kingstone removed by hand; its Personio board is live.
+    monkeypatch.setattr(company_lists, "endpoint_alive", _alive({"Kingstone": True}))
+    kingstone = _c("Kingstone", "personio", "kingstone-im", excluded=True, reason="removed by hand")
+
+    kept, unresolved, moved_in, moved_out = company_lists.rebalance([kingstone], [])
+    assert kept == [] and moved_out[0]["reason"] == "removed by hand"
+
+    kept, unresolved, moved_in, _ = company_lists.rebalance([], unresolved)
+    assert kept == [] and moved_in == [] and unresolved[0]["name"] == "Kingstone"
+
+
+def test_resolver_cli_never_redetects_an_excluded_company(monkeypatch, tmp_path):
+    unresolved_path = tmp_path / "unresolved_companies.yaml"
+    company_lists.save(
+        unresolved_path, [_c("Gone", "unresolved", None, excluded=True, reason="removed by hand")]
+    )
+    monkeypatch.setattr(resolve_ats, "COMPANIES_PATH", tmp_path / "companies.yaml")
+    monkeypatch.setattr(resolve_ats, "UNRESOLVED_PATH", unresolved_path)
+    monkeypatch.setattr(resolve_ats, "REPORT_PATH", tmp_path / "report.md")
+
+    def no_requests(url, **kwargs):
+        raise AssertionError(f"excluded company was re-detected: {url}")
+
+    monkeypatch.setattr(resolve_ats, "get_with_retry", no_requests)
+
+    resolve_ats.main([])
+
+    assert company_lists.load(unresolved_path)[0]["reason"] == "removed by hand"

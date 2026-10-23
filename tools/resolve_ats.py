@@ -716,6 +716,9 @@ def main(argv: list[str] | None = None) -> None:
     to_resolve = (
         companies + unresolved if args.force else [c for c in companies if needs_resolution(c)] + unresolved
     )
+    # Companies removed by hand are never re-detected - that would also overwrite
+    # the `reason` a person wrote for them.
+    to_resolve = [c for c in to_resolve if not c.get("excluded")]
     total = len(companies) + len(unresolved)
     logger.info("resolving %d of %d companies (force=%s)", len(to_resolve), total, args.force)
     resolve_all(to_resolve)

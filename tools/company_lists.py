@@ -122,6 +122,8 @@ def endpoint_alive(company: dict) -> bool | None:
 def reason_for(company: dict, alive: bool | None = None) -> str:
     """Why a company can't be fetched - stored as `reason` in the unresolved file."""
     ats = company.get("ats")
+    if company.get("excluded"):
+        return company.get("reason") or "excluded by hand"
     if ats == "unresolved":
         return company.get("reason") or "no careers page found"
     if ats == "custom":
@@ -134,6 +136,11 @@ def reason_for(company: dict, alive: bool | None = None) -> str:
 
 
 def is_fetchable(company: dict) -> bool:
+    # `excluded: true` = removed by hand (e.g. not a fit) - kept in the unresolved
+    # file so a future batch still dedupes against it, but never fetched again even
+    # though its ATS may be perfectly alive.
+    if company.get("excluded"):
+        return False
     return company.get("ats") in ATS_ADAPTERS and bool(company.get("identifier"))
 
 

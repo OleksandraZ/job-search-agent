@@ -131,7 +131,10 @@ the whole unresolved file, live-checks every companies.yaml endpoint, and writes
 a switched-off Personio page still linked from the company's own site would
 otherwise bounce back in on every re-check. `main.py` never retries an unresolved
 entry itself — re-fetching dead/vendor-less careers pages on every run adds latency
-for an outcome that rarely changes. See the `process-new-companies` skill.
+for an outcome that rarely changes. See the `process-new-companies` skill. To remove a company
+for good (not a fit, domain sold...), set `excluded: true` plus a `reason` on its
+entry - it moves to the unresolved file and is never re-detected or moved back, but
+still counts for deduping a future company batch.
 
 **Adapter interface:** `adapters/ats/<name>.py` exposes
 
