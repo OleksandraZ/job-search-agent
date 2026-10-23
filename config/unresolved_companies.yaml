@@ -3221,12 +3221,13 @@ companies:
   reason: homepage returns HTTP 500
 - name: Neocom (Neo Commerce GmbH)
   url: https://neocom.ai
-  ats: unresolved
+  ats: custom
   identifier: null
-  careers_url: null
+  careers_url: https://chief-inch-5e2.notion.site/312f9e4a85528157bff1de2622a3932e?v=312f9e4a8552810ebd49000ce50392ff
   match_method: null
   resolved_at: '2026-08-20T22:28:05.676572+00:00'
-  reason: homepage reachable, no careers link found (JS-rendered site?)
+  reason: careers page uses notion (no adapter yet) - job board is a public Notion
+    database; checked by hand 2026-10-23
 - name: Manvelyan Enterprises
   url: https://manvelyan-ent.de/
   ats: unresolved
@@ -9934,7 +9935,7 @@ companies:
   careers_url: https://ar-giri.notion.site/Job-Board-484ab5f6f5714568b40c70301f0c4fe0
   match_method: null
   resolved_at: '2026-10-22T15:46:31.078941+00:00'
-  reason: careers page has no recognizable ATS (own listing or JS-rendered)
+  reason: careers page uses notion (no adapter yet)
 - name: PhantomStack
   url: https://www.phantomstack.com/
   ats: unresolved
@@ -10632,7 +10633,7 @@ companies:
   careers_url: https://nesoma.notion.site/Jobs-Nesoma-Health-78955f858b3d4d218d553a31dd53171e
   match_method: null
   resolved_at: '2026-10-22T15:50:20.279940+00:00'
-  reason: careers page has no recognizable ATS (own listing or JS-rendered)
+  reason: careers page uses notion (no adapter yet)
 - name: hey circle GmbH
   url: https://www.heycircle.de/
   ats: custom
@@ -10792,7 +10793,7 @@ companies:
   careers_url: https://pinateam.notion.site/Work-Pina-Earth-3d0bbe48fc7e80a38a01c655be02246b
   match_method: null
   resolved_at: '2026-10-23T09:25:33.733556+00:00'
-  reason: careers page has no recognizable ATS (own listing or JS-rendered)
+  reason: careers page uses notion (no adapter yet)
 - name: Noah Mobility GmbH
   url: http://www.noah-mobility.de
   ats: custom
@@ -11218,7 +11219,7 @@ companies:
   careers_url: https://fintalo.notion.site
   match_method: null
   resolved_at: '2026-10-22T15:53:28.884327+00:00'
-  reason: careers page has no recognizable ATS (own listing or JS-rendered)
+  reason: careers page uses notion (no adapter yet)
 - name: Pluno
   url: https://pluno.ai/
   ats: custom
@@ -11242,7 +11243,7 @@ companies:
   careers_url: https://hulaearth.notion.site/Join-Hula-e12dc425b5e94fc2948b83f2258527fd
   match_method: null
   resolved_at: '2026-10-22T15:53:34.113121+00:00'
-  reason: careers page has no recognizable ATS (own listing or JS-rendered)
+  reason: careers page uses notion (no adapter yet)
 - name: Beglaubigt.de
   url: https://beglaubigt.de/
   ats: personio
@@ -12026,7 +12027,7 @@ companies:
   careers_url: https://getaybee.notion.site/Careers-at-Aybee-90aad8a3532840e29498f8a16ba4725f
   match_method: null
   resolved_at: '2026-10-22T15:57:18.881991+00:00'
-  reason: careers page has no recognizable ATS (own listing or JS-rendered)
+  reason: careers page uses notion (no adapter yet)
 - name: Beamler
   url: https://www.beamler.com/
   ats: unresolved
@@ -12578,7 +12579,7 @@ companies:
   careers_url: https://lunaryai.notion.site/Careers-80a7d1bc4678479d8e05264c79c06fa1
   match_method: null
   resolved_at: '2026-10-22T15:59:41.647368+00:00'
-  reason: careers page has no recognizable ATS (own listing or JS-rendered)
+  reason: careers page uses notion (no adapter yet)
 - name: Mango Medical
   url: https://mangomedical.io/
   ats: custom
