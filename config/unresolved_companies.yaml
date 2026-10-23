@@ -10649,8 +10649,9 @@ companies:
   careers_url: https://www.carsync.de/karriere
   match_method: null
   resolved_at: '2026-10-22T15:50:45.854911+00:00'
-  reason: 'CHECK: stored careers page is CARSYNC''s (carsync.de -> JOIN vispiron-gmbh)
-    - motum''s own careers page unknown'
+  reason: duplicate of CARSYNC (VISPIRON) - motum's site redirects to carsync.de;
+    jobs fetched via JOIN vispiron-gmbh (checked by hand 2026-10-23)
+  excluded: true
 - name: NumberSquare GmbH
   url: https://numbersquare.de/
   ats: custom
