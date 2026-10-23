@@ -68,6 +68,13 @@ def select_jobs(raw_jobs: list[NormalizedJob], keywords_config: dict) -> list[No
         matched = filters.require_term_groups(matched, keywords_config["require_term_groups"])
         logger.info("%d left after require_term_groups", len(matched))
 
+    # Optional: ambiguous titles ("Quality Engineer", "Testingenieur") must show a
+    # software signal - see pipeline/filters.py:require_terms_for_titles() and
+    # keywords_qa.yaml's meta.usage.
+    if "software_signal" in keywords_config:
+        matched = filters.require_terms_for_titles(matched, keywords_config["software_signal"])
+        logger.info("%d left after software_signal", len(matched))
+
     # Optional: drop jobs whose description mentions an out-of-scope domain/tool - see
     # pipeline/filters.py:exclude_by_description() and keywords_qa.yaml's meta.usage.
     if "description_exclude_terms" in keywords_config:

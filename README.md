@@ -110,6 +110,10 @@ under `config/` and point `--keywords` at it:
    description must mention at least one term from **every** group (e.g.
    `[[Python, SQL], [Airflow, dbt, Spark]]` = Python/SQL AND a pipeline tool). Jobs
    with an empty description are kept, since "unknown" isn't "doesn't mention it".
+   Optionally add `software_signal` (`{titles: [...], terms: [...]}`) instead: only
+   jobs whose title matches one of `titles` (ambiguous ones like `Quality Engineer`,
+   `Testingenieur`) must mention one of `terms` — keeps manufacturing/hardware QA out
+   without requiring a specific stack (used by `keywords_qa.yaml`).
 5. Optionally add `description_exclude_terms`: drop a job whose title or
    description mentions any of these (domains like `Embedded`, `ISO 26262`). An
    entry can also be a conditional rule —

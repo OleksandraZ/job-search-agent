@@ -15,7 +15,7 @@ meta:
     does not match it), bare "Test Automation"/"QA Automation"/"Testautomatisierung"
     (catch Specialist/Developer/"Ingenieur Testautomatisierung" variants), and
     "Qualitätssicherung" - broad on its own (manufacturing/pharma QA), usable only
-    because require_term_groups drops anything without a matching skill. Older,
+    because software_signal drops those without a software term. Older,
     now-redundant specific terms (e.g. "Backend QA Engineer" inside "QA Engineer")
     are kept on purpose: each is also a separate board search, and a narrower query
     can surface results a broad one loses to a board''s page/size cap.
@@ -25,11 +25,15 @@ meta:
     their own entry since word-boundary matching does not see inside them
     ("Testmanager", "Teamleiter").
 
-    require_term_groups: title OR description must mention one skill; empty
-    descriptions are kept (pipeline/filters.py:require_term_groups). "API testing" is
-    listed with its common spelling variants, since word-boundary matching treats
-    "API testing" and "API-Testing" as different strings. This drops QA roles that
-    only mention e.g. Java/Selenium or Cypress - intended by the target query.
+    software_signal (2026-10-23, user decision - replaces the old require_term_groups
+    Python/Playwright/Locust/API-testing requirement, which dropped 62 of 132 QA jobs
+    in one run, mostly Java/Selenium/test-automation roles): only titles that are
+    ambiguous between software and manufacturing/hardware QA ("Quality Engineer",
+    "Qualitätsingenieur", "Testingenieur", "Test Engineer", "Qualitätssicherung")
+    must mention one software term in title or description; clearly-software titles
+    (Softwaretester, QA Automation, SDET...) pass untouched. Empty descriptions are
+    kept. German compounds ("Softwareentwicklung") need their own entry - word
+    boundaries don''t see inside them. See pipeline/filters.py:require_terms_for_titles().
 
     description_exclude_terms (2026-10-06, user-curated from real noisy postings):
     a job is dropped if its title or description mentions any of these domains
@@ -47,8 +51,8 @@ meta:
     (Angular/React) not listed - in QA ads they describe the product under test. See pipeline/filters.py:exclude_by_description().'
   counts:
     title_match_terms: 26
-    title_exclude_terms: 27
-    require_term_groups: 1
+    title_exclude_terms: 29
+    software_signal: 5 titles / 44 terms
     description_exclude_terms: 117
 report_label: QA
 title_match_terms:
@@ -106,15 +110,60 @@ title_exclude_terms:
 - Teilzeit
 - part-time
 - part time
-require_term_groups:
-- - Python
+- Marketer
+- Marketing
+software_signal:
+  titles:
+  - Quality Engineer
+  - Qualitätsingenieur
+  - Testingenieur
+  - Test Engineer
+  - Qualitätssicherung
+  terms:
+  - Software
+  - Softwareentwicklung
+  - Softwarequalität
+  - Softwaretest
+  - Softwaretests
+  - Softwaretesting
+  - Softwarelösungen
+  - Softwareprodukte
+  - software development
+  - test automation
+  - Testautomatisierung
+  - Testautomation
+  - automated tests
+  - automatisierte Tests
+  - Python
+  - Java
+  - JavaScript
+  - TypeScript
   - Playwright
-  - Locust
+  - Selenium
+  - Cypress
+  - WebdriverIO
+  - Appium
+  - Postman
   - API testing
   - API-Testing
   - API Tests
   - API-Tests
-  - API-Testautomatisierung
+  - JUnit
+  - TestNG
+  - pytest
+  - Jest
+  - Cucumber
+  - Gherkin
+  - Robot Framework
+  - Ranorex
+  - Tosca
+  - JMeter
+  - Locust
+  - k6
+  - CI/CD
+  - Jenkins
+  - GitHub Actions
+  - web applications
 description_exclude_terms:
 - "robotics"
 - "ROS 2"

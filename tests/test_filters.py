@@ -3,6 +3,7 @@ from pipeline.filters import (
     exclude_by_required_years,
     filter_by_title,
     require_term_groups,
+    require_terms_for_titles,
 )
 from tests.conftest import make_job
 
@@ -131,3 +132,20 @@ def test_exclude_by_required_years_drops_only_jobs_asking_for_more():
     unstated = make_job(url="https://example.test/3", description="Mehrjährige Erfahrung mit Python.")
     empty = make_job(url="https://example.test/4", description="")
     assert exclude_by_required_years([three, five, unstated, empty], 3) == [three, unstated, empty]
+
+
+def test_require_terms_for_titles_only_checks_ambiguous_titles():
+    # Real cases (2026-10-23): "Qualitätsingenieur" for locomotive assembly vs a
+    # software "Testingenieur"; an unambiguous "Softwaretester" title always passes.
+    rule = {"titles": ["Qualitätsingenieur", "Testingenieur"], "terms": ["Software", "Selenium"]}
+    manufacturing = make_job(title="Qualitätsingenieur", description="Montage von Lokomotiven")
+    software = make_job(title="Testingenieur (m/w/d)", description="Tests mit Selenium")
+    software_in_title = make_job(title="Testingenieur Software", description="Systeme prüfen")
+    unambiguous = make_job(title="Softwaretester SAP IS-U", description="SAP Module testen")
+    no_description = make_job(title="Qualitätsingenieur", description="")
+
+    kept = require_terms_for_titles(
+        [manufacturing, software, software_in_title, unambiguous, no_description], rule
+    )
+
+    assert kept == [software, software_in_title, unambiguous, no_description]

@@ -31,6 +31,23 @@ def require_term_groups(jobs: list[NormalizedJob], groups: list[list[str]]) -> l
     ]
 
 
+def require_terms_for_titles(jobs: list[NormalizedJob], rule: dict[str, list[str]]) -> list[NormalizedJob]:
+    # Some title terms are ambiguous: "Quality Engineer", "Qualitätsingenieur",
+    # "Testingenieur" are as often manufacturing/hardware roles as software ones
+    # (verified 2026-10-23: APQP, Supplier Quality, locomotive assembly...). A job
+    # whose title matches one of rule["titles"] is kept only if its title or
+    # description mentions one of rule["terms"]; every other job passes untouched.
+    # Empty descriptions are kept, same as require_term_groups().
+    return [
+        job
+        for job in jobs
+        if not title_matches(job.title, rule["titles"])
+        or not job.description.strip()
+        or title_matches(job.title, rule["terms"])
+        or title_matches(job.description, rule["terms"])
+    ]
+
+
 def exclude_by_description(
     jobs: list[NormalizedJob], description_exclude_terms: list[str | dict[str, list[str]]]
 ) -> list[NormalizedJob]:
