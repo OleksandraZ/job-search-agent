@@ -7423,11 +7423,12 @@ companies:
   url: https://www.uvcpartners.com/
   ats: custom
   identifier: null
-  careers_url: https://talent.uvcpartners.com/companies
+  careers_url: https://talent.uvcpartners.com/jobs
   match_method: null
   resolved_at: '2026-10-22T15:04:22.602205+00:00'
-  reason: 'CHECK: careers page references ashby, greenhouse, lever, personio but no
-    live identifier matched'
+  reason: 'getro: VC portfolio job board (network 3062, ~600 jobs from portfolio startups)
+    - no adapter yet; public API api.getro.com/api/v2/collections/3062/search/jobs;
+    checked by hand 2026-10-23'
 - name: Bayern Kapital
   url: https://www.bayernkapital.de/
   ats: custom
@@ -7624,14 +7625,6 @@ companies:
   match_method: null
   resolved_at: '2026-10-22T15:05:39.458703+00:00'
   reason: homepage TLS/SSL error
-- name: Smart Reporting
-  url: https://www.smart-reporting.com/
-  ats: custom
-  identifier: null
-  careers_url: https://www.jacobian.com/careers
-  match_method: null
-  resolved_at: '2026-10-22T15:05:57.103039+00:00'
-  reason: 'CHECK: careers page references workable but no live identifier matched'
 - name: deepc
   url: https://www.deepc.ai/
   ats: custom
@@ -13875,8 +13868,7 @@ companies:
   careers_url: https://careers.cmont.com/jobs
   match_method: null
   resolved_at: '2026-08-21T20:16:28.240463+00:00'
-  reason: 'CHECK: careers page references ashby, greenhouse, personio but no live
-    identifier matched'
+  reason: 'getro: VC portfolio job board - no adapter yet; checked 2026-10-23'
 - name: cleversoft group
   url: https://www.clever-soft.com/
   ats: custom

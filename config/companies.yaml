@@ -4122,6 +4122,10 @@ companies:
   careers_url: https://careers.nttdata.com/de/de/search-results
   match_method: manual
   resolved_at: '2026-10-23T10:28:38.918880+00:00'
+  note: 'partial: Workday nttlimited has ~29 of NTT''s 97 German jobs (2026-10-23);
+    the rest apply via at.nttdata.com and SAP - all 97 are in the Phenom search API
+    behind careers.nttdata.com (POST /widgets, ddoKey refineSearch) - a Phenom adapter
+    would cover them'
 - name: FUNKE Works (AZUBIYO)
   url: http://www.azubiyo.de
   ats: personio
@@ -4165,3 +4169,10 @@ companies:
   careers_url: https://www.powerfactors.com/careers
   match_method: manual
   resolved_at: '2026-10-23T10:37:37.440113+00:00'
+- name: Jacobian (Smart Reporting)
+  url: https://www.smart-reporting.com/
+  ats: workable
+  identifier: jacobian
+  careers_url: https://www.jacobian.com/careers
+  match_method: manual
+  resolved_at: '2026-10-23T10:40:10.729670+00:00'
