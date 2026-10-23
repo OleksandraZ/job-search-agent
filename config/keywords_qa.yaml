@@ -42,7 +42,9 @@ meta:
     simulation, aerospace/aviation - added after a Blackwave "Quality Engineer
     Aerospace" posting got through), RHEL/Rocky Linux, network-protocol
     tooling (Wireshark/OpenSSL), mobile QA, native/C2 German requirements,
-    usability/accessibility testing. Plain terms, word-boundary matched. The last entry is a conditional
+    usability/accessibility testing, teaching gigs (Lehrauftrag/Dozent - 2026-10-23: an
+    alfatraining ISTQB trainer post titled "Softwaretester:in"; "Trainer" itself
+    hits real job ads, so not listed). Plain terms, word-boundary matched. The last entry is a conditional
     rule (user decision 2026-10-06): any other programming language, test
     framework/tool, or Azure only drops a job that mentions neither Python nor
     Playwright ("Playwright and Cypress" stays, "Selenium with Java" goes).
@@ -53,7 +55,7 @@ meta:
     title_match_terms: 26
     title_exclude_terms: 29
     software_signal: 5 titles / 44 terms
-    description_exclude_terms: 117
+    description_exclude_terms: 122
 report_label: QA
 title_match_terms:
 - QA Engineer
@@ -277,6 +279,11 @@ description_exclude_terms:
 - "Red Hat Enterprise Linux"
 - "Rocky Linux"
 - "RockyOS"
+- "Lehrauftrag"
+- "Unterrichtszeiten"
+- "Dozent"
+- "Dozentin"
+- "Lehrkraft"
 - "Netzwerktechnologien"
 - "Wireshark"
 - "OpenSSL"
