@@ -65,7 +65,10 @@ def _parse_search_page(html: str, source_id: str) -> list[NormalizedJob]:
                 source_id=source_id,
                 title=title_el.get_text(strip=True) if title_el else "",
                 company=company_el.get_text(strip=True) if company_el else "",
-                url=BASE_URL + href if href else "",
+                # urljoin, not BASE_URL + href: StepStone switched its card links
+                # from relative to absolute (seen 2026-10-23), which produced
+                # "https://www.stepstone.dehttps://www.stepstone.de/..." links.
+                url=urllib.parse.urljoin(BASE_URL, href) if href else "",
                 location=location_el.get_text(strip=True) if location_el else "",
                 description=snippet_el.decode_contents() if snippet_el else "",
             )

@@ -41,3 +41,15 @@ def test_detail_page_fetch_sends_a_referer_header(monkeypatch):
 
     assert seen_headers.get("Referer") == "https://www.stepstone.de/jobs/qa-engineer"
     assert "Full" in jobs[0].description
+
+
+def test_absolute_card_links_are_not_prefixed_twice():
+    # Real case (2026-10-23): StepStone's card links became absolute URLs.
+    html = SEARCH_PAGE.replace(
+        'href="/stellenangebote--QA-Engineer--1.html"',
+        'href="https://www.stepstone.de/stellenangebote--QA-Engineer--1.html"',
+    )
+
+    jobs = stepstone._parse_search_page(html, "stepstone_germany")
+
+    assert jobs[0].url == "https://www.stepstone.de/stellenangebote--QA-Engineer--1.html"
