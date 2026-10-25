@@ -3086,13 +3086,6 @@ companies:
   careers_url: https://www.maltego.com/about-us/#careers-at-maltego
   match_method: page_scan
   resolved_at: '2026-08-21T19:43:15.708778+00:00'
-- name: Rencore
-  url: https://rencore.com/
-  ats: personio
-  identifier: rencore
-  careers_url: https://rencore.com/en/company/career/
-  match_method: page_scan
-  resolved_at: '2026-08-21T19:43:16.667424+00:00'
 - name: Twentyfour Industries
   url: https://twentyfour.industries/
   ats: personio
@@ -4274,3 +4267,153 @@ companies:
   careers_url: https://envalor.com/de/karriere/
   match_method: join_widget
   resolved_at: '2026-10-23T10:46:14.164211+00:00'
+- name: Intel
+  url: https://www.intel.de/
+  ats: workday
+  identifier:
+    tenant: intel
+    wd_host: wd1
+    site: External
+  careers_url: https://www.intel.com/content/www/us/en/jobs/life-at-intel.html
+  match_method: page_scan
+  resolved_at: '2026-10-25T08:42:40.462754+00:00'
+- name: NXP Semiconductors Germany
+  url: https://www.nxp.com/
+  ats: workday
+  identifier:
+    tenant: nxp
+    wd_host: wd3
+    site: careers
+  careers_url: https://www.nxp.com/company/about-nxp/careers:CAREERS
+  match_method: page_scan
+  resolved_at: '2026-10-25T08:43:35.197361+00:00'
+- name: Analog Devices Germany
+  url: https://www.analog.com/
+  ats: ashby
+  identifier: analog
+  careers_url: null
+  match_method: api_probe
+  resolved_at: '2026-10-25T08:43:36.414295+00:00'
+- name: ROHM Semiconductor Europe
+  url: https://www.rohm.com/eu
+  ats: personio
+  identifier: rohm-semiconductor
+  careers_url: https://www.rohm.com/careers
+  match_method: page_scan
+  resolved_at: '2026-10-25T08:43:38.442362+00:00'
+- name: Disney Germany
+  url: https://www.disney.de/
+  ats: workday
+  identifier:
+    tenant: disney
+    wd_host: wd5
+    site: disneycareer
+  careers_url: https://join.disneycareers.com/global/en/the-walt-disney-studios
+  match_method: page_scan
+  resolved_at: '2026-10-25T08:44:20.288653+00:00'
+- name: BANKSapi GmbH
+  url: https://banksapi.de/
+  ats: personio
+  identifier: banksapi
+  careers_url: https://banksapi.de/
+  match_method: page_scan
+  resolved_at: '2026-10-25T08:55:37.999709+00:00'
+- name: sparkle gifts
+  url: http://www.sparkle.gifts/
+  ats: ashby
+  identifier: sparkle
+  careers_url: null
+  match_method: api_probe
+  resolved_at: '2026-10-25T09:09:17.707058+00:00'
+- name: SUMM AI GmbH
+  url: https://summ-ai.com/
+  ats: join
+  identifier: summ-ai
+  careers_url: https://summ.ai/ueber-uns/karriere
+  match_method: page_scan
+  resolved_at: '2026-10-25T09:21:51.301693+00:00'
+- name: Cambrion
+  url: https://www.cambrion.ai/
+  ats: join
+  identifier: cambrionai
+  careers_url: https://www.cambrion.ai/about#roles
+  match_method: join_widget
+  resolved_at: '2026-10-25T09:22:03.334506+00:00'
+- name: HolidayCheck Group
+  url: https://www.holidaycheckgroup.com/
+  ats: personio
+  identifier: holidaycheck
+  careers_url: https://jobs.holidaycheck.de/
+  match_method: page_scan
+  resolved_at: '2026-10-25T09:34:19.399755+00:00'
+- name: EDAG Engineering
+  url: https://www.edag.com/
+  ats: workable
+  identifier: edag-uk
+  careers_url: https://www.edag.com/de/karriere/stellenanzeigen
+  match_method: page_scan
+  resolved_at: '2026-10-25T09:36:37.463867+00:00'
+- name: TrustYou GmbH
+  url: http://www.trustyou.com
+  ats: join
+  identifier: trustyounet
+  careers_url: https://www.trustyou.com/careers/
+  match_method: join_widget
+  resolved_at: '2026-10-25T09:55:56.780482+00:00'
+- name: Sym GmbH
+  url: https://sym.eco/
+  ats: personio
+  identifier: sym
+  careers_url: null
+  match_method: api_probe
+  resolved_at: '2026-10-25T10:09:11.278716+00:00'
+- name: Greenda
+  url: https://greenda.ai/?source=munichstartupprofile
+  ats: personio
+  identifier: greenda
+  careers_url: null
+  match_method: api_probe
+  resolved_at: '2026-10-25T10:18:46.596964+00:00'
+- name: Capmont
+  url: https://www.cmont.com/
+  ats: greenhouse
+  identifier: plume
+  careers_url: https://careers.cmont.com/jobs
+  match_method: page_scan
+  resolved_at: '2026-10-25T10:30:20.415341+00:00'
+- name: amp sound branding
+  url: https://ampsoundbranding.com/
+  ats: greenhouse
+  identifier: landor
+  careers_url: https://ampsoundbranding.com/join-us
+  match_method: page_scan
+  resolved_at: '2026-10-25T10:38:27.080858+00:00'
+- name: Terra Canis
+  url: https://www.terracanis.com/
+  ats: personio
+  identifier: terra-canis-gmbh
+  careers_url: https://www.terracanis.com/
+  match_method: page_scan
+  resolved_at: '2026-10-25T10:40:21.995286+00:00'
+- name: ForTISS
+  url: https://www.fortiss.org/
+  ats: personio
+  identifier: fortiss
+  careers_url: null
+  match_method: api_probe
+  resolved_at: '2026-10-25T10:47:09.206085+00:00'
+- name: European Medicines Agency (EMA)
+  url: https://www.ema.europa.eu
+  ats: ashby
+  identifier: ema
+  careers_url: null
+  match_method: api_probe
+  resolved_at: '2026-10-25T10:49:51.294143+00:00'
+- name: Institut für Arbeitsmarkt- und Berufsforschung (IAB) der Bundesagentur für
+    Arbeit
+  url: https://www.iab.de
+  ats: personio
+  identifier: iab
+  careers_url: null
+  match_method: api_probe
+  resolved_at: '2026-10-25T10:53:27.816070+00:00'
