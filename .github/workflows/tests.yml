@@ -1,0 +1,37 @@
+name: Tests
+
+on:
+  push:
+    branches: [main]
+    # The daily/weekly bot commits only touch state files - no need to re-test those.
+    paths-ignore:
+      - "storage/jobs.db"
+      - "tools/resolve_ats_report.md"
+  pull_request:
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+          cache: pip
+
+      - run: pip install -r requirements.txt -r requirements-dev.txt
+
+      - name: Lint (ruff)
+        run: ruff check .
+
+      - name: Type check (mypy)
+        run: mypy .
+
+      # Fully offline: every adapter test runs against recorded/stubbed responses.
+      - name: Tests (pytest)
+        run: pytest -q
