@@ -19,7 +19,8 @@ def _entry(i: int, group: JobGroup) -> str:
     # pipeline/duplicates.py. The other boards are named, not linked, to keep the
     # message short (user decision 2026-10-06).
     job = group.main
-    text = f"{i}. {job.title} — {job.company} ({group.locations})\n   {job.url}"
+    location = f" ({group.locations})" if group.locations else ""
+    text = f"{i}. {job.title} — {job.company}{location}\n   {job.url}"
     if group.other_hosts:
         text += f"\n   also on: {', '.join(group.other_hosts)}"
     return text

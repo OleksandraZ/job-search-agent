@@ -22,6 +22,17 @@ def test_format_message_english_only_section():
     assert "QA Engineer — Acme" in chunks[0]
 
 
+def test_format_message_omits_brackets_when_no_location_known():
+    # Arbeitnow jobs can come without a location - seen in a real send as
+    # "Test Engineer (f/m/d) — Think Cell ()".
+    no_location = _group(title="QA Engineer", company="Acme", location="")
+    with_location = _group(title="QA Lead", company="Beta", location="München", url="https://example.test/2")
+    chunks = telegram.format_message(german_jobs=[], english_jobs=[no_location, with_location])
+    assert "QA Engineer — Acme\n" in chunks[0]
+    assert "()" not in chunks[0]
+    assert "QA Lead — Beta (München)\n" in chunks[0]
+
+
 def test_format_message_orders_english_before_german():
     en_job = _group(url="https://example.test/en")
     de_job = _group(url="https://example.test/de")
