@@ -32,7 +32,9 @@ logger = logging.getLogger(__name__)
 
 
 def load_yaml(name: str) -> dict:
-    with open(CONFIG_DIR / name, encoding="utf-8") as f:
+    # Every config file lives in config/, so `--keywords config/keywords_x.yaml` (a
+    # tab-completed path) means the same as `--keywords keywords_x.yaml`.
+    with open(CONFIG_DIR / Path(name).name, encoding="utf-8") as f:
         return yaml.safe_load(f)
 
 
@@ -143,7 +145,7 @@ def main(dry_run: bool = False, keywords_file: str = "keywords_qa.yaml") -> None
     raw_jobs = raw_board_jobs + raw_company_jobs
 
     report = build_report(raw_jobs, keywords_config, db_path)
-    report_label = keywords_config.get("report_label", "QA")
+    report_label = keywords_config.get("report_label", "")
 
     if dry_run:
         for chunk in telegram.format_message(report.german, report.english, report_label):

@@ -26,15 +26,21 @@ def _entry(i: int, group: JobGroup) -> str:
     return text
 
 
+def _jobs_noun(report_label: str) -> str:
+    """'QA jobs', or just 'jobs' for a keywords file without a report_label - a
+    forked search must not be announced under someone else's role name."""
+    return f"{report_label} jobs" if report_label else "jobs"
+
+
 def _blocks(
-    german_jobs: list[JobGroup], english_jobs: list[JobGroup], report_label: str = "QA"
+    german_jobs: list[JobGroup], english_jobs: list[JobGroup], report_label: str = ""
 ) -> list[tuple[str, JobGroup | None]]:
     """Header/section-header/per-job blocks, each paired with the job group it
     represents (None for the date header and the two section headers) so a chunk
     built from these blocks can report exactly which jobs it contains.
     """
     date_str = datetime.now().strftime("%d.%m.%Y")
-    blocks: list[tuple[str, JobGroup | None]] = [(f"📅 {date_str} — New {report_label} jobs", None)]
+    blocks: list[tuple[str, JobGroup | None]] = [(f"📅 {date_str} — New {_jobs_noun(report_label)}", None)]
 
     if english_jobs:
         blocks.append((f"🇬🇧 English-speaking ({len(english_jobs)})", None))
@@ -71,11 +77,11 @@ def _pack_chunks(blocks: list[tuple[str, JobGroup | None]]) -> list[tuple[str, l
 
 
 def format_message(
-    german_jobs: list[JobGroup], english_jobs: list[JobGroup], report_label: str = "QA"
+    german_jobs: list[JobGroup], english_jobs: list[JobGroup], report_label: str = ""
 ) -> list[str]:
     """Format the EN/DE-split report into one or more messages, each under Telegram's length limit."""
     if not german_jobs and not english_jobs:
-        return [f"No new {report_label} jobs today."]
+        return [f"No new {_jobs_noun(report_label)} today."]
     return [text for text, _jobs in _pack_chunks(_blocks(german_jobs, english_jobs, report_label))]
 
 
@@ -93,7 +99,7 @@ def send_report(
     english_jobs: list[JobGroup],
     bot_token: str,
     chat_id: str,
-    report_label: str = "QA",
+    report_label: str = "",
 ) -> list[JobGroup]:
     """Send each chunk in order, stopping at the first failure rather than raising.
     Returns only the job groups whose chunk actually sent, so the caller marks
@@ -102,7 +108,7 @@ def send_report(
     duplicate alongside jobs that already went out.
     """
     if not german_jobs and not english_jobs:
-        send_message(f"No new {report_label} jobs today.", bot_token, chat_id)
+        send_message(f"No new {_jobs_noun(report_label)} today.", bot_token, chat_id)
         return []
 
     total = len(german_jobs) + len(english_jobs)

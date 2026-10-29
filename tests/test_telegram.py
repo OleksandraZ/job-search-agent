@@ -10,7 +10,14 @@ def _group(**kwargs) -> JobGroup:
 
 
 def test_format_message_with_no_jobs():
-    assert telegram.format_message([], []) == ["No new QA jobs today."]
+    assert telegram.format_message([], [], "QA") == ["No new QA jobs today."]
+
+
+def test_format_message_without_label_stays_neutral():
+    # A new keywords file without report_label must not be announced as "QA".
+    assert telegram.format_message([], []) == ["No new jobs today."]
+    chunks = telegram.format_message(german_jobs=[], english_jobs=[_group()])
+    assert "New jobs\n" in chunks[0]
 
 
 def test_format_message_english_only_section():

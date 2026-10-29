@@ -102,7 +102,7 @@ def _patch_orchestration(monkeypatch, *, german_jobs, english_jobs, calls):
     def fake_refresh_seen(jobs, db_path):
         calls.append(("refresh_seen", jobs))
 
-    def fake_send_report(german_jobs, english_jobs, bot_token, chat_id, report_label="QA"):
+    def fake_send_report(german_jobs, english_jobs, bot_token, chat_id, report_label=""):
         calls.append(("send_report", german_jobs, english_jobs))
         return german_jobs + english_jobs
 
@@ -163,3 +163,10 @@ def test_build_report_merges_the_same_job_from_several_boards(tmp_path):
     assert report.german == []
     assert report.english == [JobGroup([xing, devjobs])]
     assert report.english[0].main is devjobs
+
+
+@pytest.mark.parametrize("name", ["keywords_qa.yaml", "config/keywords_qa.yaml", "./config/keywords_qa.yaml"])
+def test_load_yaml_accepts_a_bare_name_or_a_config_path(name):
+    # `--keywords config/keywords_qa.yaml` (a tab-completed path) used to look for
+    # config/config/keywords_qa.yaml.
+    assert "title_match_terms" in main.load_yaml(name)
