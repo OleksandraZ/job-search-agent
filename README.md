@@ -8,7 +8,7 @@ postings in Munich and remote roles across Germany from job boards and hundreds 
 company career pages, keeps the ones matching your keywords, drops ones it has already
 sent, sorts the rest by whether the role **requires German**, and posts the result to
 Telegram. The role is just a YAML file: QA, Python, Cloud/DevOps and Data Engineering
-sets are included, and [adding your own](#add-your-own-search) needs no code changes.
+sets are included, and [adding your own](#use-it-for-your-own-search) needs no code changes.
 
 <img src="docs/img/telegram-sample.png" alt="A daily Telegram report: three English-speaking QA jobs and one German-speaking job, the last also found on arbeitsagentur.de" width="520">
 
@@ -93,19 +93,193 @@ building this: what happened, how it was found and the rule that came out of it.
 
 ## Use it for your own search
 
-Fork it, point it at your own role, done. Searching for something other than QA
-needs no code changes. Ships with four keyword sets as working examples: QA Engineer
-roles (`config/keywords_qa.yaml`, the default), Python developer roles
-(`config/keywords_python.yaml`), Cloud/DevOps roles (`config/keywords_cloud_devops.yaml`)
-and Data Engineering roles (`config/keywords_data_engineering.yaml`) — see
-[Add your own search](#add-your-own-search).
+**What you can change without touching code:** the roles you search for, set in one
+YAML file of keywords. **What's fixed:** the location (Munich, plus remote jobs anywhere
+in Germany) and the list of job boards and companies, which are Germany-focused. Searching
+another city or country would need code changes.
 
-**Scope that's *not* yet configurable:** the location filter is fixed to Munich +
-Germany-wide-remote (`pipeline/location.py`), and the board/company source lists
-(`config/sources.yaml`, `config/companies.yaml`) are fixed and Germany-focused.
-Only the keyword set (what roles you're matching) is swappable today — a fork
-targeting a different city or country would need code changes, not just a new
-config file.
+You need Python 3.13+, a Telegram account and about 15 minutes. Expect the first run to
+take a while (see step 6).
+
+### 1. Get the code
+
+Fork the repo on GitHub if you want it to run daily (see
+[Run it every day](#run-it-every-day-on-github-actions)), or just clone it to run it on
+your machine:
+
+```bash
+git clone https://github.com/<your-username>/job-search-agent.git   # or OleksandraZ/... if you didn't fork
+cd job-search-agent
+python -m venv .venv
+source .venv/bin/activate          # Windows: .venv\Scripts\activate
+pip install -r requirements.txt
+```
+
+### 2. Start with an empty history
+
+`storage/jobs.db` remembers every job already sent, so nothing is sent twice. The copy
+in the repo holds the original author's history: keep it and you'll never see jobs
+they already got. Delete it, and a fresh one is created on your first real run:
+
+```bash
+rm storage/jobs.db
+```
+
+### 3. Create your Telegram bot
+
+1. In Telegram, open [@BotFather](https://t.me/BotFather), send `/newbot` and follow
+   the prompts. It replies with a **bot token** like `123456789:AAE...`.
+2. Open a chat with your new bot and press **Start** (a bot can't message you until
+   you've written to it first). Send it any message, e.g. `hi`.
+3. Open `https://api.telegram.org/bot<your token>/getUpdates` in a browser and find
+   `"chat":{"id":123456789,...}`. That number is your **chat ID**. If the page shows
+   `"result":[]`, send the bot another message and reload.
+4. Create a file named `.env` in the project folder (it's git-ignored, so your token
+   never gets committed):
+
+   ```
+   TELEGRAM_BOT_TOKEN=123456789:AAE...
+   TELEGRAM_CHAT_ID=123456789
+   ```
+
+### 4. Describe your search
+
+Create a file in `config/`, e.g. `config/keywords_frontend.yaml`. Only
+`title_match_terms` is required:
+
+```yaml
+report_label: Frontend        # shown in the message: "New Frontend jobs"
+title_match_terms:            # a job is kept if its title contains one of these words
+  - Frontend
+  - Front-End
+  - React Developer
+  - Frontend-Entwickler       # add the German titles too
+```
+
+Run it once (step 5), look at what comes back, then tighten it with the optional
+filters in the [keywords file reference](#keywords-file-reference), e.g. drop `Senior`
+roles or require a specific skill. The four shipped `config/keywords_*.yaml` files are
+worked examples of every option.
+
+### 5. Try it without sending anything
+
+```bash
+python main.py --keywords keywords_frontend.yaml --dry-run
+```
+
+This prints the message instead of sending it, and doesn't record anything as seen,
+so you can repeat it as often as you like while tuning your keywords.
+
+### 6. Send it for real
+
+```bash
+python main.py --keywords keywords_frontend.yaml
+```
+
+**How long it takes:** anywhere from 20 minutes to 2–3 hours. It queries every
+job board and several hundred company career pages, and reads the full description of
+every job whose title matches. Broad terms like `Software Engineer` match many titles
+and make the run much longer. It logs its progress the whole time, so a long quiet
+stretch isn't a hang.
+
+The jobs you're sent are recorded in `storage/jobs.db` and won't be sent again for 90
+days, so the next run only shows new ones.
+
+### Run it every day on GitHub Actions
+
+Your fork already contains the daily workflow. To switch it on:
+
+1. **Commit your changes** (your keywords file and the deleted `storage/jobs.db`) and
+   push them to your fork.
+2. **Add your Telegram credentials as secrets.** In your fork go to Settings → Secrets
+   and variables → Actions → *Secrets* → New repository secret, and add
+   `TELEGRAM_BOT_TOKEN` and `TELEGRAM_CHAT_ID`.
+3. **Choose your search.** On the same page open the *Variables* tab and add
+   `KEYWORDS_FILE` = `keywords_frontend.yaml`. Without it, the QA search runs.
+4. **Enable workflows.** GitHub turns off scheduled workflows in new forks. Open the
+   Actions tab and click the button to enable them.
+5. **Test it.** Actions → Daily job search → Run workflow. You should get a Telegram
+   message when it finishes.
+
+What to expect afterwards:
+
+- It runs once a day, scheduled for about 06:13 Berlin time, but GitHub often starts
+  scheduled runs a few hours late.
+- **After every run, the workflow pushes a commit to your `main`** with the updated
+  `storage/jobs.db`. Run `git pull --rebase` before you push your own changes, and
+  never force-push: that would roll back the history and resend old jobs.
+- If the messages stop, check the Actions tab: a failed run shows there with its log,
+  and GitHub switches off scheduled workflows in repositories with no activity for 60
+  days (one click to switch back on).
+- The weekly company re-check (2–3 hours) only runs on a schedule in the original
+  repo, so your fork doesn't spend time on it. You get its results when you sync.
+
+### Getting updates from the original repo
+
+New adapters, fixes and the weekly company-list updates land in the original repo.
+GitHub's **Sync fork** button will usually report a conflict on `storage/jobs.db`,
+because both repos change it every day. Always keep **your** copy, since it's your
+own history. From the command line:
+
+```bash
+git remote add upstream https://github.com/OleksandraZ/job-search-agent.git   # once
+git pull --rebase                       # get your bot's latest commit first
+git fetch upstream
+git merge upstream/main                 # if it stops on storage/jobs.db:
+git checkout --ours storage/jobs.db && git add storage/jobs.db && git commit --no-edit
+git push
+```
+
+## Keywords file reference
+
+A keywords file is a YAML file in `config/` passed with `--keywords <file name>`.
+`title_match_terms` is the only required key. Filters run in this order, and each one
+is optional:
+
+1. `title_match_terms`: job-title words/phrases to match. Matching ignores case and
+   uses whole words, so `Java` doesn't match "JavaScript". The list is also sent as
+   the search query to every board that supports free-text search, so keep entries to
+   plain role/skill terms, not sentences. Include German titles too: German postings
+   often keep the English title, but not always. Short, simple terms work best: a list
+   of long multi-word phrases matched zero real postings when we tried it.
+2. `title_exclude_terms`: drop a job whose title also contains one of these words
+   (e.g. `Senior`, `Werkstudent`). Useful when a broad term pulls in the wrong
+   seniority or employment type.
+3. `require_term_groups`: a list of groups; the title or description must mention at
+   least one term from **every** group (e.g. `[[Python, SQL], [Airflow, dbt, Spark]]`
+   = Python or SQL, and a pipeline tool). Jobs with an empty description are kept,
+   since "unknown" isn't "doesn't mention it".
+4. `software_signal` (`{titles: [...], terms: [...]}`): a lighter alternative. Only
+   jobs whose title matches one of `titles` (ambiguous ones like `Quality Engineer`)
+   must mention one of `terms`. `keywords_qa.yaml` uses it to keep out
+   manufacturing QA.
+5. `description_exclude_terms`: drop a job whose title or description mentions any of
+   these (domains like `Embedded`, `ISO 26262`). An entry can also be a rule like
+   `{terms: [Selenium, Cypress], unless: [Playwright, Python]}`, which only drops the
+   job if none of the `unless` terms appear. Prefer `title_exclude_terms` for words
+   that often appear in descriptions by accident (benefits lists, "Vollzeit oder
+   Teilzeit").
+6. `max_required_years`: drop a job whose description asks for more years of
+   experience than this. Jobs that state no number are kept.
+7. `report_label`: names the search in the Telegram message ("New Frontend jobs").
+   Without it the message just says "New jobs".
+
+## Other commands
+
+```bash
+# Excel report of ALL currently fitting jobs, seen or not (never sends anything).
+# Writes reports/market_report_<date>.xlsx plus reports/raw_jobs_<date>.json.
+# Defaults to the four shipped searches; pass your own with --keywords.
+python -m tools.market_report --keywords keywords_frontend.yaml
+
+# Rebuild that report in seconds from saved jobs after changing filters
+# (new title_match_terms need a fresh fetch: they were never searched)
+python -m tools.market_report --from-raw reports/raw_jobs_<date>.json
+
+# Run the tests, linter and type checker
+pip install -r requirements-dev.txt
+pytest && ruff check . && mypy .
+```
 
 See [`CLAUDE.md`](CLAUDE.md) for the adapter contract and contribution rules used
 when extending this project with an AI coding agent.
@@ -128,7 +302,7 @@ fetch (boards + companies) → scope filter (Munich / Germany-remote) → title 
 - **Agents** — `agents/munich_local.py` and `agents/germany_remote.py` each filter the
   same raw job list down to their scope (`pipeline/location.py`).
 - **Pipeline** — `pipeline/filters.py` matches titles against
-  `config/keywords_qa.yaml` (or whatever file `--keywords` points at) and applies
+  the keywords file passed with `--keywords` (default `config/keywords_qa.yaml`) and applies
   that file's optional filters (`pipeline/experience.py` reads the required years of
   experience from the description), `storage/dedupe.py` drops jobs already sent
   (SQLite, `storage/jobs.db`) — recognized by normalized title + company
@@ -140,128 +314,26 @@ fetch (boards + companies) → scope filter (Munich / Germany-remote) → title 
   entry with an `also on: …` line.
 - **Notifier** — `notifier/telegram.py` formats and sends the report.
 
-## Setup
+## How the scheduled runs work
 
-Requires Python 3.13+ (the same version the GitHub workflow uses).
+Three workflows live in `.github/workflows/`:
 
-```bash
-python -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt -r requirements-dev.txt
-```
+| Workflow | When | What it does |
+|---|---|---|
+| `tests.yml` | Every push and PR | `ruff`, `mypy`, `pytest` (offline, about a second) |
+| `daily-job-search.yml` | Daily, ~06:13 Berlin, or manually | Runs the search named by the `KEYWORDS_FILE` repo variable (default `keywords_qa.yaml`) and sends it to Telegram |
+| `weekly-company-recheck.yml` | Sundays (original repo only), or manually | `python -m tools.resolve_ats`, 2–3 hours: re-detects every company in `config/unresolved_companies.yaml`, checks that every `config/companies.yaml` endpoint still answers, moves companies between the two files and writes `tools/resolve_ats_report.md` |
 
-Create a `.env` file (git-ignored) with your Telegram bot credentials:
+**Why the bot commits to `main`:** a GitHub runner starts empty every time, so state
+that has to survive until the next run is kept in git: `storage/jobs.db` (what was
+already sent) and the two company files. Each run commits whatever changed. The two
+scheduled workflows share a concurrency group so they never push at the same time.
 
-```
-TELEGRAM_BOT_TOKEN=<your bot token>
-TELEGRAM_CHAT_ID=<your chat id>
-```
-
-## Usage
-
-```bash
-# print the report instead of sending it to Telegram
-python main.py --dry-run
-
-# fetch, filter, and send today's report to Telegram (default: config/keywords_qa.yaml)
-python main.py
-
-# run against a different keyword set (e.g. the Python search)
-python main.py --keywords keywords_python.yaml
-
-# Excel report of ALL currently fitting jobs for all four searches (seen or not,
-# duplicates across boards merged) - never sends or marks anything as seen.
-# Writes reports/market_report_<date>.xlsx plus reports/raw_jobs_<date>.json
-python -m tools.market_report
-
-# rebuild the report in seconds from saved jobs after changing exclusions
-# (new title_match_terms need a fresh fetch - they were never searched)
-python -m tools.market_report --from-raw reports/raw_jobs_<date>.json
-```
-
-## Add your own search
-
-Searching for a different role doesn't need any code changes — add a new YAML file
-under `config/` and point `--keywords` at it:
-
-1. Copy an existing file as a starting template, e.g.
-   `cp config/keywords_qa.yaml config/keywords_frontend.yaml`.
-2. Edit `title_match_terms`: the list of job-title words/phrases to match (case-
-   insensitive, whole-word — a bare `Frontend` won't match inside an unrelated
-   word). This list is also sent as the search query to every board that supports
-   free-text search, so keep entries to plain role/skill terms, not full sentences.
-   Include both English and German titles — German postings often keep the English
-   title as a loanword, but not always.
-3. Optionally add `title_exclude_terms`: drop any title match that also contains
-   one of these words (e.g. `Senior`, `Werkstudent`) — useful when a broad term
-   like a bare skill name would otherwise pull in postings outside your target
-   seniority/employment type.
-4. Optionally add `require_term_groups`: a list of groups; the title or
-   description must mention at least one term from **every** group (e.g.
-   `[[Python, SQL], [Airflow, dbt, Spark]]` = Python/SQL AND a pipeline tool). Jobs
-   with an empty description are kept, since "unknown" isn't "doesn't mention it".
-   Optionally add `software_signal` (`{titles: [...], terms: [...]}`) instead: only
-   jobs whose title matches one of `titles` (ambiguous ones like `Quality Engineer`,
-   `Testingenieur`) must mention one of `terms` — keeps manufacturing/hardware QA out
-   without requiring a specific stack (used by `keywords_qa.yaml`).
-5. Optionally add `description_exclude_terms`: drop a job whose title or
-   description mentions any of these (domains like `Embedded`, `ISO 26262`). An
-   entry can also be a conditional rule —
-   `{terms: [Selenium, Cypress], unless: [Playwright, Python]}` only drops the job
-   if none of the `unless` terms appear. Prefer `title_exclude_terms` for words that
-   are often incidental in descriptions ("Vollzeit oder Teilzeit", perks lists).
-6. Optionally add `max_required_years`: drop a job whose description asks for more
-   years of experience than this (`pipeline/experience.py`); jobs stating no number
-   are kept.
-7. Optionally add `report_label`: names this search in the Telegram heading
-   (`New {label} jobs`) and the no-jobs message, so different searches are
-   distinguishable in chat history. Defaults to `"QA"` if omitted.
-8. Run it: `python main.py --dry-run --keywords keywords_frontend.yaml` to check
-   the output, then drop `--dry-run` once it looks right.
-
-All four shipped `config/keywords_*.yaml` files document this contract in their own
-`meta.usage` field with real worked examples (including one real trap: a
-combinatorial multi-word phrase list matched zero real postings — short, bare
-terms combined with `title_exclude_terms` worked far better in practice).
-
-To run your new search on a schedule too, add a step to
-`.github/workflows/daily-job-search.yml` next to the QA step (see
-[Scheduled runs](#scheduled-runs-github-actions) below) — but check the runtime
-first: every matched title costs one description request, so broad terms like
-`Software Engineer` can turn a run from minutes into hours.
-
-## Scheduled runs (GitHub Actions)
-
-`.github/workflows/daily-job-search.yml` runs the QA keyword search once a day
-(nominally ~06:13 Europe/Berlin - GitHub often starts scheduled runs hours late) and
-on manual dispatch; the other keyword files are run locally on demand. It needs
-two repo secrets (Settings → Secrets and variables → Actions):
-
-```
-TELEGRAM_BOT_TOKEN
-TELEGRAM_CHAT_ID
-```
-
-`.github/workflows/weekly-company-recheck.yml` runs `python -m tools.resolve_ats`
-every Sunday (2-3 hours, no secrets needed): it re-detects every
-`config/unresolved_companies.yaml` entry, live-checks every `config/companies.yaml`
-ATS endpoint, moves companies between the two files, and commits
-`tools/resolve_ats_report.md` — counts per reason, what moved, and `CHECK:` cases
-worth a manual look. It shares the daily run's concurrency group, so the two never
-push at the same time.
-
-`storage/jobs.db` (dedupe state) and `config/companies.yaml` /
-`config/unresolved_companies.yaml` (ATS resolution results) are tracked in git rather
-than ignored, because the runner's filesystem
-doesn't survive between runs — the workflow commits whatever changed back to the
-repo at the end of each run so the next scheduled run sees it.
-
-That means the bot pushes a commit to `main` after every run. Always
-`git pull --rebase` before pushing, and **never force-push** — a force push
-silently replaces the bot's commits, the dedupe DB falls back to an old state, and
-the next run re-sends every job seen since then as "new". The same applies after a
-local run without `--dry-run`: it updates `storage/jobs.db` locally, so pull first
-and commit the DB afterwards.
+That's why you should always `git pull --rebase` before pushing and **never
+force-push**: a force push replaces the bot's commits, `jobs.db` falls back to an old
+state, and the next run resends every job seen since then. A local run without
+`--dry-run` updates `storage/jobs.db` too, so pull first and commit the database
+afterwards.
 
 ## Project layout
 
