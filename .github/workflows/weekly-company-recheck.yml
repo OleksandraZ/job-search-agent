@@ -20,6 +20,10 @@ concurrency:
 
 jobs:
   recheck:
+    # Maintains the shared company lists, so on schedule only in the original repo -
+    # a fork gets the updates by syncing instead of spending 2-3 hours a week on it.
+    # Manual dispatch still works everywhere.
+    if: ${{ !github.event.repository.fork || github.event_name == 'workflow_dispatch' }}
     runs-on: ubuntu-latest
     timeout-minutes: 330
     steps:

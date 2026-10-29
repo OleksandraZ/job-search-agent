@@ -36,14 +36,18 @@ jobs:
 
       - run: pip install -r requirements.txt
 
-      - name: Run QA keyword search
+      # A fork picks its own search with the repo variable KEYWORDS_FILE (Settings →
+      # Secrets and variables → Actions → Variables), e.g. keywords_frontend.yaml -
+      # no workflow edit needed. Unset = the QA search.
+      - name: Run keyword search
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
-        run: python main.py
+          KEYWORDS_FILE: ${{ vars.KEYWORDS_FILE || 'keywords_qa.yaml' }}
+        run: python main.py --keywords "$KEYWORDS_FILE"
 
-      # Only the QA search runs on schedule (user decision 2026-10-06). The Python,
-      # Cloud/DevOps and Data Engineering keyword files are run locally on demand:
+      # One search per scheduled run (here: QA, user decision 2026-10-06). The other
+      # keyword files are run locally on demand:
       # python main.py --keywords keywords_python.yaml (or tools/market_report.py).
       # The run above mutates state on disk that has to survive to tomorrow's
       # run: storage/jobs.db (dedupe - without this every job would look "new"
@@ -56,7 +60,10 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add storage/jobs.db config/companies.yaml config/unresolved_companies.yaml tools/resolve_ats_report.md
+          # storage/ rather than storage/jobs.db: a fork that started from an empty
+          # history has no jobs.db until its first sent job, and git add fails on a
+          # path that doesn't exist.
+          git add storage/ config/companies.yaml config/unresolved_companies.yaml tools/resolve_ats_report.md
           git diff --cached --quiet && exit 0
           git commit -m "chore: update dedupe DB and resolved companies [skip ci]"
           # main may have moved while this run was going (a run takes up to an hour
