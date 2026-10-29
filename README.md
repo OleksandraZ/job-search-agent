@@ -1,14 +1,104 @@
 # job-search-agent
 
-A scheduled pipeline that finds new job postings in Germany (remote) and Munich
-(onsite/hybrid/remote) matching a keyword set of your choosing, splits them by the
-language *required* for the role (German vs English), and sends a formatted
-summary to Telegram once a day. Fork it, point it at your own role, done — no code
-changes needed to search for something other than what it ships with. Ships with
-four keyword sets as working examples: QA Engineer roles (`config/keywords_qa.yaml`,
-the default), Python developer roles (`config/keywords_python.yaml`), Cloud/DevOps
-roles (`config/keywords_cloud_devops.yaml`) and Data Engineering roles
-(`config/keywords_data_engineering.yaml`) — see [Add your own search](#add-your-own-search).
+[![Tests](https://github.com/OleksandraZ/job-search-agent/actions/workflows/tests.yml/badge.svg)](https://github.com/OleksandraZ/job-search-agent/actions/workflows/tests.yml)
+[![Daily job search](https://github.com/OleksandraZ/job-search-agent/actions/workflows/daily-job-search.yml/badge.svg)](https://github.com/OleksandraZ/job-search-agent/actions/workflows/daily-job-search.yml)
+
+A pipeline that runs every morning on **GitHub Actions**. It collects new job
+postings in Munich and remote roles across Germany from job boards and hundreds of
+company career pages, keeps the ones matching your keywords, drops ones it has already
+sent, sorts the rest by whether the role **requires German**, and posts the result to
+Telegram. The role is just a YAML file: QA, Python, Cloud/DevOps and Data Engineering
+sets are included, and [adding your own](#add-your-own-search) needs no code changes.
+
+<img src="docs/img/telegram-sample.png" alt="A daily Telegram report: three English-speaking QA jobs and one German-speaking job, the last also found on arbeitsagentur.de" width="520">
+
+## Highlights
+
+- **Sorting by required language, not the language of the ad.** A German ad that
+  says "Deutschkenntnisse von Vorteil" is still fine for English speakers, and an
+  English ad can still require C1 German. See [The language classifier](#the-language-classifier).
+- **Many sources, one contract.** Every job board and ATS vendor (Greenhouse, Lever,
+  Personio, Workday...) has its own adapter, and each converts its data into the
+  same `NormalizedJob` shape, so the rest of the pipeline doesn't know where a job came from.
+- **Each job is sent once.** The same posting on three boards, under a new tracking
+  URL, or listed for another city is recognized and merged into one entry
+  (`also on: …`), and isn't sent again for 90 days.
+- **The company list maintains itself.** A weekly workflow re-checks every company's
+  careers page and moves companies in or out of the fetch list when their ATS changes
+  or their endpoint dies.
+- **Every lesson is written down.** Real bugs and the reasoning behind each fix are in
+  [`docs/lessons/`](#lessons-learned).
+
+## How it's tested
+
+260+ pytest tests run on every push ([`tests.yml`](.github/workflows/tests.yml)),
+together with `ruff` and `mypy`. They're **fully offline**: HTTP calls are replaced
+with stubbed responses shaped like the real payloads, so the suite runs in about a
+second and never fails because a job board is down.
+
+| Area | What the tests protect |
+|---|---|
+| Adapters (boards + ATS) | Each source's payload is mapped correctly into `NormalizedJob`; non-German locations are dropped; one failed request doesn't throw away the rest |
+| Location + language classification | Munich/remote detection, German-requirement phrases, optional-language wording, negation |
+| Filters | Whole-word title matching, excluded terms, required skills, maximum years of experience |
+| Dedupe | Already-sent jobs stay out; reposts across boards/URLs are merged into one entry |
+| Company resolution | ATS vendor detection and identifier extraction from careers pages; moves between the two company files |
+| Infrastructure | Retry on 429/5xx, Telegram message splitting, config file validation |
+
+Most classification and filter tests are **regression tests for bugs that reached a
+real Telegram message**. For example, the title keyword `SDET` matched inside
+"Emsdetten" (a German town) and sent a tax-clerk job as a QA role. Title matching
+has used whole words since then, and a test pins that down
+([`tests/test_filters.py`](tests/test_filters.py)).
+
+## The language classifier
+
+[`pipeline/classify_language.py`](pipeline/classify_language.py) uses rules, not an
+LLM. The output feeds a daily decision about which jobs to apply for, so it needs to
+be predictable, free to run and testable. Every rule in
+[`config/language_rules.yaml`](config/language_rules.yaml) traces back to a real
+posting it got wrong. It runs two checks:
+
+1. **Explicit requirement.** Regexes for German-requirement phrases in both languages
+   ("Deutsch C1", "verhandlungssichere Deutschkenntnisse", "fluent German"). A
+   match doesn't count if optional wording ("von Vorteil", "nice to have", "a plus")
+   follows **in the same clause**. Word gaps stop at `.`, `;` and HTML tags, so an
+   optional phrase in one bullet point can't cancel a requirement in the next.
+2. **Whole-description fallback.** If no phrase matches, it counts common German and
+   English words. An ad written mostly in German (≥15 German words, ≥60% ratio)
+   counts as German-required even if it never says so.
+
+| Description | Result | Why |
+|---|---|---|
+| `Deutschkenntnisse B2 von Vorteil, aber nicht zwingend.` | English | German mentioned, but marked optional in the same clause |
+| `Gute Deutschkenntnisse, Englisch von Vorteil.` | German | The optional wording applies to English, not German |
+| `Deutschkenntnisse (B2). Andere Skills sind von Vorteil…` | German | "von Vorteil" is in the next sentence, so it doesn't apply |
+| An ad written entirely in German with no language requirement stated | German | Fallback: 0.91–0.94 German word ratio on real samples vs 0.00 for an English ad |
+
+## Lessons learned
+
+[`docs/lessons/`](docs/lessons/) records about 40 real bugs and surprises found while
+building this: what happened, how it was found and the rule that came out of it.
+
+- [`classification.md`](docs/lessons/classification.md): the regex false positives
+  behind the classifier, e.g. an optional phrase in one bullet point cancelling a
+  real German requirement in the bullet next to it.
+- [`adapters.md`](docs/lessons/adapters.md): building board adapters, e.g. a site
+  whose `robots.txt` explicitly allows AI crawlers while its firewall blocks them
+  anyway (treated as "don't scrape", not "work around it"), and search boxes that
+  ignore the query.
+- [`ats_adapters.md`](docs/lessons/ats_adapters.md): company career pages, e.g.
+  Workday's search endpoint returning 400 above an undocumented page size of 20, and
+  Greenhouse descriptions that are HTML-escaped twice.
+
+## Use it for your own search
+
+Fork it, point it at your own role, done. Searching for something other than QA
+needs no code changes. Ships with four keyword sets as working examples: QA Engineer
+roles (`config/keywords_qa.yaml`, the default), Python developer roles
+(`config/keywords_python.yaml`), Cloud/DevOps roles (`config/keywords_cloud_devops.yaml`)
+and Data Engineering roles (`config/keywords_data_engineering.yaml`) — see
+[Add your own search](#add-your-own-search).
 
 **Scope that's *not* yet configurable:** the location filter is fixed to Munich +
 Germany-wide-remote (`pipeline/location.py`), and the board/company source lists
@@ -189,5 +279,5 @@ tools/             resolve_ats.py — resolves companies to an ATS vendor (weekl
                    market_report.py — Excel report of all fitting jobs
 reports/           market reports + saved raw jobs (git-ignored)
 docs/lessons/      the "why" behind adapter/classification gotchas
-tests/             pytest suite
+tests/             pytest suite (offline; run in CI by .github/workflows/tests.yml)
 ```
