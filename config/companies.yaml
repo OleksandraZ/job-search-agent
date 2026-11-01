@@ -819,10 +819,6 @@ companies:
   careers_url: https://www.nagarro.com/en/careers/south-africa
   match_method: page_scan
   resolved_at: '2026-08-20T17:30:55.842104+00:00'
-- name: Valtech
-  url: https://www.valtech.com/
-  ats: greenhouse
-  identifier: valtech
 - name: BearingPoint
   url: https://www.bearingpoint.com/
   ats: greenhouse
@@ -938,10 +934,6 @@ companies:
   url: https://www.planqc.eu/
   ats: personio
   identifier: planqc-gmbh
-- name: QuantumDiamonds
-  url: https://www.quantumdiamonds.de/
-  ats: personio
-  identifier: quantum-diamond
 - name: kiutra
   url: https://kiutra.com/
   ats: personio
@@ -2586,13 +2578,6 @@ companies:
   careers_url: https://www.edurino.com/pages/career-at-edurino
   match_method: page_scan
   resolved_at: '2026-08-21T00:14:33.588098+00:00'
-- name: MSAID GmbH
-  url: https://www.msaid.de/
-  ats: personio
-  identifier: msaid
-  careers_url: https://www.msaid.de/career
-  match_method: page_scan
-  resolved_at: '2026-08-21T00:45:44.629132+00:00'
 - name: EcoPlanet Green Operations GmbH
   url: https://www.ecoplanet.tech
   ats: personio
@@ -4360,13 +4345,6 @@ companies:
   careers_url: https://www.trustyou.com/careers/
   match_method: join_widget
   resolved_at: '2026-10-25T09:55:56.780482+00:00'
-- name: Sym GmbH
-  url: https://sym.eco/
-  ats: personio
-  identifier: sym
-  careers_url: null
-  match_method: api_probe
-  resolved_at: '2026-10-25T10:09:11.278716+00:00'
 - name: Greenda
   url: https://greenda.ai/?source=munichstartupprofile
   ats: personio
@@ -4395,13 +4373,6 @@ companies:
   careers_url: https://www.terracanis.com/
   match_method: page_scan
   resolved_at: '2026-10-25T10:40:21.995286+00:00'
-- name: ForTISS
-  url: https://www.fortiss.org/
-  ats: personio
-  identifier: fortiss
-  careers_url: null
-  match_method: api_probe
-  resolved_at: '2026-10-25T10:47:09.206085+00:00'
 - name: European Medicines Agency (EMA)
   url: https://www.ema.europa.eu
   ats: ashby
@@ -4417,3 +4388,10 @@ companies:
   careers_url: null
   match_method: api_probe
   resolved_at: '2026-10-25T10:53:27.816070+00:00'
+- name: EASE
+  url: https://ease-systems.de/
+  ats: join
+  identifier: ease-systemsde
+  careers_url: https://ease.systems/
+  match_method: join_widget
+  resolved_at: '2026-11-01T12:26:57.639945+00:00'
