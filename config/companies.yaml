@@ -9,10 +9,6 @@ companies:
   identifier: career.quantum-systems.com
   match_method: manual
   resolved_at: '2026-10-23T09:25:33.733556+00:00'
-- name: Parloa
-  url: https://www.parloa.com
-  ats: greenhouse
-  identifier: parloa
 - name: n8n
   url: https://n8n.io
   ats: ashby
@@ -88,10 +84,6 @@ companies:
   url: https://taktile.com
   ats: ashby
   identifier: taktile
-- name: Urban Sports Club
-  url: https://urbansportsclub.com
-  ats: greenhouse
-  identifier: urbansportsclub
 - name: Omio
   url: https://www.omio.com
   ats: smartrecruiters
@@ -1158,20 +1150,6 @@ companies:
   careers_url: https://www.kranushealth.com/en/about/careers
   match_method: page_scan
   resolved_at: '2026-08-20T14:17:24.265340+00:00'
-- name: XO Life
-  url: https://xo-life.com/
-  ats: personio
-  identifier: xolife
-  careers_url: https://xolife.jobs.personio.de/
-  match_method: page_scan
-  resolved_at: '2026-08-20T14:17:25.871158+00:00'
-- name: Munevo
-  url: https://www.munevo.com/
-  ats: recruitee
-  identifier: munevo
-  careers_url: https://munevo.com/en
-  match_method: page_scan
-  resolved_at: '2026-08-20T14:17:30.179746+00:00'
 - name: ArianeGroup
   url: https://www.ariane.group/
   ats: workday
@@ -4262,16 +4240,6 @@ companies:
   careers_url: https://www.intel.com/content/www/us/en/jobs/life-at-intel.html
   match_method: page_scan
   resolved_at: '2026-10-25T08:42:40.462754+00:00'
-- name: NXP Semiconductors Germany
-  url: https://www.nxp.com/
-  ats: workday
-  identifier:
-    tenant: nxp
-    wd_host: wd3
-    site: careers
-  careers_url: https://www.nxp.com/company/about-nxp/careers:CAREERS
-  match_method: page_scan
-  resolved_at: '2026-10-25T08:43:35.197361+00:00'
 - name: Analog Devices Germany
   url: https://www.analog.com/
   ats: ashby
@@ -4395,3 +4363,45 @@ companies:
   careers_url: https://ease.systems/
   match_method: join_widget
   resolved_at: '2026-11-01T12:26:57.639945+00:00'
+- name: FirmParking
+  url: https://firmparking.de
+  ats: personio
+  identifier: firmparking
+  careers_url: null
+  match_method: api_probe
+  resolved_at: '2026-11-08T11:16:30.096275+00:00'
+- name: MediPulse
+  url: https://www.medipulse.de
+  ats: join
+  identifier: medipulsede
+  careers_url: https://www.medipulse.de/karriere
+  match_method: join_widget
+  resolved_at: '2026-11-08T11:26:18.419194+00:00'
+- name: Alasco
+  url: https://www.alasco.de/
+  ats: lever
+  identifier: alasco
+  careers_url: null
+  match_method: api_probe
+  resolved_at: '2026-11-08T11:45:00.346029+00:00'
+- name: Starforge GmbH
+  url: https://starforge.energy
+  ats: ashby
+  identifier: starforge
+  careers_url: null
+  match_method: api_probe
+  resolved_at: '2026-11-08T13:16:12.625993+00:00'
+- name: Valtech
+  url: https://www.valtech.com/
+  ats: greenhouse
+  identifier: valtech
+  careers_url: null
+  match_method: api_probe
+  resolved_at: '2026-11-08T13:17:07.298986+00:00'
+- name: QuantumDiamonds
+  url: https://www.quantumdiamonds.de/
+  ats: ashby
+  identifier: quantumdiamonds
+  careers_url: https://www.qd-st.com/careers
+  match_method: page_scan
+  resolved_at: '2026-11-08T13:16:56.710514+00:00'
