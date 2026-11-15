@@ -4405,3 +4405,52 @@ companies:
   careers_url: https://www.qd-st.com/careers
   match_method: page_scan
   resolved_at: '2026-11-08T13:16:56.710514+00:00'
+- name: Lanes & Planes
+  url: https://www.lanes-planes.de/
+  ats: personio
+  identifier: lanes-planes
+  careers_url: null
+  match_method: api_probe
+  resolved_at: '2026-11-15T11:29:57.212971+00:00'
+- name: Scompler
+  url: https://www.scompler.com/
+  ats: personio
+  identifier: scompler-technologies-gmbh
+  careers_url: https://scompler.com/karriere/
+  match_method: page_scan
+  resolved_at: '2026-11-15T11:27:52.054315+00:00'
+- name: Warner Bros. Discovery Germany
+  url: https://wbd.com/
+  ats: lever
+  identifier: skydance
+  careers_url: https://www.skydance.com/careers
+  match_method: page_scan
+  resolved_at: '2026-11-15T12:30:40.146785+00:00'
+- name: Pepper
+  url: https://peppermove.com/
+  ats: greenhouse
+  identifier: pepper
+  careers_url: null
+  match_method: api_probe
+  resolved_at: '2026-11-15T12:52:10.177829+00:00'
+- name: Parloa
+  url: https://www.parloa.com
+  ats: ashby
+  identifier: parloa
+  careers_url: null
+  match_method: api_probe
+  resolved_at: '2026-11-15T13:47:07.275314+00:00'
+- name: Urban Sports Club
+  url: https://urbansportsclub.com
+  ats: greenhouse
+  identifier: usc
+  careers_url: https://culture.urbansportsclub.com/en/jobs
+  match_method: page_scan
+  resolved_at: '2026-11-15T13:47:05.764343+00:00'
+- name: XO Life
+  url: https://xo-life.com/
+  ats: personio
+  identifier: britehealth
+  careers_url: https://britehealth.jobs.personio.com/
+  match_method: page_scan
+  resolved_at: '2026-11-15T13:47:05.889557+00:00'
