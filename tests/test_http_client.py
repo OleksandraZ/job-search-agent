@@ -130,3 +130,68 @@ def test_fetch_each_concurrent_skips_failed_items_without_stopping_others():
     )
 
     assert results == [(1, 10), (3, 30)]
+
+
+def test_429_waits_as_long_as_retry_after_says(monkeypatch):
+    limited = httpx.Response(
+        429, headers={"Retry-After": "12"}, request=httpx.Request("GET", "https://example.test/")
+    )
+    responses = iter([limited, _response(200)])
+    monkeypatch.setattr(http_client.httpx, "request", lambda *a, **k: next(responses))
+    sleeps = []
+    monkeypatch.setattr(http_client.time, "sleep", lambda s: sleeps.append(s))
+
+    http_client.get_with_retry("https://example.test/")
+
+    assert sleeps == [12]
+
+
+def test_retry_after_is_capped(monkeypatch):
+    limited = httpx.Response(
+        429, headers={"Retry-After": "3600"}, request=httpx.Request("GET", "https://example.test/")
+    )
+    responses = iter([limited, _response(200)])
+    monkeypatch.setattr(http_client.httpx, "request", lambda *a, **k: next(responses))
+    sleeps = []
+    monkeypatch.setattr(http_client.time, "sleep", lambda s: sleeps.append(s))
+
+    http_client.get_with_retry("https://example.test/")
+
+    assert sleeps == [http_client.MAX_RETRY_AFTER_SECONDS]
+
+
+def test_fetch_each_gives_up_after_consecutive_failures(monkeypatch):
+    monkeypatch.setattr(http_client.time, "sleep", lambda *_: None)
+    attempted = []
+
+    def fetch_one(term):
+        attempted.append(term)
+        raise httpx.ReadTimeout("no answer")
+
+    results = list(
+        http_client.fetch_each(
+            list("abcdef"), fetch_one, delay_seconds=0, logger=http_client.logger,
+            log_context="search", give_up_after=3,
+        )
+    )
+
+    assert results == []
+    assert attempted == ["a", "b", "c"]
+
+
+def test_fetch_each_give_up_counts_only_failures_in_a_row(monkeypatch):
+    monkeypatch.setattr(http_client.time, "sleep", lambda *_: None)
+
+    def fetch_one(term):
+        if term in "abde":
+            raise httpx.ReadTimeout("no answer")
+        return term
+
+    results = list(
+        http_client.fetch_each(
+            list("abcdef"), fetch_one, delay_seconds=0, logger=http_client.logger,
+            log_context="search", give_up_after=3,
+        )
+    )
+
+    assert results == [("c", "c"), ("f", "f")]

@@ -86,6 +86,14 @@ itself retried; an adapter making many requests per call should still catch
 per-request `httpx.HTTPError` internally so one bad request doesn't discard everything
 else already fetched. See `docs/lessons/adapters.md` for the full reasoning.
 
+Going through `http_client.py` is also what makes a failure visible: it records
+every request's outcome in `source_health.py`, and a source that mostly fails is
+listed under `⚠️ Some sources failed today` in the Telegram message. A request made
+any other way fails silently. A per-term search loop should pass
+`give_up_after=SEARCH_GIVE_UP_AFTER` to `fetch_each()`. A description loop should
+not: a skipped description silently lands the job in the English bucket. See
+[silent-failures](docs/lessons/adapters.md#silent-failures).
+
 **Registration:** adapters are looked up by name in `adapters/registry.py`'s `ADAPTERS`
 dict, keyed by the string used in `sources.yaml`'s `adapter:` field. An unregistered
 `adapter:` value isn't an error — `fetch_from_sources()` logs a warning and skips it,

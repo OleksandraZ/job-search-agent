@@ -13,6 +13,9 @@ logger = logging.getLogger(__name__)
 BASE_URL = "https://www.stepstone.de"
 SEARCH_URL_TEMPLATE = BASE_URL + "/jobs/{slug}"
 REQUEST_DELAY_SECONDS = 1.0
+# A host that rejects or ignores 3 searches in a row will reject the rest too -
+# see http_client.fetch_each.
+SEARCH_GIVE_UP_AFTER = 3
 # See http_client.fetch_each_concurrent's docstring - kept modest since every
 # description request here hits the same host (www.stepstone.de).
 DESCRIPTION_FETCH_WORKERS = 4
@@ -28,6 +31,7 @@ def fetch_jobs(source_config: dict) -> list[NormalizedJob]:
         delay_seconds=REQUEST_DELAY_SECONDS,
         logger=logger,
         log_context="stepstone search",
+        give_up_after=SEARCH_GIVE_UP_AFTER,
     ):
         for job in _parse_search_page(html, source_config["id"]):
             jobs_by_url[job.url] = job

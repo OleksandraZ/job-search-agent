@@ -14,6 +14,9 @@ SEARCH_URL_TEMPLATE = "https://{tenant}.{wd_host}.myworkdayjobs.com/wday/cxs/{te
 DETAIL_URL_TEMPLATE = "https://{tenant}.{wd_host}.myworkdayjobs.com/wday/cxs/{tenant}/{site}{path}"
 PUBLIC_URL_TEMPLATE = "https://{tenant}.{wd_host}.myworkdayjobs.com/{site}{path}"
 REQUEST_DELAY_SECONDS = 1.0
+# A host that rejects or ignores 3 searches in a row will reject the rest too -
+# see http_client.fetch_each.
+SEARCH_GIVE_UP_AFTER = 3
 # The endpoint 400s above 20 (verified live: 20 succeeds, 25 and 100 both 400) -
 # not documented anywhere, found by testing directly.
 SEARCH_PAGE_SIZE = 20
@@ -96,6 +99,7 @@ def fetch_jobs(company_config: dict) -> list[NormalizedJob]:
         delay_seconds=REQUEST_DELAY_SECONDS,
         logger=logger,
         log_context="workday search",
+        give_up_after=SEARCH_GIVE_UP_AFTER,
     ):
         for raw in postings:
             path = raw.get("externalPath")

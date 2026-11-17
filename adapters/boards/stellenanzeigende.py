@@ -14,6 +14,9 @@ logger = logging.getLogger(__name__)
 BASE_URL = "https://www.stellenanzeigen.de"
 SEARCH_URL = f"{BASE_URL}/suche/"
 REQUEST_DELAY_SECONDS = 1.0
+# A host that rejects or ignores 3 searches in a row will reject the rest too -
+# see http_client.fetch_each.
+SEARCH_GIVE_UP_AFTER = 3
 # The site's own search box submits this field name (verified live against the
 # homepage's <input name="fulltext">), and ?fulltext=<term> genuinely filters
 # results (verified live: "Tester" -> 13 real, on-topic jobs). No pagination
@@ -34,6 +37,7 @@ def fetch_jobs(source_config: dict) -> list[NormalizedJob]:
         delay_seconds=REQUEST_DELAY_SECONDS,
         logger=logger,
         log_context="stellenanzeigen.de search",
+        give_up_after=SEARCH_GIVE_UP_AFTER,
     ):
         for job in jobs:
             jobs_by_url[job.url] = job

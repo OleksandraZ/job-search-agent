@@ -162,6 +162,38 @@ per-request retry's job, done cheaper.
   `try/except` around `_search()` and per-job `try/except` around
   `_fetch_description()`.
 
+## <a name="silent-failures"></a>Isolating failures made them invisible - report them instead
+
+**Every failure that's caught and logged must also be counted, and a run whose
+sources failed must say so in the Telegram message.** The two layers above keep a
+run alive, but they turned a dead source into a quiet day: the workflow stays green,
+and "No new jobs today" from a broken run looks exactly like one from a healthy run.
+
+Found 2026-11-17 after four "no new jobs" days in a row. The logs showed:
+stellenanzeigen.de had answered **403 to every request from GitHub Actions since
+2026-10-29**. That's three weeks of a dead board, though the same requests from a home
+connection still worked, so the site blocks data-centre traffic. Workday answered 429 or a non-JSON block
+page for ~45 of 50 companies on 3 of the 4 empty days, and StepStone timed out on
+all 26 search terms on several days. The market really was slow too (about one new
+QA job a day since mid-October), which is exactly why nobody noticed.
+
+What changed:
+- `source_health.py` tallies every request's final outcome (recorded in
+  `http_client.py`, so adapters don't have to do anything) per board and per company,
+  plus whole-fetch crashes from `adapters/registry.py`. `main.py` appends a
+  `⚠️ Some sources failed today` block to the message, the no-jobs one included.
+  Thresholds: a board at ≥50% failed requests; an ATS vendor once ≥25% (and ≥3) of
+  its companies fail. A single dead company is the weekly re-check's job.
+- **A host that blocks data-centre traffic is skipped in CI, not worked around**
+  (`skip_in_ci: true` in `sources.yaml`, same reasoning as
+  [robots-vs-waf](#robots-vs-waf)). It still runs locally.
+- **Search loops give up after 3 failures in a row** (`fetch_each(...,
+  give_up_after=3)`) instead of waiting ~65s per remaining term. Not for description
+  loops: a skipped description silently lands the job in the English bucket.
+- **Vendors that rate-limit their shared infrastructure get their own queue**
+  (`VENDOR_MAX_WORKERS` in the registry: Workday 1 at a time), and a 429's own
+  `Retry-After` is respected (capped at 60s) instead of a fixed 5s.
+
 ## Per-run wall time keeps growing as sources are added
 
 **Per-run wall time grows with every source added — a long-running `main.py` isn't

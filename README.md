@@ -23,6 +23,10 @@ sets are included, and [adding your own](#use-it-for-your-own-search) needs no c
 - **Each job is sent once.** The same posting on three boards, under a new tracking
   URL, or listed for another city is recognized and merged into one entry
   (`also on: …`), and isn't sent again for 90 days.
+- **A broken run doesn't look like a quiet day.** Every request's outcome is
+  recorded. If a board or a whole ATS vendor mostly failed, the message ends with
+  `⚠️ Some sources failed today, so jobs may be missing:` and the list. This was added
+  after a board had been blocked for three weeks while every run looked fine.
 - **The company list maintains itself.** A weekly workflow re-checks every company's
   careers page and moves companies in or out of the fetch list when their ATS changes
   or their endpoint dies.
@@ -205,6 +209,10 @@ What to expect afterwards:
 
 - It runs once a day, scheduled for about 06:13 Berlin time, but GitHub often starts
   scheduled runs a few hours late.
+- If the message ends with **⚠️ Some sources failed today**, those sources returned
+  errors and jobs may be missing; the run's log on the Actions tab has the details.
+  stellenanzeigen.de is skipped on GitHub Actions altogether (it blocks GitHub's
+  servers) and only searched when you run it on your own machine.
 - **After every run, the workflow pushes a commit to your `main`** with the updated
   `storage/jobs.db`. Run `git pull --rebase` before you push your own changes, and
   never force-push: that would roll back the history and resend old jobs.

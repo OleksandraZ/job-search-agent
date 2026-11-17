@@ -148,3 +148,20 @@ def test_format_message_shows_one_entry_per_job_with_other_boards_and_all_cities
 def test_format_message_has_no_also_on_line_for_a_single_listing():
     text = telegram.format_message(german_jobs=[], english_jobs=[_group(title="QA Engineer")])[0]
     assert "also on" not in text
+
+
+def test_no_jobs_message_says_when_sources_failed():
+    [message] = telegram.format_message([], [], "QA", ["stepstone_germany: 26 of 26 requests failed"])
+    assert message.startswith("No new QA jobs today.")
+    assert "⚠️ Some sources failed today, so jobs may be missing:" in message
+    assert "• stepstone_germany: 26 of 26 requests failed" in message
+
+
+def test_report_ends_with_failed_sources():
+    chunks = telegram.format_message([], [_group()], "QA", ["workday companies: 45 of 50 failed"])
+    assert chunks[-1].endswith("• workday companies: 45 of 50 failed")
+
+
+def test_healthy_report_has_no_warning():
+    chunks = telegram.format_message([], [_group()], "QA", [])
+    assert "⚠️" not in chunks[0]

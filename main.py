@@ -7,6 +7,7 @@ from typing import NamedTuple
 import yaml
 from dotenv import load_dotenv
 
+import source_health
 from adapters.boards import NormalizedJob
 from adapters.registry import fetch_from_companies, fetch_from_sources
 from agents import germany_remote, munich_local
@@ -137,25 +138,31 @@ def main(dry_run: bool = False, keywords_file: str = "keywords_qa.yaml") -> None
 
     companies_config = load_yaml("companies.yaml")
 
+    source_health.reset()
     raw_board_jobs = fetch_from_sources(sources_config, keywords_config, sorted(SOURCE_IDS))
     raw_company_jobs = fetch_from_companies(companies_config, keywords_config)
     logger.info(
         "fetched %d board jobs, %d company jobs", len(raw_board_jobs), len(raw_company_jobs)
     )
     raw_jobs = raw_board_jobs + raw_company_jobs
+    problems = source_health.problems()
+    for problem in problems:
+        logger.warning("source problem: %s", problem)
 
     report = build_report(raw_jobs, keywords_config, db_path)
     report_label = keywords_config.get("report_label", "")
 
     if dry_run:
-        for chunk in telegram.format_message(report.german, report.english, report_label):
+        for chunk in telegram.format_message(report.german, report.english, report_label, problems):
             print(chunk)
             print("---")
         return
 
     bot_token = os.environ["TELEGRAM_BOT_TOKEN"]
     chat_id = os.environ["TELEGRAM_CHAT_ID"]
-    sent_groups = telegram.send_report(report.german, report.english, bot_token, chat_id, report_label)
+    sent_groups = telegram.send_report(
+        report.german, report.english, bot_token, chat_id, report_label, problems
+    )
     sent_jobs = [job for group in sent_groups for job in group.copies]
     dedupe.mark_seen(sent_jobs, db_path=db_path)
     # Keep already-sent jobs that are still listed "seen" (dedupe.SEEN_WINDOW).

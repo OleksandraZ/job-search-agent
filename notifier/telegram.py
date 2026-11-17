@@ -32,8 +32,18 @@ def _jobs_noun(report_label: str) -> str:
     return f"{report_label} jobs" if report_label else "jobs"
 
 
+def _health_block(problems: list[str]) -> str:
+    """Sources that failed this run - "no new jobs" from a run that couldn't reach
+    half its sources isn't the same news as from a healthy one (source_health.py)."""
+    lines = "\n".join(f"• {problem}" for problem in problems)
+    return f"⚠️ Some sources failed today, so jobs may be missing:\n{lines}"
+
+
 def _blocks(
-    german_jobs: list[JobGroup], english_jobs: list[JobGroup], report_label: str = ""
+    german_jobs: list[JobGroup],
+    english_jobs: list[JobGroup],
+    report_label: str = "",
+    problems: list[str] | None = None,
 ) -> list[tuple[str, JobGroup | None]]:
     """Header/section-header/per-job blocks, each paired with the job group it
     represents (None for the date header and the two section headers) so a chunk
@@ -48,6 +58,8 @@ def _blocks(
     if german_jobs:
         blocks.append((f"🇩🇪 German-speaking ({len(german_jobs)})", None))
         blocks.extend((_entry(i, job), job) for i, job in enumerate(german_jobs, 1))
+    if problems:
+        blocks.append((_health_block(problems), None))
 
     return blocks
 
@@ -76,13 +88,21 @@ def _pack_chunks(blocks: list[tuple[str, JobGroup | None]]) -> list[tuple[str, l
     return chunks
 
 
+def _no_jobs_message(report_label: str, problems: list[str] | None) -> str:
+    text = f"No new {_jobs_noun(report_label)} today."
+    return f"{text}\n\n{_health_block(problems)}" if problems else text
+
+
 def format_message(
-    german_jobs: list[JobGroup], english_jobs: list[JobGroup], report_label: str = ""
+    german_jobs: list[JobGroup],
+    english_jobs: list[JobGroup],
+    report_label: str = "",
+    problems: list[str] | None = None,
 ) -> list[str]:
     """Format the EN/DE-split report into one or more messages, each under Telegram's length limit."""
     if not german_jobs and not english_jobs:
-        return [f"No new {_jobs_noun(report_label)} today."]
-    return [text for text, _jobs in _pack_chunks(_blocks(german_jobs, english_jobs, report_label))]
+        return [_no_jobs_message(report_label, problems)]
+    return [text for text, _jobs in _pack_chunks(_blocks(german_jobs, english_jobs, report_label, problems))]
 
 
 def send_message(text: str, bot_token: str, chat_id: str) -> dict:
@@ -100,6 +120,7 @@ def send_report(
     bot_token: str,
     chat_id: str,
     report_label: str = "",
+    problems: list[str] | None = None,
 ) -> list[JobGroup]:
     """Send each chunk in order, stopping at the first failure rather than raising.
     Returns only the job groups whose chunk actually sent, so the caller marks
@@ -108,12 +129,12 @@ def send_report(
     duplicate alongside jobs that already went out.
     """
     if not german_jobs and not english_jobs:
-        send_message(f"No new {_jobs_noun(report_label)} today.", bot_token, chat_id)
+        send_message(_no_jobs_message(report_label, problems), bot_token, chat_id)
         return []
 
     total = len(german_jobs) + len(english_jobs)
     sent_jobs: list[JobGroup] = []
-    for text, jobs_in_chunk in _pack_chunks(_blocks(german_jobs, english_jobs, report_label)):
+    for text, jobs_in_chunk in _pack_chunks(_blocks(german_jobs, english_jobs, report_label, problems)):
         try:
             send_message(text, bot_token, chat_id)
         except httpx.HTTPError as exc:

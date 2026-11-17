@@ -1,6 +1,8 @@
 import logging
+import os
 from concurrent.futures import ThreadPoolExecutor
 
+import source_health
 from adapters.ats import (
     ashby_api,
     bamboohr_api,
@@ -94,6 +96,16 @@ ATS_ADAPTERS = {
 # connection-error retry in place.
 MAX_WORKERS = 4
 
+# ATS vendors whose companies all sit on the vendor's own shared infrastructure and
+# rate-limit it as a whole get their own queue with this many workers, instead of
+# taking up to MAX_WORKERS slots at once. Workday answered 429 (or a non-JSON block
+# page) for ~45 of its 50 companies on 2026-11-14/16/17 with up to 4 in flight.
+VENDOR_MAX_WORKERS = {"workday": 1}
+
+
+def _in_ci() -> bool:
+    return os.environ.get("GITHUB_ACTIONS") == "true"
+
 
 def fetch_from_sources(
     sources_config: dict, keywords_config: dict, source_ids: list[str]
@@ -112,11 +124,19 @@ def fetch_from_sources(
             logger.warning("no adapter registered for %s", source["adapter"])
             return []
 
-        try:
-            source_jobs = fetch_jobs({**source, "search_terms": search_terms})
-        except Exception:
-            logger.exception("failed to fetch jobs from %s", source_id)
+        # A site that blocks GitHub's data-centre addresses but answers normal ones -
+        # see the source's notes in sources.yaml. Skipped, not worked around.
+        if source.get("skip_in_ci") and _in_ci():
+            logger.info("skipping %s on GitHub Actions (skip_in_ci)", source_id)
             return []
+
+        with source_health.board(source_id):
+            try:
+                source_jobs = fetch_jobs({**source, "search_terms": search_terms})
+            except Exception:
+                logger.exception("failed to fetch jobs from %s", source_id)
+                source_health.record_crash()
+                return []
 
         logger.info("fetched %d jobs from %s", len(source_jobs), source_id)
         return source_jobs
@@ -137,18 +157,32 @@ def fetch_from_companies(companies_config: dict, keywords_config: dict) -> list[
         if fetch_jobs is None:
             return []  # unresolved or not-yet-built ATS - inert, same as a board _todo
 
-        try:
-            company_jobs = fetch_jobs({**company, "search_terms": search_terms})
-        except Exception:
-            logger.exception("failed to fetch jobs from company %s", company["name"])
-            return []
+        with source_health.company(company["ats"], company["name"]):
+            try:
+                company_jobs = fetch_jobs({**company, "search_terms": search_terms})
+            except Exception:
+                logger.exception("failed to fetch jobs from company %s", company["name"])
+                source_health.record_crash()
+                return []
 
         logger.info("fetched %d jobs from %s (%s)", len(company_jobs), company["name"], company["ats"])
         return company_jobs
 
-    jobs: list[NormalizedJob] = []
-    with ThreadPoolExecutor(max_workers=MAX_WORKERS) as executor:
-        for company_jobs in executor.map(_fetch_one, companies_config["companies"]):
-            jobs.extend(company_jobs)
+    companies = companies_config["companies"]
+    executors = {vendor: ThreadPoolExecutor(max_workers=n) for vendor, n in VENDOR_MAX_WORKERS.items()}
+    shared = ThreadPoolExecutor(max_workers=MAX_WORKERS)
+    try:
+        # Submitted all at once, so a vendor's own queue runs alongside the shared one;
+        # results are still collected in companies.yaml order.
+        futures = [
+            executors.get(company.get("ats"), shared).submit(_fetch_one, company) for company in companies
+        ]
+        jobs: list[NormalizedJob] = []
+        for future in futures:
+            jobs.extend(future.result())
+    finally:
+        shared.shutdown()
+        for executor in executors.values():
+            executor.shutdown()
 
     return jobs

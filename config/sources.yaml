@@ -313,6 +313,10 @@ sources:
   category: general
   enabled: true
   adapter: stellenanzeigende
+  # 403 for every request from GitHub Actions since 2026-10-29 while the same
+  # requests from a home connection still work (verified 2026-11-17, 230 jobs) - the
+  # site blocks data-centre traffic. Not worked around; used in local runs only.
+  skip_in_ci: true
   notes: >-
     Broad German board with good coverage of SMEs and employers outside the
     largest technology hubs. url corrected from the bare homepage (no job
