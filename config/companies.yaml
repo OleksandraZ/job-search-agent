@@ -1921,13 +1921,6 @@ companies:
   careers_url: https://customsurgical.de/
   match_method: page_scan
   resolved_at: '2026-08-20T22:21:35.569993+00:00'
-- name: Angsa Robotics
-  url: https://angsa-robotics.com
-  ats: personio
-  identifier: angsa-robotics
-  careers_url: null
-  match_method: api_probe
-  resolved_at: '2026-08-20T22:21:47.363415+00:00'
 - name: ubiMaster (ubiLearning Solutions GmbH)
   url: https://ubimaster.de/
   ats: softgarden
@@ -4363,13 +4356,6 @@ companies:
   careers_url: https://ease.systems/
   match_method: join_widget
   resolved_at: '2026-11-01T12:26:57.639945+00:00'
-- name: FirmParking
-  url: https://firmparking.de
-  ats: personio
-  identifier: firmparking
-  careers_url: null
-  match_method: api_probe
-  resolved_at: '2026-11-08T11:16:30.096275+00:00'
 - name: MediPulse
   url: https://www.medipulse.de
   ats: join
@@ -4454,3 +4440,31 @@ companies:
   careers_url: https://britehealth.jobs.personio.com/
   match_method: page_scan
   resolved_at: '2026-11-15T13:47:05.889557+00:00'
+- name: Dell Technologies Germany
+  url: https://www.dell.com/de-de
+  ats: personio
+  identifier: dell
+  careers_url: null
+  match_method: api_probe
+  resolved_at: '2026-11-22T11:56:29.036070+00:00'
+- name: Neohelden
+  url: https://neohelden.com/
+  ats: personio
+  identifier: msg-industry-advisors-ag
+  careers_url: https://www.msg.group/de/karriere/einstiegsmoeglichkeiten/branchen/life-sciences-chemicals/
+  match_method: page_scan
+  resolved_at: '2026-11-22T13:38:38.358075+00:00'
+- name: jember
+  url: https://www.jember.de/
+  ats: personio
+  identifier: jember
+  careers_url: null
+  match_method: api_probe
+  resolved_at: '2026-11-22T14:14:06.539467+00:00'
+- name: Concept International
+  url: https://www.concept.biz/
+  ats: ashby
+  identifier: concept
+  careers_url: null
+  match_method: api_probe
+  resolved_at: '2026-11-22T14:17:00.440591+00:00'
